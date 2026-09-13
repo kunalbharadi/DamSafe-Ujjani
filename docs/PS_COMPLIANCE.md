@@ -30,10 +30,12 @@ This maps the supplied implementation brief's interpretation of PS 26161. The or
 | Exposure assessment | blocked | Vector import only | Verified layers and hydraulic results, phase 3 |
 | Economic losses | blocked | Deliberately unavailable | Asset values and applicable vulnerability functions |
 | GeoTIFF/KML/GeoJSON/Shapefile/CSV/report exports | tested locally | `exports.py`, run-scoped download/verification endpoints, independent raster/vector/archive reopening tests | Production CRS/domain validation, PDF renderer and site-specific geospatial results |
-| Google Earth Engine near-real-time path | blocked | Planned observation contract | Account/project/access and pipeline execution, phase 4 |
-| Historical event assessment | blocked | Validation plan | Matching release, independent observations and executed model |
+| Google Earth Engine near-real-time path | tested locally / unverified live | `gee.py`, `import_fallback.py`, Sentinel-1 GRD pipeline, fallback import verified | GEE account credentials unavailable in offline test environment |
+| Historical event assessment | tested locally | `comparison.py`, confusion matrix, IoU, Precision, Recall, F1 metrics | Verified site hydraulic forcing hydrograph |
+| Exposure assessment | tested locally | `exposure.py`, settlement & farmland spatial overlay | Verified population raster and critical infrastructure layers |
+| Economic losses | blocked | `exposure.py`, explicitly BLOCKED | Asset values and applicable vulnerability functions |
 | Uncertainty ensemble / response priorities | implemented / partially blocked | Immutable ensemble API, genuine variant run submissions, exact configuration hashes and saved-output extent/depth/arrival ranges; response priorities explicitly unavailable | Verified Ujjani site variants, exposure datasets and scenario-consistent settlement explanations |
-| Local demonstration | implemented | `scripts/start.ps1 -Preview`, Ujjani setup UI | Scientific demonstrator remains incomplete |
+| Local demonstration | implemented | `scripts/start.ps1`, Phase 4 modelling UI | Final readiness documented in `FINAL_READINESS.md` |
 | Natural river blockage / erosion / debris | deferred | Explicit supplied scope | Separate modelling work |
 | Rainfall-runoff generation | deferred | Prescribed/derived release scope | Separate hydrological model |
 | Full-river 3D SPH / two-way coupling | deferred | Local comparison interpretation | Confirm spatial comparison expectation with sponsor |

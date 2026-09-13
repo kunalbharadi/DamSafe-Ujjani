@@ -146,6 +146,11 @@ function App() {
     { engine: 'dualsphysics', case_kind: 'OFFICIAL_EXAMPLE', idempotency_key: 'ensemble-variant-02', particle_spacing_m: 0.02 },
   ], null, 2));
   const [ensembleSummary, setEnsembleSummary] = useState<Record<string, unknown> | null>(null);
+  const [obsResult, setObsResult] = useState<Record<string, unknown> | null>(null);
+  const [satelliteComp, setSatelliteComp] = useState<Record<string, unknown> | null>(null);
+  const [gaugeComp, setGaugeComp] = useState<Record<string, unknown> | null>(null);
+  const [exposureData, setExposureData] = useState<Record<string, unknown> | null>(null);
+  const [obsMode, setObsMode] = useState<'HISTORICAL_EVENT' | 'LATEST_AVAILABLE'>('HISTORICAL_EVENT');
   const project = projects.find((item) => item.id === selected);
 
   async function refresh(id = selected) {
@@ -235,6 +240,21 @@ function App() {
   async function summarizeEnsemble(id: string) {
     setEnsembleSummary(await api<Record<string, unknown>>(`/projects/${selected}/ensembles/${id}/summary`));
   }
+  async function queryObservation() {
+    setObsResult(await api(`/observation/gee/query?site_key=ujjani-bhima&mode=${obsMode}`, { method: 'POST' }));
+  }
+  async function runSatelliteVal() {
+    if (!selectedRun) throw new Error('Select a successful numerical run from Numerical runs first');
+    setSatelliteComp(await api(`/projects/${selected}/runs/${selectedRun}/compare_satellite?mode=${obsMode}`, { method: 'POST' }));
+  }
+  async function runGaugeVal() {
+    if (!selectedRun) throw new Error('Select a successful numerical run from Numerical runs first');
+    setGaugeComp(await api(`/projects/${selected}/runs/${selectedRun}/gauges/station-001`));
+  }
+  async function loadExposure() {
+    if (!selectedRun) throw new Error('Select a successful numerical run from Numerical runs first');
+    setExposureData(await api(`/projects/${selected}/runs/${selectedRun}/exposure`));
+  }
   async function downloadExport(format: string) {
     if (!selectedRun) throw new Error('Load a successful run before exporting');
     const response = await fetch(`/api/projects/${selected}/runs/${selectedRun}/exports/${format}`, { method: 'POST' });
@@ -249,14 +269,14 @@ function App() {
   const activeRun = runs.find((run) => run.id === selectedRun);
   const latestJob = jobs[jobs.length - 1];
   const maxDepth = useMemo(() => resultWindow?.frames[0]?.values.reduce((m: number, v) => v == null ? m : Math.max(m, v), 0) ?? null, [resultWindow]);
-  const menu = ['Overview', 'Data library', 'Scenarios', 'Readiness', 'Numerical runs', 'Ensembles', 'Results', 'Compare', 'Exposure', 'Exports'];
+  const menu = ['Overview', 'Data library', 'Scenarios', 'Readiness', 'Numerical runs', 'Ensembles', 'Results', 'Compare', 'Observations', 'Validation', 'Exposure', 'Exports'];
 
   return <div className="shell">
     <aside>
       <a className="brand" href="/">◈ <span>DamSafe</span></a>
       <div className="eyebrow">MODELLING WORKSPACE</div>
       <nav>{menu.map((item) => <button key={item} className={tab === item ? 'active' : ''} onClick={() => setTab(item)}>{item}<span>↗</span></button>)}</nav>
-      <div className="sidebar-foot"><span className="dot" /> Local development<br /><small>SIH PS 26161 · Phase 3B</small></div>
+      <div className="sidebar-foot"><span className="dot" /> Local development<br /><small>SIH PS 26161 · Phase 4</small></div>
     </aside>
     <main>
       <header><div>PROJECT / <strong>UJJANI–BHIMA</strong></div><span className="tag">{health?.preview ? 'SQLITE PREVIEW' : 'POSTGIS'}</span></header>
@@ -280,7 +300,9 @@ function App() {
           {tab === 'Ensembles' && <><section className="panel form"><h2>User-configured scenario ensemble</h2><p>Each variant is an immutable request with its own engine, model, input/configuration hash and genuine solver status. Counts are scenario frequency, not probability or real-world likelihood.</p><label>Ensemble name<input value={ensembleName} onChange={(e) => setEnsembleName(e.target.value)} /></label><label>Immutable run variants<textarea aria-label="Ensemble variants" value={ensembleVariants} onChange={(e) => setEnsembleVariants(e.target.value)} /></label><button className="primary" disabled={busy || !project.synthetic} onClick={() => act(submitEnsemble)}>Submit ensemble</button>{!project.synthetic && <p className="caption">Ujjani site variants remain blocked until verified hydraulic inputs exist.</p>}</section><section className="panel"><h2>Ensemble history</h2>{!ensembles.length ? <p className="empty">No ensembles configured.</p> : <div className="table-wrap"><table><thead><tr><th>Ensemble</th><th>Status</th><th>Runs</th><th>Summary</th></tr></thead><tbody>{ensembles.map((item) => <tr key={item.id}><td>{item.name}<small>{item.id}</small></td><td><StatusPill value={item.status} /></td><td>{item.run_ids.length}</td><td><button onClick={() => act(() => summarizeEnsemble(item.id))}>Review summary</button></td></tr>)}</tbody></table></div>}{ensembleSummary && <pre className="result-json">{JSON.stringify(ensembleSummary, null, 2)}</pre>}</section></>}
           {tab === 'Results' && <ResultsView run={activeRun} metadata={resultMeta} raw={resultWindow} area={area} location={location} maxDepth={maxDepth} onLoad={() => selectedRun && act(() => loadResults(selectedRun))} onExport={(format) => act(() => downloadExport(format))} />}
           {tab === 'Compare' && <section className="panel"><h2>Scenario and model comparison</h2><p>Comparison is enabled only for compatible saved outputs. Scales are fixed to the shared numerical contract; runs are never stretched independently.</p><div className="inline-form"><label>Run A<select value={selectedRun} onChange={(e) => setSelectedRun(e.target.value)}><option value="">Select run</option>{runs.filter((r) => r.state === 'SUCCEEDED').map((r) => <option key={r.id} value={r.id}>{r.id} · {r.input.request.engine}</option>)}</select></label><label>Run B<select value={otherRun} onChange={(e) => setOtherRun(e.target.value)}><option value="">Select run</option>{runs.filter((r) => r.state === 'SUCCEEDED').map((r) => <option key={r.id} value={r.id}>{r.id} · {r.input.request.engine}</option>)}</select></label><button disabled={busy} onClick={() => act(compareRuns)}>Compare saved outputs</button></div>{comparison && <pre className="result-json">{JSON.stringify(comparison, null, 2)}</pre>}{!comparison && <p className="empty">No comparison requested. Incompatible CRS, datum, domain, resolution, thresholds or engine evidence will be reported instead of forced into a chart.</p>}</section>}
-          {tab === 'Exposure' && <section className="panel unavailable"><h2>Exposure overlays unavailable</h2><p>Population, buildings, roads, farmland and critical-facility layers are not verified in this project. Missing buildings are not zero buildings, and no population or economic loss is inferred.</p><div className="exposure-list">{['Population', 'Buildings', 'Roads', 'Farmland', 'Critical facilities'].map((name) => <div key={name}><strong>{name}</strong><span>Unavailable · producer, year, coverage and aggregation evidence missing</span></div>)}</div><p className="note">Economic damage remains unavailable because traceable asset values and vulnerability functions are not present. Response priorities are not generated without verified exposure and saved hydraulic results.</p></section>}
+          {tab === 'Observations' && <section className="panel"><h2>Sentinel-1 Earth Engine Observation Query</h2><p className="intro">Query Earth Engine or fallback Sentinel-1 GRD observation metadata for the Ujjani–Bhima domain. Historical event scenes and latest overpasses are kept distinct.</p><div className="inline-form"><label>Observation Mode<select value={obsMode} onChange={(e) => setObsMode(e.target.value as 'HISTORICAL_EVENT' | 'LATEST_AVAILABLE')}><option value="HISTORICAL_EVENT">HISTORICAL_EVENT (August 2020 Monsoonal Flood)</option><option value="LATEST_AVAILABLE">LATEST_AVAILABLE (Most Recent Overpass)</option></select></label><button className="primary" disabled={busy} onClick={() => act(queryObservation)}>Query Observation</button></div>{obsResult && <pre className="result-json">{JSON.stringify(obsResult, null, 2)}</pre>}{!obsResult && <p className="empty">No observation query executed yet. Press 'Query Observation' to retrieve satellite metadata and coverage.</p>}</section>}
+          {tab === 'Validation' && <><section className="panel"><h2>Satellite Flood Agreement Assessment</h2><p className="intro">Evaluates cell-by-cell spatial agreement between a selected numerical simulation run and a Sentinel-1 satellite flood reference. Labeled strictly as "agreement with satellite-derived flood reference".</p><div className="inline-form"><label>Selected Numerical Run<select value={selectedRun} onChange={(e) => setSelectedRun(e.target.value)}><option value="">Select run</option>{runs.filter((r) => r.state === 'SUCCEEDED').map((r) => <option key={r.id} value={r.id}>{r.id} · {r.input.request.engine}</option>)}</select></label><button className="primary" disabled={busy || !selectedRun} onClick={() => act(runSatelliteVal)}>Compute Satellite Agreement Metrics</button></div>{satelliteComp && <pre className="result-json">{JSON.stringify(satelliteComp, null, 2)}</pre>}{!satelliteComp && <p className="empty">Select a successful run and press 'Compute Satellite Agreement Metrics' to calculate IoU, Precision, Recall, and Confusion Matrix.</p>}</section><section className="panel"><h2>Independent Gauge Hydrograph Evaluation</h2><p className="intro">Compares simulated stage and discharge hydrographs against independent river gauge recordings.</p><button disabled={busy || !selectedRun} onClick={() => act(runGaugeVal)}>Evaluate Gauge Station 001</button>{gaugeComp && <pre className="result-json">{JSON.stringify(gaugeComp, null, 2)}</pre>}{!gaugeComp && <p className="empty">Press 'Evaluate Gauge Station 001' to inspect gauge status.</p>}</section></>}
+          {tab === 'Exposure' && <section className="panel"><h2>Exposure & Economic Loss Assessment</h2><p className="intro">Evaluates spatial overlay of numerical flood extents with settlement, farmland, and population layers. Missing datasets return UNAVAILABLE rather than zero.</p><div className="inline-form"><label>Selected Numerical Run<select value={selectedRun} onChange={(e) => setSelectedRun(e.target.value)}><option value="">Select run</option>{runs.filter((r) => r.state === 'SUCCEEDED').map((r) => <option key={r.id} value={r.id}>{r.id} · {r.input.request.engine}</option>)}</select></label><button className="primary" disabled={busy || !selectedRun} onClick={() => act(loadExposure)}>Evaluate Exposure & Loss</button></div>{exposureData && <pre className="result-json">{JSON.stringify(exposureData, null, 2)}</pre>}{!exposureData && <p className="empty">Select a successful run and press 'Evaluate Exposure & Loss' to compute exposure metrics.</p>}</section>}
           {tab === 'Exports' && <section className="panel unavailable"><h2>Exports available after processing</h2><p>GeoTIFF, KML, GeoJSON, Shapefile, CSV and report exports remain disabled until a compatible saved numerical result and independently reopened product are available.</p><button disabled>Export flood depth</button> <button disabled>Export technical report</button><div className="note">No placeholder file or synthetic export is offered.</div></section>}
         </>}
       </div>

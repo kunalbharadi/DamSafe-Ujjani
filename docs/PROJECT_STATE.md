@@ -1,3 +1,11 @@
+# Project state — Phase 4 Earth Engine, Validation, Security & Handover
+
+Date: 2026-09-13. Phase 4 completes the Sentinel-1 Earth Engine observation pipeline, authentic observation fallback imports, satellite flood agreement metric engine (`IoU`, `Precision`, `Recall`, `F1`, confusion matrix), exposure evaluation, security/path protection, export verification, and complete technical documentation (`FINAL_READINESS.md`, `DEMO_SCRIPT.md`, `JUDGE_QA.md`) on branch `feature/phase-4-earth-engine-validation`.
+
+All 43 backend pytest unit tests pass cleanly, frontend production build (`tsc -b && vite build`) and TypeScript checks pass with 0 errors, and `git diff --check` passes.
+
+The system enforces scientific honesty: synthetic/laboratory solver evidence is never presented as a Ujjani site prediction; missing satellite/gauge/exposure datasets return `UNVERIFIED`, `UNAVAILABLE`, or `BLOCKED` rather than fake data; and software readiness is explicitly distinguished from scientific site validation.
+
 # Project state — Phase 3C ensembles and exports
 
 Date: 2026-09-13. Phase 3C adds an immutable user-configured ensemble API backed by genuine numerical run submissions, exact per-variant configuration/cache identity, ensemble summaries, and export endpoints for GeoTIFF, KML, GeoJSON, zipped Shapefile, CSV time series, and HTML report output. Exports are sanitized, include provenance/units/nodata conventions, and are independently reopened by focused tests. The dashboard now exposes ensemble configuration, scenario-frequency summaries, and download actions.

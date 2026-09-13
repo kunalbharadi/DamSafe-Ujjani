@@ -26,6 +26,11 @@ from .numerics.execution import sha256
 from .readiness import assess
 from .storage import storage_for
 from . import exports as numerical_exports
+from .observation.gee import ee_service, SARProcessingConfig, ObservationMode
+from .observation.import_fallback import import_authentic_observation, ImportedObservationInput
+from .observation.comparison import compare_simulation_with_observation
+from .observation.gauges import evaluate_gauge_observations
+from .observation.exposure import evaluate_exposure
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -552,6 +557,63 @@ def create_app(database_url=None, storage=None):
             run_id, export_format, metadata=row["result"],
         )
         return numerical_exports.verify_export(output, export_format)
+
+    # --- Phase 4 Observation & Earth Engine Endpoints ---
+
+    @app.post("/api/observation/gee/query")
+    def query_gee_observation(
+        site_key: str = "ujjani-bhima",
+        mode: ObservationMode = ObservationMode.HISTORICAL_EVENT,
+        target_time: str | None = None,
+        bounds_wgs84: tuple[float, float, float, float] = (74.6, 18.0, 75.1, 18.4),
+    ):
+        return ee_service.query_sentinel1(
+            site_key=site_key,
+            bounds_wgs84=bounds_wgs84,
+            mode=mode,
+            target_time=target_time,
+        )
+
+    @app.post("/api/observation/import")
+    def import_observation(body: ImportedObservationInput):
+        return import_authentic_observation(body)
+
+    @app.post("/api/projects/{project_id}/runs/{run_id}/compare_satellite")
+    def compare_satellite(
+        project_id: str,
+        run_id: str,
+        mode: ObservationMode = ObservationMode.HISTORICAL_EVENT,
+        target_time: str | None = None,
+    ):
+        row, source, path = result_source(project_id, run_id)
+        product = product_source(source, path)
+        with netCDF4.Dataset(product) as ds:
+            cell_states = np.asarray(ds["cell_state"][:])
+            if cell_states.ndim == 1:
+                wet_matrix = [[1 if cell == 2 else 0 for cell in cell_states]]
+            else:
+                wet_matrix = [[1 if cell == 2 else 0 for cell in row] for row in cell_states]
+
+        obs = ee_service.query_sentinel1(
+            site_key="ujjani-bhima",
+            bounds_wgs84=(74.6, 18.0, 75.1, 18.4),
+            mode=mode,
+            target_time=target_time,
+        )
+        return compare_simulation_with_observation(
+            run_id=run_id,
+            sim_grid=wet_matrix,
+            observation=obs,
+            sim_frame_time=target_time or obs.acquisition_time,
+        )
+
+    @app.get("/api/projects/{project_id}/runs/{run_id}/gauges/{station_id}")
+    def evaluate_gauge(project_id: str, run_id: str, station_id: str):
+        return evaluate_gauge_observations(station_id, run_id)
+
+    @app.get("/api/projects/{project_id}/runs/{run_id}/exposure")
+    def evaluate_exposure_endpoint(project_id: str, run_id: str):
+        return evaluate_exposure(run_id, "ujjani-bhima")
 
     dist = ROOT / "frontend/dist"
     if (dist / "assets").exists():
