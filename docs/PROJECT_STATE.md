@@ -1,3 +1,13 @@
+# Project state — Phase 5A Ujjani Site Data & Model Readiness
+
+Date: 2026-09-13. Phase 5A on branch `feature/phase-5-ujjani-site-data` transitions DamSafe from "software-demonstrable with laboratory solver evidence" to "scientifically prepared for the first real Ujjani–Bhima hydraulic simulation." This phase adds the authoritative Ujjani Dam specification module (`backend/damsafe/site/ujjani.py`) with CWC/WRD-sourced engineering parameters (crest 497.0 m, 41 radial gates, FRL 496.83 m, gross storage 3.14 km³, catchment 14,858 km²), preprocessing utilities (`backend/damsafe/site/preprocessing.py`) for discharge conversion (cusecs ↔ m³/s), timezone alignment (IST → UTC), and coordinate transformation (WGS84 ↔ UTM Zone 43N), and a formal 16-item model-readiness gate (`backend/damsafe/site/readiness_gate.py`).
+
+Historical flood events are selected and documented: primary October 2020 Bhima Flood (~250,000 cusecs peak, Sentinel-1 scene pair on Relative Orbit 63) and secondary August 2019 Krishna-Bhima Flood. The readiness gate evaluates all 16 input categories (terrain, reach, bathymetry, dam, storage, gates, upstream forcing, forcing attribution, downstream boundary, roughness, CRS, vertical datum, clock, permanent water, event selection, satellite observation) and returns verdict `NOT_READY_FOR_SITE_RUN` due to 3 BLOCKED items: sub-surface channel bathymetry absent from public satellite data, continuous upstream discharge telemetry unavailable, and downstream Pandharpur rating curve not obtained.
+
+Scientific integrity is enforced: the `TERRAIN_APPROXIMATION_ONLY` classification explicitly prevents any terrain-only channel approximation from being labelled as verified bathymetry. No Ujjani site simulation is claimed or executed. The 7 PASS items (terrain, reach, dam, storage, CRS, clock, permanent water) and 6 PARTIAL items represent genuine progress toward site readiness while honestly documenting the 3 remaining blockers that require government agency data releases.
+
+Verification: backend pytest suite passes (all tests including Phase 5A site readiness tests), frontend production build passes, TypeScript checks pass with 0 errors, `git diff --check` passes.
+
 # Project state — Phase 4 Earth Engine, Validation, Security & Handover
 
 Date: 2026-09-13. Phase 4 completes the Sentinel-1 Earth Engine observation pipeline, authentic observation fallback imports, satellite flood agreement metric engine (`IoU`, `Precision`, `Recall`, `F1`, confusion matrix), exposure evaluation, security/path protection, export verification, and complete technical documentation (`FINAL_READINESS.md`, `DEMO_SCRIPT.md`, `JUDGE_QA.md`) on branch `feature/phase-4-earth-engine-validation`.

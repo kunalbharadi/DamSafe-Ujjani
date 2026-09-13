@@ -1,5 +1,23 @@
 # Verification and scientific validation plan
 
+## Phase 5A site data readiness assessment
+
+Phase 5A adds a formal 16-item Ujjani model-readiness gate ([UJJANI_MODEL_READINESS.md](UJJANI_MODEL_READINESS.md)) that must evaluate all physical inputs before any site simulation is permitted. The current verdict is `NOT_READY_FOR_SITE_RUN` with 3 BLOCKED items.
+
+**Validated inputs (PASS):** Copernicus GLO-30 terrain (30 m), HydroRIVERS reach geometry (115 km), CWC/WRD dam specification (crest 497.0 m, 41 gates), storage capacity (3.14 km³ gross), EPSG:32643 CRS, IST→UTC temporal alignment, JRC permanent water baseline.
+
+**Partially validated (PARTIAL):** Gate discharge rating curves (dimensions known, head-discharge relationship unknown), forcing attribution (raw NWIC gate data, pathway mapping incomplete), roughness (literature Manning's n, uncalibrated), vertical datum (EGM96, local gauge zero unverified), October 2020 event selection (peak known, continuous hydrograph unavailable), Sentinel-1 scene pair (IDs matched, not processed).
+
+**Blocked:** Sub-surface channel bathymetry (requires WRD/CWPRS survey), continuous upstream forcing telemetry (requires SCADA access), Pandharpur downstream rating curve (requires CWC release).
+
+**Site validation prerequisites (must be met before claiming site-validated simulation):**
+1. All 3 BLOCKED items resolved to at least PARTIAL.
+2. At least one complete Ujjani site hydraulic simulation executed with verified forcing.
+3. Authentic Sentinel-1 SAR flood extent processed via GEE or fallback import.
+4. Simulation output compared against authentic satellite observation at compatible acquisition time on valid shared spatial grid.
+5. Flood agreement metrics (IoU, Precision, Recall, F1) computed and reported with uncertainty bounds.
+6. Roughness coefficient calibrated against observed flood extent for at least one historical event.
+
 Phase 2 execution status is in [PHASE2_EVIDENCE.md](PHASE2_EVIDENCE.md). Both genuine engines have executed official examples and a shared synthetic benchmark; the original DualSPHysics example was normalized afterward following a parser fix, while a 0.02 m variant completed automatically. D-Flow FM passed a separate lake-at-rest analytical check. The bundled SPH literature front-position check has measured errors, but native particle mass loss and reference-convention uncertainty preclude a validation badge. No Ujjani site run or site comparison is claimed. The existing gates below remain acceptance criteria, not claims of completion.
 
 Software tests cannot validate Ujjani hydraulics. Phase 1 tests concern input handling, traceability, separation of projects and persistence. Synthetic files exist exclusively in temporary test projects.

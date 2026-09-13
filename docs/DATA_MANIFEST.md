@@ -1,3 +1,15 @@
+# Data manifest — Phase 5A Ujjani site data, 2026-09-13
+
+## Phase 5A Ujjani site data acquisition
+
+Phase 5A adds authoritative Ujjani Dam and Bhima River reach specifications codified in `backend/damsafe/site/ujjani.py`, preprocessing utilities in `backend/damsafe/site/preprocessing.py`, and a formal 16-item model-readiness gate in `backend/damsafe/site/readiness_gate.py`.
+
+The complete dataset catalogue covering terrain (Copernicus GLO-30), channel geometry (HydroRIVERS), dam specifications (CWC/WRD), hydrological forcing (NWIC/WRD bulletins), permanent water baseline (JRC GSW v1.4), satellite SAR (Sentinel-1 GRD), and downstream exposure (OSM/WorldPop) is documented in [UJJANI_SITE_DATA.md](UJJANI_SITE_DATA.md).
+
+Historical flood events selected for future validation are documented in [UJJANI_EVENT_MANIFEST.md](UJJANI_EVENT_MANIFEST.md): primary October 2020 Bhima Flood (~250,000 cusecs peak) and secondary August 2019 Krishna-Bhima Flood, with matched Sentinel-1 GRD scene pairs on compatible orbit geometry.
+
+The strict 16-item readiness assessment in [UJJANI_MODEL_READINESS.md](UJJANI_MODEL_READINESS.md) yields verdict `NOT_READY_FOR_SITE_RUN` due to 3 BLOCKED items: sub-surface channel bathymetry, continuous upstream forcing telemetry, and downstream rating curve. Any simulation using current terrain-only channel approximation MUST be labelled `APPROXIMATE DEMONSTRATION — NOT VALIDATED SITE RUN`.
+
 # Data manifest — phase 1, 2026-09-12
 
 ## Phase 3C export/data constraints

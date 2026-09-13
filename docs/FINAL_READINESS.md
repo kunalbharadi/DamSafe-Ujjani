@@ -1,16 +1,30 @@
 # DamSafe — Final Scientific Readiness Assessment
 
-**Branch**: `feature/phase-4-earth-engine-validation`  
-**Checkpoint Baseline**: `793cb02`  
-**Date**: September 2026  
+**Branch**: `feature/phase-5-ujjani-site-data`
+**Phase 4 Baseline**: `e54e411`
+**Date**: September 2026
 **System Classification**:
 - **SOFTWARE DEMONSTRABLE**: PASS (Continuous 14-stage E2E software lineage verified)
 - **SCIENTIFICALLY ASSESSED**: PARTIAL (Laboratory benchmark cases verified; no site validation)
+- **SITE DATA PREPARED**: PARTIAL (7/16 PASS, 6/16 PARTIAL, 3/16 BLOCKED — see [UJJANI_MODEL_READINESS.md](UJJANI_MODEL_READINESS.md))
 - **OPERATIONALLY READY**: BLOCKED (Requires verified Ujjani riverbed bathymetry, dam rating curves, gauge datums, and authority review)
+
+## Phase 5A — Ujjani Site Data & Model Readiness
+
+Phase 5A adds authoritative site specifications, preprocessing utilities, and a formal 16-item readiness gate. The complete assessment is in [UJJANI_MODEL_READINESS.md](UJJANI_MODEL_READINESS.md).
+
+| Category | Items | Details |
+|---|---|---|
+| **PASS** | 7 | Terrain (GLO-30), Reach geometry, Dam specification, Storage capacity, CRS (EPSG:32643), Temporal clock (IST→UTC), Permanent water (JRC GSW) |
+| **PARTIAL** | 6 | Gate rating curves, Forcing attribution, Roughness coefficients, Vertical datum, Event selection, Satellite observation |
+| **BLOCKED** | 3 | Channel bathymetry (sub-surface survey needed), Upstream continuous forcing (SCADA telemetry needed), Downstream rating curve (CWC release needed) |
+
+**Site Model Verdict**: `NOT_READY_FOR_SITE_RUN`
+**Site Data Documentation**: [UJJANI_SITE_DATA.md](UJJANI_SITE_DATA.md), [UJJANI_EVENT_MANIFEST.md](UJJANI_EVENT_MANIFEST.md)
 
 ---
 
-## Strict Evidence Matrix
+## Phase 4 — Strict Evidence Matrix (retained)
 
 | # | Capability / Requirement | Status | Evidence File / Lineage ID | Limitation / Remaining Work |
 |---|---|---|---|---|

@@ -1,3 +1,18 @@
+# PS 26161 Phase 5A implementation note
+
+Phase 5A adds Ujjani site data acquisition and model-readiness assessment. The site specification module (`backend/damsafe/site/ujjani.py`) codifies authoritative dam parameters from CWC/WRD sources. Preprocessing utilities (`backend/damsafe/site/preprocessing.py`) provide traceable unit conversion (cusecs ↔ m³/s), timezone alignment (IST → UTC), and coordinate projection (WGS84 ↔ UTM Zone 43N). The 16-item readiness gate (`backend/damsafe/site/readiness_gate.py`) formally evaluates site simulation prerequisites and returns `NOT_READY_FOR_SITE_RUN` due to missing sub-surface bathymetry, continuous forcing telemetry, and downstream rating curve.
+
+Historical events are selected (October 2020 primary, August 2019 secondary) with matched Sentinel-1 GRD scene pairs. No site simulation is executed or claimed. The `TERRAIN_APPROXIMATION_ONLY` classification prevents terrain-only channel approximations from being labelled as verified bathymetry.
+
+| Deliverable | Status | Code / evidence | Missing completion evidence |
+| --- | --- | --- | --- |
+| Ujjani dam/reservoir specification | tested | `backend/damsafe/site/ujjani.py`, `test_phase5a_site_readiness.py` | Independent survey verification |
+| Discharge/timezone/CRS preprocessing | tested | `backend/damsafe/site/preprocessing.py`, round-trip tests | Production continuous telemetry stream |
+| 16-item model-readiness gate | tested | `backend/damsafe/site/readiness_gate.py`, 16-item evaluation test | BLOCKED items require government data releases |
+| Historical event selection & SAR matching | documented | `docs/UJJANI_EVENT_MANIFEST.md` | Live GEE processing of authentic scenes |
+| Site data catalogue | documented | `docs/UJJANI_SITE_DATA.md` | Field-verified bathymetry and rating curves |
+| Model readiness matrix | documented | `docs/UJJANI_MODEL_READINESS.md` | Progression from NOT_READY to READY requires 3 blocked items resolved |
+
 # PS 26161 Phase 3C implementation note
 
 The Phase 3B UI consumes only existing run-scoped Phase 3A contracts. It does not turn synthetic laboratory output into a Ujjani claim. The result viewer distinguishes saved numerical values from visual presentation, retains wet/dry/nodata states, uses fixed comparison semantics, and exposes provenance in a technical details panel. Exposure and economic damage are explicitly unavailable because verified producer/year/coverage/aggregation metadata, asset inventories, values and vulnerability functions are absent. Export actions are disabled until verified processing outputs exist.
