@@ -1,3 +1,24 @@
+# Project state — Phase 3C ensembles and exports
+
+Date: 2026-09-13. Phase 3C adds an immutable user-configured ensemble API backed by genuine numerical run submissions, exact per-variant configuration/cache identity, ensemble summaries, and export endpoints for GeoTIFF, KML, GeoJSON, zipped Shapefile, CSV time series, and HTML report output. Exports are sanitized, include provenance/units/nodata conventions, and are independently reopened by focused tests. The dashboard now exposes ensemble configuration, scenario-frequency summaries, and download actions.
+
+The implementation preserves no-flood/not-reached/nodata distinctions in saved products. Settlement exposure and response priorities remain explicitly unavailable without verified settlement/exposure datasets and site hydraulic results. Economic damage is not estimated. The GeoTIFF writer documents its cell-centre strip convention; unsupported or absent CRS returns an honest unavailable error rather than inventing a coordinate system.
+
+Verification: the full backend suite passes 35 tests; frontend production build and TypeScript checks pass. Browser tests were not end-to-end runnable because no API server was started at `127.0.0.1:8000`; the existing Playwright suite requires that service.
+
+# Project state — Phase 3B dashboard integration
+
+Date: 2026-09-13. Phase 3B connects the existing Phase 3A run-scoped APIs to a coherent frontend journey on `feature/prompt-3-dashboard`. The dashboard now covers Ujjani overview, source/readiness review, immutable hypothetical scenario configuration, audit/run progress and cancellation, genuine saved-result exploration, compatible-run comparison, explicit exposure unavailability, and honest post-processing export gates.
+
+The primary map remains 2D MapLibre. Numerical playback reads saved frame/window responses and labels the frame state (`WET`, `DRY`, `NODATA`); it does not invent a flood surface or interpolate exact metrics. Result metadata displays engine evidence, units, elapsed/source time where qualified, CRS/datum, thresholds, nodata encoding and cache provenance. Comparison delegates compatibility checks and fixed-scale metrics to the backend.
+
+No Ujjani numerical result, verified exposure layer, permanent-water baseline, economic loss, evacuation guarantee or export file exists. Official examples are only available in a separate synthetic laboratory project and are prominently labelled. Export controls remain disabled until Phase 3C provides independently reopened geospatial products. Backend validation was inspected through the Phase 3A test contracts; this environment could not execute the Python test command because Windows sandbox execution was unavailable.
+
+# Project state — Phase 3A backend complete for saved synthetic numerical results
+
+Date: 2026-09-13. On `feature/prompt-3-dashboard`, Phase 3A adds immutable run configuration identity, verified-only cache aliases, project/run-isolated saved-output reads, bounded metric/time windows, background numerical postprocessing and stable result/product APIs. The full Python suite passed 33 tests with retained genuine D-Flow shared synthetic output required, not skipped. See [Phase 3A report](PHASE3A_REPORT.md) for scientific and API details, exact limits, tested commands and Prompt 3B entry points. No commit or push was made.
+
+Only synthetic laboratory/benchmark numerical results exist. No Ujjani site run, site comparison, computed breach, historical assessment, permanent-water baseline mask or real-site flood layer is available. Site submission remains blocked by missing verified physical inputs. The older phase records below are retained as history.
 # Project state — Prompt 2 partial completion
 
 Date: 2026-09-13. Phase 2 has genuine, locally built D-Flow FM and DualSPHysics CPU engines. Both executed exact official examples and a physically matched synthetic closed-tank benchmark. D-Flow also passed a lake-at-rest analytical check; mesh/time-step variants and two SPH particle spacings have computed sensitivity differences. The original 0.01 m SPH example completed native stages and was normalized afterward following a parser fix; a 0.02 m variant completed solver-to-normalized processing automatically. See [Phase 2 evidence](PHASE2_EVIDENCE.md) for run IDs, hashes, runtime, comparison metrics and quality concerns.

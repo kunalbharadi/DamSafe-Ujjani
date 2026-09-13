@@ -8,7 +8,7 @@ Software tests cannot validate Ujjani hydraulics. Phase 1 tests concern input ha
 
 `backend/tests/test_foundation.py` exercises gaps, missing values, duplicate times and flags without interpolation; explicit cusec conversion and timezone rejection; unsafe filenames and malformed/oversized uploads; separate synthetic project enforcement; immutable version/snapshot hashes and database triggers; reopening the database with a new application instance; cross-project scenario denial; CRS mismatch, nodata and unknown datum; physically distinct forcing contracts; monotonic storage-curve checks; durable audit execution/cancellation; vector geometry and safe storage paths.
 
-The TypeScript production build and frontend dependency audit are run independently. Browser smoke checks use `frontend/tests/setup.spec.ts` against a running local server, including page navigation, empty/readiness states, mobile width and console errors. They do not prove solver-backed result exploration, which does not exist yet.
+The TypeScript production build and frontend dependency audit are run independently. Browser smoke checks use `frontend/tests/setup.spec.ts` against a running local server, including page navigation, empty/readiness states, mobile width and console errors. They do not prove the Phase 3A solver-backed result API or the future Prompt 3B result viewer.
 
 PostgreSQL/PostGIS runtime, PostgreSQL immutability/concurrency, Docker image builds and real S3 operations require their services and are not covered by SQLite tests. Do not mark these as passing through a skip.
 
@@ -24,6 +24,8 @@ PostgreSQL/PostGIS runtime, PostgreSQL immutability/concurrency, Docker image bu
 ## Later product and observation gates
 
 Depth/velocity/arrival/duration must derive from stored solver output with masks, projection and threshold metadata. Validate exports by reopening them with an independent reader. Preserve not-reached and outside-domain separately. Exposure is not monetary damage or casualties.
+
+Phase 3A executed software verification of the saved-result API, masks, arrival and duration products, cache/source identity and bounded reads. Its integration test directly reopens the retained genuine D-Flow shared synthetic normalized NetCDF and compares derived flooded area to the native saved frame; the local test run required that file to exist, so absence was not counted as a pass. See [Phase 3A report](PHASE3A_REPORT.md). Product correctness on this synthetic case is not hydraulic validation or evidence of a site flood. Verify future georeferenced baseline water masks, cross-datum handling, arrival precision against saved intervals, large-result load and Ujjani spatial outputs independently when actual site data are available.
 
 Historical observation assessment requires the actual acquisition time, matching forcing and valid shared spatial mask, with documented empty-mask behaviour for IoU/precision/recall/F1. Do not compare event-maximum predicted extent with an instantaneous satellite image without a justified reference definition. Separate calibration from independent assessment. Hypothetical failure runs cannot inherit historical validation status.
 

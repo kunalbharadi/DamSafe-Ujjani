@@ -181,3 +181,16 @@ class RunRequest(Contract):
     scenario_id: str | None = None
     idempotency_key: str = Field(min_length=8, max_length=120, pattern=r"^[a-zA-Z0-9_-]+$")
     particle_spacing_m: Literal[0.005, 0.01, 0.02, 0.04] | None = None
+
+    @model_validator(mode="after")
+    def scenario_binding(self):
+        if self.case_kind == "SITE_SCENARIO" and not self.scenario_id:
+            raise ValueError("Site run requires an immutable scenario ID")
+        if self.case_kind == "OFFICIAL_EXAMPLE" and self.scenario_id is not None:
+            raise ValueError("Official laboratory example cannot inherit an unrelated site scenario")
+        return self
+
+
+class EnsembleInput(Contract):
+    name: str = Field(min_length=1, max_length=120)
+    variants: tuple[RunRequest, ...] = Field(min_length=1, max_length=8)

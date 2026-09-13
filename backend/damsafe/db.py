@@ -56,6 +56,13 @@ runs = Table(
     Column("result", JSON, nullable=False),
     UniqueConstraint("project_id", "idempotency_key", name="uq_run_submission"),
 )
+ensembles = Table(
+    "ensembles",
+    metadata,
+    Column("id", String, primary_key=True),
+    Column("project_id", ForeignKey("projects.id"), nullable=False),
+    Column("body", JSON, nullable=False),
+)
 
 
 def now():

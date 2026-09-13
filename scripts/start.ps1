@@ -23,6 +23,8 @@ $env:DAMSAFE_STORAGE_ROOT = Join-Path (Get-Location) '.local\objects'
 if ($LASTEXITCODE -ne 0) { throw 'Migration failed' }
 & $pythonPath scripts\bootstrap.py
 if ($LASTEXITCODE -ne 0) { throw 'Bootstrap failed' }
+& $pythonPath scripts\register_phase2_examples.py
+if ($LASTEXITCODE -ne 0) { throw 'Pinned Phase 2 evidence registration failed' }
 Write-Host 'DamSafe preview: http://127.0.0.1:8000 (SQLite; numerical examples require their installed Docker images)'
 $workerProcess = Start-Process -FilePath $pythonPath -ArgumentList '-m','damsafe.worker' -WindowStyle Hidden -PassThru
 $numericalProcess = Start-Process -FilePath $pythonPath -ArgumentList '-m','damsafe.numerics.worker' -WindowStyle Hidden -PassThru

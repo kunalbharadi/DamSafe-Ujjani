@@ -5,6 +5,7 @@ import tempfile
 from contextlib import asynccontextmanager
 from pathlib import Path
 
+import netCDF4
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -14,13 +15,18 @@ from sqlalchemy import func, insert, select, text
 from starlette.concurrency import run_in_threadpool
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
-from .contracts import DatasetInput, ProjectInput, RunRequest, ScenarioInput
-from .db import datasets, engine_for, jobs, now, projects, scenarios, uid
+from .contracts import DatasetInput, EnsembleInput, ProjectInput, RunRequest, ScenarioInput
+from .db import datasets, ensembles, engine_for, jobs, now, projects, scenarios, uid
 from .ingestion import inspect
+from .numerics import products as numerical_products
+from .numerics import comparison as numerical_comparison
 from .numerics import service as numerical_service
 from .numerics.adapters import capabilities
+from .numerics.execution import sha256
 from .readiness import assess
 from .storage import storage_for
+from . import exports as numerical_exports
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 MAX_UPLOAD = 64 * 1024 * 1024
@@ -100,7 +106,7 @@ def create_app(database_url=None, storage=None):
             "database": engine.dialect.name,
             "postgis": postgis,
             "preview": engine.dialect.name == "sqlite",
-            "phase": 2,
+            "phase": "3A",
             "engines": engines(),
         }
 
@@ -108,6 +114,12 @@ def create_app(database_url=None, storage=None):
     def list_projects():
         with engine.connect() as conn:
             return [{"id": r.id, **r.body} for r in conn.execute(select(projects))]
+
+    @app.get("/api/projects/{project_id}")
+    def project_detail(project_id: str):
+        with engine.connect() as conn:
+            row = get(conn, projects, project_id)
+            return {"id": row["id"], **row["body"]}
 
     @app.post("/api/projects", status_code=201)
     def add_project(body: ProjectInput):
@@ -260,6 +272,14 @@ def create_app(database_url=None, storage=None):
             conn.execute(insert(scenarios).values(id=ident, project_id=project_id, body=record))
         return record
 
+    @app.get("/api/projects/{project_id}/scenarios/{scenario_id}")
+    def scenario_detail(project_id: str, scenario_id: str):
+        with engine.connect() as conn:
+            row = get(conn, scenarios, scenario_id)
+            if row["project_id"] != project_id:
+                raise HTTPException(404, "Scenario not found in project")
+            return row["body"]
+
     @app.get("/api/projects/{project_id}/readiness")
     def readiness(project_id: str, scenario_id: str | None = None):
         with engine.connect() as conn:
@@ -319,9 +339,219 @@ def create_app(database_url=None, storage=None):
     def list_runs(project_id: str):
         return numerical_service.get_runs(engine, project_id)
 
+    @app.get("/api/projects/{project_id}/runs/{run_id}")
+    def run_detail(project_id: str, run_id: str):
+        with engine.connect() as conn:
+            row = conn.execute(select(numerical_service.runs).where(
+                numerical_service.runs.c.id == run_id,
+                numerical_service.runs.c.project_id == project_id,
+            )).mappings().first()
+            if not row:
+                raise HTTPException(404, "Run not found in project")
+            return dict(row)
+
+    def result_source(project_id, run_id):
+        return numerical_service.result_record(engine, project_id, run_id)
+
+    def product_source(source_row, path):
+        record = source_row["result"].get("postprocessing", {})
+        product = path.with_name("products.nc")
+        if (not product.is_file() or not record.get("product_sha256")
+                or sha256(product) != record["product_sha256"]
+                or record.get("source_normalized_sha256") != source_row["result"]["normalization"]["normalized_sha256"]):
+            raise HTTPException(409, "Derived products unavailable or changed")
+        with netCDF4.Dataset(product) as ds:
+            if getattr(ds, "schema_version", None) != numerical_products.PRODUCT_SCHEMA:
+                raise HTTPException(409, "Derived products require schema 2 reprocessing")
+        return product
+
+    def metric_bbox(value: str):
+        try:
+            bbox = tuple(float(part) for part in value.split(","))
+            if len(bbox) != 4:
+                raise ValueError("Expected four coordinates")
+            return bbox
+        except ValueError as exc:
+            raise HTTPException(422, "bbox must be xmin,ymin,xmax,ymax in the result CRS") from exc
+
+    @app.get("/api/projects/{project_id}/runs/{run_id}/results/metadata")
+    def result_metadata(project_id: str, run_id: str):
+        row, source, path = result_source(project_id, run_id)
+        return numerical_products.metadata(
+            path, run_id=run_id, scenario_id=row["input"]["request"].get("scenario_id"),
+            configuration_hash=row["input"].get("configuration_hash", "LEGACY_UNHASHED"),
+            source_run_id=source["id"], cached=run_id != source["id"],
+        )
+
+    @app.get("/api/projects/{project_id}/runs/{run_id}/results/window")
+    def result_window(project_id: str, run_id: str, bbox: str, field: str = "h",
+                      first_frame: int = 0, frame_count: int = 1):
+        _, _, path = result_source(project_id, run_id)
+        try:
+            return numerical_products.window(path, metric_bbox(bbox), first_frame=first_frame,
+                                             frame_count=frame_count, field=field)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+    @app.get("/api/projects/{project_id}/runs/{run_id}/results/series")
+    def result_series(project_id: str, run_id: str, cell: int,
+                      first_frame: int = 0, frame_count: int | None = None):
+        _, _, path = result_source(project_id, run_id)
+        try:
+            return numerical_products.point_series(path, cell=cell, first_frame=first_frame,
+                                                   frame_count=frame_count)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+    @app.get("/api/projects/{project_id}/runs/{run_id}/products/window")
+    def derived_window(project_id: str, run_id: str, bbox: str,
+                       field: str = "maximum_depth_m"):
+        _, source, path = result_source(project_id, run_id)
+        try:
+            return numerical_products.product_window(product_source(source, path), metric_bbox(bbox), field)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+    @app.get("/api/projects/{project_id}/runs/{run_id}/products/area")
+    def flooded_area(project_id: str, run_id: str, first_frame: int = 0, frame_count: int = 32):
+        _, source, path = result_source(project_id, run_id)
+        if first_frame < 0 or not 1 <= frame_count <= 32:
+            raise HTTPException(422, "Area window exceeds 32 frames")
+        with netCDF4.Dataset(product_source(source, path)) as ds:
+            if first_frame + frame_count > len(ds.dimensions["time"]):
+                raise HTTPException(422, "Frame window outside saved result")
+            return {"baseline_water": ds.baseline_water, "threshold_m": float(ds.arrival_threshold_m),
+                    "area_semantics": ds.area_method,
+                    "frames": [{"frame": i, "elapsed_s": float(ds["time"][i]),
+                                "flooded_area_m2": float(ds["flooded_area_m2"][i]),
+                                "unknown_area_m2": float(ds["unknown_area_m2"][i])}
+                               for i in range(first_frame, first_frame + frame_count)]}
+
+    @app.get("/api/projects/{project_id}/runs/{run_id}/products/location")
+    def location(project_id: str, run_id: str, name: str, x: float, y: float,
+                 radius_m: float, first_frame: int = 0, frame_count: int | None = None):
+        _, source, path = result_source(project_id, run_id)
+        try:
+            return numerical_products.named_location(path, product_source(source, path),
+                name=name, x=x, y=y, radius_m=radius_m, first_frame=first_frame,
+                frame_count=frame_count)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+    @app.get("/api/projects/{project_id}/runs/{run_id}/compare/{other_run_id}")
+    def compare_runs(project_id: str, run_id: str, other_run_id: str):
+        first, first_source, first_path = result_source(project_id, run_id)
+        second, second_source, second_path = result_source(project_id, other_run_id)
+        return numerical_comparison.compare(
+            first_path, second_path, product_source(first_source, first_path),
+            product_source(second_source, second_path), first, second,
+        )
+
     @app.post("/api/projects/{project_id}/runs/{run_id}/cancel")
     def cancel_run(project_id: str, run_id: str):
         return numerical_service.cancel(engine, project_id, run_id)
+
+    @app.post("/api/projects/{project_id}/ensembles", status_code=202)
+    def submit_ensemble(project_id: str, body: EnsembleInput):
+        ensemble_id = uid()
+        submitted = []
+        for variant in body.variants:
+            submitted.append(numerical_service.submit(engine, project_id, variant, ensemble_id=ensemble_id))
+        record = {
+            "id": ensemble_id, "name": body.name, "created_at": now(),
+            "variants": [item["input"] for item in submitted],
+            "run_ids": [item["id"] for item in submitted],
+            "status": "SUCCEEDED" if all(item["state"] == "SUCCEEDED" for item in submitted) else "QUEUED",
+            "frequency_semantics": "scenario frequency; not probability or real-world likelihood",
+        }
+        with engine.begin() as conn:
+            get(conn, projects, project_id)
+            conn.execute(insert(ensembles).values(id=ensemble_id, project_id=project_id, body=record))
+        return record
+
+    @app.get("/api/projects/{project_id}/ensembles")
+    def list_ensembles(project_id: str):
+        with engine.connect() as conn:
+            return records(conn, ensembles, project_id)
+
+    @app.get("/api/projects/{project_id}/ensembles/{ensemble_id}")
+    def ensemble_detail(project_id: str, ensemble_id: str):
+        with engine.connect() as conn:
+            row = get(conn, ensembles, ensemble_id)
+            if row["project_id"] != project_id:
+                raise HTTPException(404, "Ensemble not found in project")
+            return row["body"]
+
+    @app.get("/api/projects/{project_id}/ensembles/{ensemble_id}/summary")
+    def ensemble_summary(project_id: str, ensemble_id: str):
+        with engine.connect() as conn:
+            ensemble = get(conn, ensembles, ensemble_id)
+            if ensemble["project_id"] != project_id:
+                raise HTTPException(404, "Ensemble not found in project")
+            run_rows = [
+                dict(row) for row in conn.execute(
+                    select(numerical_service.runs).where(
+                        numerical_service.runs.c.project_id == project_id,
+                        numerical_service.runs.c.id.in_(ensemble["body"]["run_ids"]),
+                    )
+                ).mappings()
+            ]
+        products = []
+        for row in run_rows:
+            if row["state"] != "SUCCEEDED":
+                continue
+            _, source, path = result_source(project_id, row["id"])
+            product = product_source(source, path)
+            with netCDF4.Dataset(product) as ds:
+                products.append({
+                    "run_id": row["id"], "state": row["state"],
+                    "extent": np.asarray(ds["cell_state"][:]) == 2,
+                    "depth": np.ma.asarray(ds["maximum_depth_m"][:]).filled(np.nan),
+                    "arrival": np.ma.asarray(ds["arrival_elapsed_s"][:]).filled(np.nan),
+                })
+        if not products:
+            return {"state": "UNAVAILABLE", "reason": "No successful saved numerical outputs", "runs": run_rows}
+        comparable = len({len(item["extent"]) for item in products}) == 1
+        if not comparable:
+            return {"state": "INCOMPATIBLE", "reason": "Saved output grids have different cell counts",
+                    "runs": [item["run_id"] for item in products]}
+        intersection = np.logical_and.reduce([item["extent"] for item in products])
+        union = np.logical_or.reduce([item["extent"] for item in products])
+        depths = np.concatenate([item["depth"][np.isfinite(item["depth"])] for item in products])
+        arrivals = np.concatenate([item["arrival"][np.isfinite(item["arrival"])] for item in products])
+        return {
+            "state": "AVAILABLE", "run_ids": [item["run_id"] for item in products],
+            "scenario_frequency": {"tested": len(products), "intersection_cells": int(intersection.sum()),
+                                   "union_cells": int(union.sum())},
+            "maximum_depth_range_m": [float(np.min(depths)), float(np.max(depths))] if depths.size else None,
+            "arrival_time_range_s": [float(np.min(arrivals)), float(np.max(arrivals))] if arrivals.size else None,
+            "not_reached_count": int(sum(np.count_nonzero(~np.isfinite(item["arrival"])) for item in products)),
+            "settlements": {"state": "UNAVAILABLE", "reason": "No verified settlement exposure dataset"},
+            "response_priorities": {"state": "UNAVAILABLE", "reason": "Verified exposure and site results are required"},
+        }
+
+    @app.post("/api/projects/{project_id}/runs/{run_id}/exports/{export_format}")
+    def export_run(project_id: str, run_id: str, export_format: str):
+        row, source, path = result_source(project_id, run_id)
+        product = product_source(source, path)
+        try:
+            output = numerical_exports.create_export(
+                path, product, numerical_service.run_root() / "exports" / project_id / run_id,
+                run_id, export_format, metadata=row["result"],
+            )
+        except ValueError as exc:
+            raise HTTPException(409, str(exc)) from exc
+        return FileResponse(output, filename=output.name)
+
+    @app.get("/api/projects/{project_id}/runs/{run_id}/exports/{export_format}/verify")
+    def verify_run_export(project_id: str, run_id: str, export_format: str):
+        row, source, path = result_source(project_id, run_id)
+        product = product_source(source, path)
+        output = numerical_exports.create_export(
+            path, product, numerical_service.run_root() / "exports" / project_id / run_id,
+            run_id, export_format, metadata=row["result"],
+        )
+        return numerical_exports.verify_export(output, export_format)
 
     dist = ROOT / "frontend/dist"
     if (dist / "assets").exists():

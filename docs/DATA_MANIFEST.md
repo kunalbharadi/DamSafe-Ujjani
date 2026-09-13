@@ -1,5 +1,11 @@
 # Data manifest — phase 1, 2026-09-12
 
+## Phase 3C export/data constraints
+
+Exports consume only saved normalized numerical results and derived products; they do not reinterpret the raw Ujjani gate CSVs as complete hydraulic forcing. A result must carry an exportable CRS. Cell-centre vector coordinates are written in the saved result CRS and KML is transformed to WGS84 with `always_xy`; CSV depth states preserve `WET`, `DRY` and `NODATA`. GeoTIFF uses an explicit `-9999` nodata value and metres for depth. Shapefile field-name shortening is documented in `fields.txt` inside each archive.
+
+No verified population, building, roads, farmland or critical-facility dataset was added. Consequently, ensemble settlement exposure and response priorities remain unavailable rather than inferred from missing data.
+
 ## Actual source retrieval
 
 Source: [NWIC Ujjani catalogue](https://www.nwdp.nwic.gov.in/dataset/reservoir_discharge_ujjani_dam_1_maharashtra_telemetry_hourly), agency Maharashtra SW. CKAN API metadata is saved in `evidence/nwic-catalogue.json`. Retrieval responses, SHA-256 values and byte counts are in `evidence/source-audit.json`; per-gate statistics are in `evidence/hydrology-audit.json`.

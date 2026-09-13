@@ -11,6 +11,7 @@ from ..db import engine_for, now, runs
 from .adapters import ROOT, prepare_official, run_stages
 from .diagnostics import native_dflow_balance
 from .execution import Limits, save_json, sha256
+from .products import postprocess
 from .results import normalize_dflow
 from .service import run_root
 from .sph import assess_front_reference, normalize_sph
@@ -96,6 +97,11 @@ def work_once(engine):
         )
         if result["state"] == "SUCCEEDED" and not cancelled():
             result["normalization"] = finalize(request["engine"], destination, case, submission["capability"])
+            if not cancelled():
+                result["postprocessing"] = postprocess(
+                    destination / "normalized.nc", destination / "products.nc", threshold_m=0.01,
+                    cancelled=cancelled, progress=progress,
+                )
         if cancelled():
             result["state"] = "CANCELLED"
     except Exception as e:  # noqa: BLE001 -- persist parser/engine failures, never convert to success

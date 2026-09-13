@@ -1,3 +1,11 @@
+# PS 26161 Phase 3C implementation note
+
+The Phase 3B UI consumes only existing run-scoped Phase 3A contracts. It does not turn synthetic laboratory output into a Ujjani claim. The result viewer distinguishes saved numerical values from visual presentation, retains wet/dry/nodata states, uses fixed comparison semantics, and exposes provenance in a technical details panel. Exposure and economic damage are explicitly unavailable because verified producer/year/coverage/aggregation metadata, asset inventories, values and vulnerability functions are absent. Export actions are disabled until verified processing outputs exist.
+
+Phase 3C now provides immutable ensemble submissions, scenario-frequency summaries (never probabilities), exact cache identity through the existing run service, and independently reopenable GeoTIFF/KML/GeoJSON/Shapefile/CSV/HTML exports. Export filenames and paths are sanitized; Shapefile field truncation is documented in each archive. No export is created when the saved result lacks a usable CRS. Settlement exposure, response priorities and economic damage remain unavailable without verified datasets and vulnerability inputs.
+
+Remaining gaps are recorded below and must not be hidden with placeholder metrics.
+
 # PS 26161 deliverable evidence matrix
 
 This maps the supplied implementation brief's interpretation of PS 26161. The original official PS and the full PRD were not present. Status uses implemented/tested/blocked/deferred; a blocked row may have preparatory code but is not a completed deliverable.
@@ -17,13 +25,14 @@ This maps the supplied implementation brief's interpretation of PS 26161. The or
 | Compatible SPH/D-Flow benchmark comparison | tested locally | Physically matched synthetic closed-tank case, depth/extent/runtime agreement report | Breaking/impact interpretation and SPH mass loss limit validation; no site comparison |
 | Compatible Ujjani site comparison | blocked | One-site scope retained | Verified site inputs and two genuine local runs |
 | Depth/velocity normalization | tested locally for both engines | Genuine SPH PartVTK and D-Flow face-centred map outputs to NetCDF | Ujjani mesh/forcing absent; SPH local impact zones require interpretation |
-| Ujjani arrival/duration outputs | blocked | No site result generator exists | Two actual site-specific runs, phase 3 output derivation |
+| Saved-result products and bounded API | tested locally for synthetic solver output | `numerics/products.py`, run-scoped API and [Phase 3A report](PHASE3A_REPORT.md); genuine D-Flow saved-output integration test | No Ujjani run, verified permanent-water mask or site product |
+| Ujjani arrival/duration outputs | blocked | General saved-output derivation exists; no site result exists | Verified site inputs and an actual site-specific run |
 | Exposure assessment | blocked | Vector import only | Verified layers and hydraulic results, phase 3 |
 | Economic losses | blocked | Deliberately unavailable | Asset values and applicable vulnerability functions |
-| GeoTIFF/KML/GeoJSON/Shapefile/CSV/report exports | blocked | No export code claimed | Numerical results and independently reopened outputs, phase 3 |
+| GeoTIFF/KML/GeoJSON/Shapefile/CSV/report exports | tested locally | `exports.py`, run-scoped download/verification endpoints, independent raster/vector/archive reopening tests | Production CRS/domain validation, PDF renderer and site-specific geospatial results |
 | Google Earth Engine near-real-time path | blocked | Planned observation contract | Account/project/access and pipeline execution, phase 4 |
 | Historical event assessment | blocked | Validation plan | Matching release, independent observations and executed model |
-| Uncertainty ensemble / response priorities | blocked | Immutable scenario basis only | Actual ensemble runs and explanation metrics |
+| Uncertainty ensemble / response priorities | implemented / partially blocked | Immutable ensemble API, genuine variant run submissions, exact configuration hashes and saved-output extent/depth/arrival ranges; response priorities explicitly unavailable | Verified Ujjani site variants, exposure datasets and scenario-consistent settlement explanations |
 | Local demonstration | implemented | `scripts/start.ps1 -Preview`, Ujjani setup UI | Scientific demonstrator remains incomplete |
 | Natural river blockage / erosion / debris | deferred | Explicit supplied scope | Separate modelling work |
 | Rainfall-runoff generation | deferred | Prescribed/derived release scope | Separate hydrological model |
