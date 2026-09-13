@@ -1,0 +1,615 @@
+{
+  "retrieved_at": "2026-09-12T06:10:36.684722+00:00",
+  "resources": [
+    {
+      "url": "https://nwdp.nwic.gov.in/dataset/a0c6fb7a-cc0d-4c1b-be0f-9ba974c42164/resource/bb63b1bb-76df-4bbe-8cb9-60313254ccb3/download/reservior_discharge_tel_hr_maharashtra_sw_mh_ujjani_dam_1_2021_2025.csv",
+      "final_url": "https://nwdp.nwic.gov.in/dataset/a0c6fb7a-cc0d-4c1b-be0f-9ba974c42164/resource/bb63b1bb-76df-4bbe-8cb9-60313254ccb3/download/reservior_discharge_tel_hr_maharashtra_sw_mh_ujjani_dam_1_2021_2025.csv",
+      "status": 200,
+      "content_type": "text/csv",
+      "bytes": 978304,
+      "sha256": "16a4ba60e173f55c8c856a6f5835f54466ebc63f38326c81d96b0ec010c6a038",
+      "resource_id": "bb63b1bb-76df-4bbe-8cb9-60313254ccb3",
+      "catalogue_name": "Reservior  Water Level Maharashtra_SW Maharashtra (2021 - 2025) Manual Daily",
+      "preview": "SlNo,Station,Agency,State LGD Code,State,District LGD Code,District,Tehsil,Block,Village,River,Basin,Tributary,Subtributary,SubSubtributary,Local River,Latitude,Longitude,Data Acquisition Time,Gate-1 Discharge (cusec),Gate-2 Discharge (cusec),Gate-3 Discharge (cusec),Gate-4 Discharge (cusec),Gate-5 Discharge (cusec),Gate-6 Discharge (cusec),Gate-7 Discharge (cusec),Gate-8 Discharge (cusec),Gate-9 Discharge (cusec),Gate-10 Discharge (cusec),Gate-11 Discharge (cusec),Gate-12 Discharge (cusec),Gate-13 Discharge (cusec),Gate-14 Discharge (cusec),Gate-15 Discharge (cusec),Gate-16 Discharge (cusec),Gate-17 Discharge (cusec),Gate-18 Discharge (cusec),Gate-19 Discharge (cusec),Gate-20 Discharge (cusec),Gate-21 Discharge (cusec),Gate-22 Discharge (cusec),Gate-23 Discharge (cusec),Gate-24 Discharge (cusec),Gate-25 Discharge (cusec),Gate-26 Discharge (cusec),Gate-27 Discharge (cusec),Gate-28 Discharge (cusec),Gate-29 Discharge (cusec),Gate-30 Discharge (cusec),Gate-31 Discharge (cusec),Gate-32 Di",
+      "header": [
+        "SlNo",
+        "Station",
+        "Agency",
+        "State LGD Code",
+        "State",
+        "District LGD Code",
+        "District",
+        "Tehsil",
+        "Block",
+        "Village",
+        "River",
+        "Basin",
+        "Tributary",
+        "Subtributary",
+        "SubSubtributary",
+        "Local River",
+        "Latitude",
+        "Longitude",
+        "Data Acquisition Time",
+        "Gate-1 Discharge (cusec)",
+        "Gate-2 Discharge (cusec)",
+        "Gate-3 Discharge (cusec)",
+        "Gate-4 Discharge (cusec)",
+        "Gate-5 Discharge (cusec)",
+        "Gate-6 Discharge (cusec)",
+        "Gate-7 Discharge (cusec)",
+        "Gate-8 Discharge (cusec)",
+        "Gate-9 Discharge (cusec)",
+        "Gate-10 Discharge (cusec)",
+        "Gate-11 Discharge (cusec)",
+        "Gate-12 Discharge (cusec)",
+        "Gate-13 Discharge (cusec)",
+        "Gate-14 Discharge (cusec)",
+        "Gate-15 Discharge (cusec)",
+        "Gate-16 Discharge (cusec)",
+        "Gate-17 Discharge (cusec)",
+        "Gate-18 Discharge (cusec)",
+        "Gate-19 Discharge (cusec)",
+        "Gate-20 Discharge (cusec)",
+        "Gate-21 Discharge (cusec)",
+        "Gate-22 Discharge (cusec)",
+        "Gate-23 Discharge (cusec)",
+        "Gate-24 Discharge (cusec)",
+        "Gate-25 Discharge (cusec)",
+        "Gate-26 Discharge (cusec)",
+        "Gate-27 Discharge (cusec)",
+        "Gate-28 Discharge (cusec)",
+        "Gate-29 Discharge (cusec)",
+        "Gate-30 Discharge (cusec)",
+        "Gate-31 Discharge (cusec)",
+        "Gate-32 Discharge (cusec)",
+        "Gate-33 Discharge (cusec)",
+        "Gate-34 Discharge (cusec)",
+        "Gate-35 Discharge (cusec)",
+        "Gate-36 Discharge (cusec)",
+        "Gate-37 Discharge (cusec)",
+        "Gate-38 Discharge (cusec)",
+        "Gate-39 Discharge (cusec)",
+        "Gate-40 Discharge (cusec)",
+        "Gate-41 Discharge (cusec)",
+        "Gate-42 Discharge (cusec)",
+        "Gate-43 Discharge (cusec)",
+        "Gate-44 Discharge (cusec)",
+        "Gate-45 Discharge (cusec)",
+        "Gate-46 Discharge (cusec)",
+        "Gate-47 Discharge (cusec)",
+        "Gate-48 Discharge (cusec)",
+        "Gate-49 Discharge (cusec)",
+        "Gate-50 Discharge (cusec)"
+      ],
+      "rows": 4026
+    },
+    {
+      "url": "https://nwdp.nwic.gov.in/dataset/a0c6fb7a-cc0d-4c1b-be0f-9ba974c42164/resource/696d5dc7-b8e2-4d3b-80d2-68512962ba35/download/reservior_discharge_tel_hr_maharashtra_sw_mh_ujjani_dam_1_2026_2030.csv",
+      "final_url": "https://nwdp.nwic.gov.in/dataset/a0c6fb7a-cc0d-4c1b-be0f-9ba974c42164/resource/696d5dc7-b8e2-4d3b-80d2-68512962ba35/download/reservior_discharge_tel_hr_maharashtra_sw_mh_ujjani_dam_1_2026_2030.csv",
+      "status": 200,
+      "content_type": "text/csv",
+      "bytes": 343968,
+      "sha256": "af4a5d7f2df117eaa243e86bc44fec682a2ace41639aceaba96274fb9cd70823",
+      "resource_id": "696d5dc7-b8e2-4d3b-80d2-68512962ba35",
+      "catalogue_name": "Reservior  Water Level Maharashtra_SW Maharashtra (2026 - 2030) Manual Daily",
+      "preview": "SlNo,Station,Agency,State LGD Code,State,District LGD Code,District,Tehsil,Block,Village,River,Basin,Tributary,Subtributary,SubSubtributary,Local River,Latitude,Longitude,Data Acquisition Time,Gate-1 Discharge (cusec),Gate-2 Discharge (cusec),Gate-3 Discharge (cusec),Gate-4 Discharge (cusec),Gate-5 Discharge (cusec),Gate-6 Discharge (cusec),Gate-7 Discharge (cusec),Gate-8 Discharge (cusec),Gate-9 Discharge (cusec),Gate-10 Discharge (cusec),Gate-11 Discharge (cusec),Gate-12 Discharge (cusec),Gate-13 Discharge (cusec),Gate-14 Discharge (cusec),Gate-15 Discharge (cusec),Gate-16 Discharge (cusec),Gate-17 Discharge (cusec),Gate-18 Discharge (cusec),Gate-19 Discharge (cusec),Gate-20 Discharge (cusec),Gate-21 Discharge (cusec),Gate-22 Discharge (cusec),Gate-23 Discharge (cusec),Gate-24 Discharge (cusec),Gate-25 Discharge (cusec),Gate-26 Discharge (cusec),Gate-27 Discharge (cusec),Gate-28 Discharge (cusec),Gate-29 Discharge (cusec),Gate-30 Discharge (cusec),Gate-31 Discharge (cusec),Gate-32 Di",
+      "header": [
+        "SlNo",
+        "Station",
+        "Agency",
+        "State LGD Code",
+        "State",
+        "District LGD Code",
+        "District",
+        "Tehsil",
+        "Block",
+        "Village",
+        "River",
+        "Basin",
+        "Tributary",
+        "Subtributary",
+        "SubSubtributary",
+        "Local River",
+        "Latitude",
+        "Longitude",
+        "Data Acquisition Time",
+        "Gate-1 Discharge (cusec)",
+        "Gate-2 Discharge (cusec)",
+        "Gate-3 Discharge (cusec)",
+        "Gate-4 Discharge (cusec)",
+        "Gate-5 Discharge (cusec)",
+        "Gate-6 Discharge (cusec)",
+        "Gate-7 Discharge (cusec)",
+        "Gate-8 Discharge (cusec)",
+        "Gate-9 Discharge (cusec)",
+        "Gate-10 Discharge (cusec)",
+        "Gate-11 Discharge (cusec)",
+        "Gate-12 Discharge (cusec)",
+        "Gate-13 Discharge (cusec)",
+        "Gate-14 Discharge (cusec)",
+        "Gate-15 Discharge (cusec)",
+        "Gate-16 Discharge (cusec)",
+        "Gate-17 Discharge (cusec)",
+        "Gate-18 Discharge (cusec)",
+        "Gate-19 Discharge (cusec)",
+        "Gate-20 Discharge (cusec)",
+        "Gate-21 Discharge (cusec)",
+        "Gate-22 Discharge (cusec)",
+        "Gate-23 Discharge (cusec)",
+        "Gate-24 Discharge (cusec)",
+        "Gate-25 Discharge (cusec)",
+        "Gate-26 Discharge (cusec)",
+        "Gate-27 Discharge (cusec)",
+        "Gate-28 Discharge (cusec)",
+        "Gate-29 Discharge (cusec)",
+        "Gate-30 Discharge (cusec)",
+        "Gate-31 Discharge (cusec)",
+        "Gate-32 Discharge (cusec)",
+        "Gate-33 Discharge (cusec)",
+        "Gate-34 Discharge (cusec)",
+        "Gate-35 Discharge (cusec)",
+        "Gate-36 Discharge (cusec)",
+        "Gate-37 Discharge (cusec)",
+        "Gate-38 Discharge (cusec)",
+        "Gate-39 Discharge (cusec)",
+        "Gate-40 Discharge (cusec)",
+        "Gate-41 Discharge (cusec)",
+        "Gate-42 Discharge (cusec)",
+        "Gate-43 Discharge (cusec)",
+        "Gate-44 Discharge (cusec)",
+        "Gate-45 Discharge (cusec)",
+        "Gate-46 Discharge (cusec)",
+        "Gate-47 Discharge (cusec)",
+        "Gate-48 Discharge (cusec)",
+        "Gate-49 Discharge (cusec)",
+        "Gate-50 Discharge (cusec)"
+      ],
+      "rows": 1411
+    }
+  ],
+  "engines": {
+    "Deltares/Delft3D": {
+      "url": "https://api.github.com/repos/Deltares/Delft3D/git/trees/main?recursive=1",
+      "final_url": "https://api.github.com/repos/Deltares/Delft3D/git/trees/main?recursive=1",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 6622237,
+      "sha256": "ce1e0e63d7200d716df43525a2cc6a8f118824f9e54fd5f916299dd72c8c15ac",
+      "commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+      "candidates": [
+        {
+          "path": "LICENSE",
+          "size": 1574
+        },
+        {
+          "path": "doc/compiling_Windows.md",
+          "size": 12078
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/CreateDOMDocument.exe",
+          "size": 12288
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/DOMCount.exe",
+          "size": 32256
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/DOMPrint.exe",
+          "size": 31744
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/EnumVal.exe",
+          "size": 21504
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/MemParse.exe",
+          "size": 26112
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/PParse.exe",
+          "size": 24576
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/PSVIWriter.exe",
+          "size": 121856
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/Redirect.exe",
+          "size": 24064
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/SAX2Count.exe",
+          "size": 36352
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/SAX2Print.exe",
+          "size": 42496
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/SAXCount.exe",
+          "size": 39936
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/SAXPrint.exe",
+          "size": 27136
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/SCMPrint.exe",
+          "size": 44544
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/SEnumVal.exe",
+          "size": 27648
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/StdInParse.exe",
+          "size": 24064
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/XInclude.exe",
+          "size": 16384
+        },
+        {
+          "path": "src/engines_gpl/fbc/packages/FBCTools/thirdParty/xerces/xerces-c-3.1.1-x86_64-windows-vc-10.0/bin/xerces-c_3_1.dll",
+          "size": 2528768
+        },
+        {
+          "path": "src/third_party_open/doxygen/bin/doxygen.exe",
+          "size": 21685248
+        },
+        {
+          "path": "src/third_party_open/doxygen/bin/doxyindexer.exe",
+          "size": 1720320
+        },
+        {
+          "path": "src/third_party_open/doxygen/bin/doxywizard.exe",
+          "size": 6155776
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/ESMF_RegridWeightGen.exe",
+          "size": 128491
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygaec-0.dll",
+          "size": 30227
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygbrotlicommon-1.dll",
+          "size": 136723
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygbrotlidec-1.dll",
+          "size": 49683
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygbz2-1.dll",
+          "size": 67603
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygcom_err-2.dll",
+          "size": 12819
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygcrypto-1.0.0.dll",
+          "size": 2250771
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygcrypto-1.1.dll",
+          "size": 2546707
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygcrypto-3.dll",
+          "size": 3830803
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygcurl-4.dll",
+          "size": 765971
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygdf-0.dll",
+          "size": 509459
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyggcc_s-seh-1.dll",
+          "size": 98323
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyggcrypt-20.dll",
+          "size": 971795
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyggfortran-5.dll",
+          "size": 3015699
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyggomp-1.dll",
+          "size": 235027
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyggpg-error-0.dll",
+          "size": 141843
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyggsasl-18.dll",
+          "size": 115219
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyggssapi_krb5-2.dll",
+          "size": 280595
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyghdf5-310.dll",
+          "size": 3899923
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyghdf5_hl-310.dll",
+          "size": 121363
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygiconv-2.dll",
+          "size": 1088019
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygidn-12.dll",
+          "size": 202771
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygidn2-0.dll",
+          "size": 346643
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygintl-8.dll",
+          "size": 108051
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygjpeg-8.dll",
+          "size": 784403
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygk5crypto-3.dll",
+          "size": 196115
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygkrb5-3.dll",
+          "size": 772115
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygkrb5support-0.dll",
+          "size": 37907
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyglber-2.dll",
+          "size": 49171
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygldap-2.dll",
+          "size": 329235
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cyglzma-5.dll",
+          "size": 175635
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygmfhdf-0.dll",
+          "size": 166931
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygnetcdf-19.dll",
+          "size": 1372179
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygnetcdff-7.dll",
+          "size": 633875
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygnghttp2-14.dll",
+          "size": 177683
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygntlm-0.dll",
+          "size": 30227
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygpsl-5.dll",
+          "size": 70675
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygquadmath-0.dll",
+          "size": 358419
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygsasl2-3.dll",
+          "size": 101395
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygssh2-1.dll",
+          "size": 253459
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygssl-3.dll",
+          "size": 593939
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygstdc++-6.dll",
+          "size": 1984531
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygsz-2.dll",
+          "size": 9747
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygunistring-5.dll",
+          "size": 1854995
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygwin1.dll",
+          "size": 2995765
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygxml2-2.dll",
+          "size": 1260051
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygz.dll",
+          "size": 89619
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygzip-5.dll",
+          "size": 92691
+        },
+        {
+          "path": "src/third_party_open/esmf/win64/bin/cygzstd-1.dll",
+          "size": 671763
+        },
+        {
+          "path": "src/third_party_open/pthreads/bin/win32/pthreadVCE2.dll",
+          "size": 61952
+        },
+        {
+          "path": "src/third_party_open/pthreads/bin/win32/pthreadvce.dll",
+          "size": 57396
+        },
+        {
+          "path": "src/third_party_open/pthreads/bin/x64/msvcr100.dll",
+          "size": 827728
+        },
+        {
+          "path": "src/third_party_open/pthreads/bin/x64/pthreadGC2.dll",
+          "size": 185976
+        },
+        {
+          "path": "src/third_party_open/pthreads/bin/x64/pthreadVC2.dll",
+          "size": 82944
+        },
+        {
+          "path": "src/third_party_open/pugixml/pugixml-1.15/bin/pugixml.dll",
+          "size": 199680
+        },
+        {
+          "path": "src/third_party_open/tcl/bin/win64/tclkitsh852.exe",
+          "size": 2160242
+        }
+      ]
+    },
+    "DualSPHysics/DualSPHysics": {
+      "url": "https://api.github.com/repos/DualSPHysics/DualSPHysics/git/trees/master?recursive=1",
+      "final_url": "https://api.github.com/repos/DualSPHysics/DualSPHysics/git/trees/master?recursive=1",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 202681,
+      "sha256": "11642e48c20e48ac827abf703d6618ad6df1795d7e4350fc973da55d59f0a0a6",
+      "commit": "ef3721a861fda961f0e2f9ec4cd317b19de99086",
+      "candidates": [
+        {
+          "path": "LICENSE",
+          "size": 26526
+        },
+        {
+          "path": "bin/windows/ChronoEngine.dll",
+          "size": 6077952
+        },
+        {
+          "path": "bin/windows/GenCase_win64.exe",
+          "size": 2972672
+        },
+        {
+          "path": "bin/windows/IsoSurface_win64.exe",
+          "size": 3234304
+        },
+        {
+          "path": "bin/windows/MeasureTool_win64.exe",
+          "size": 3234304
+        },
+        {
+          "path": "bin/windows/PartVTKOut_win64.exe",
+          "size": 3234304
+        },
+        {
+          "path": "bin/windows/PartVTK_win64.exe",
+          "size": 3234304
+        },
+        {
+          "path": "bin/windows/dsphchrono.dll",
+          "size": 786432
+        },
+        {
+          "path": "bin/windows/vcomp140.dll",
+          "size": 185144
+        },
+        {
+          "path": "examples/main/01_DamBreak",
+          "size": null
+        },
+        {
+          "path": "examples/main/01_DamBreak/CaseDambreakVal2D_Def.xml",
+          "size": 7925
+        },
+        {
+          "path": "examples/main/01_DamBreak/CaseDambreak_Def.xml",
+          "size": 7145
+        },
+        {
+          "path": "examples/main/01_DamBreak/CaseDambreak_FileBoxes.txt",
+          "size": 1179
+        },
+        {
+          "path": "examples/main/01_DamBreak/CaseDambreak_PointsPressure_Correct.txt",
+          "size": 120
+        },
+        {
+          "path": "examples/main/01_DamBreak/CaseDambreak_PointsPressure_Incorrect.txt",
+          "size": 117
+        },
+        {
+          "path": "examples/main/01_DamBreak/CaseDambreak_PointsVelocity.txt",
+          "size": 120
+        },
+        {
+          "path": "examples/main/01_DamBreak/CaseDambreak_Pressure_Probes.pdf",
+          "size": 92128
+        },
+        {
+          "path": "examples/main/01_DamBreak/Command Prompt.lnk",
+          "size": 1431
+        },
+        {
+          "path": "examples/main/01_DamBreak/EXP_X-DamTipPosition_Koshizula&Oka1996.txt",
+          "size": 450
+        },
+        {
+          "path": "examples/main/01_DamBreak/wCaseDambreakVal2D_win64_CPU.bat",
+          "size": 3878
+        },
+        {
+          "path": "examples/main/01_DamBreak/wCaseDambreakVal2D_win64_GPU.bat",
+          "size": 3883
+        },
+        {
+          "path": "examples/main/01_DamBreak/wCaseDambreak_win64_CPU.bat",
+          "size": 4821
+        },
+        {
+          "path": "examples/main/01_DamBreak/wCaseDambreak_win64_GPU.bat",
+          "size": 4826
+        },
+        {
+          "path": "examples/main/01_DamBreak/xCaseDambreakVal2D_linux64_CPU.sh",
+          "size": 3979
+        },
+        {
+          "path": "examples/main/01_DamBreak/xCaseDambreakVal2D_linux64_GPU.sh",
+          "size": 3984
+        },
+        {
+          "path": "examples/main/01_DamBreak/xCaseDambreak_linux64_CPU.sh",
+          "size": 4940
+        },
+        {
+          "path": "examples/main/01_DamBreak/xCaseDambreak_linux64_GPU.sh",
+          "size": 4945
+        }
+      ]
+    }
+  }
+}

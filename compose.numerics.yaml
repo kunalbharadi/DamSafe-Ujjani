@@ -1,0 +1,4 @@
+# Optional loopback database access for a host numerical worker. No Docker socket is exposed to the API.
+services:
+  db:
+    ports: ["127.0.0.1:54329:5432"]

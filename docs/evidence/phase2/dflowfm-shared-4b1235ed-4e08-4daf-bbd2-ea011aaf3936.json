@@ -1,0 +1,108 @@
+{
+  "id": "4b1235ed-4e08-4daf-bbd2-ea011aaf3936",
+  "engine": {
+    "engine": "dflowfm",
+    "available": true,
+    "image_id": "sha256:d439312899ce18fc3c498355b3c87ddda55a59b3b74e762bc2b08425b2980cd8",
+    "image": "damsafe-dflowfm:local",
+    "source_commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+    "build_provenance": {
+      "image_id": "sha256:d439312899ce18fc3c498355b3c87ddda55a59b3b74e762bc2b08425b2980cd8",
+      "source_commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+      "dimr_sha256": "82778434af480601dbec525e62bf035322c6ffb99a0a1d6072be1afa3b9d7eb8",
+      "dflowfm_library_sha256": "8a2183004ed05fb22e9ea1ac4fd68d64897489f98c84c0b780046dd352469b6d",
+      "run_dimr_script_sha256": "eb844d8b3537e033db894b5e561d054826fa1b1ce8b57d98a4f5c0438a38482a",
+      "buildtools_image_id": "sha256:f6d8f80b01bde8e605bf92164f9cb13ed03327369803a89a8f6a7e0cdd526aa6",
+      "thirdparty_image_id": "sha256:5df273d79ea799cd918e49a222c6c4c8566b571391ec5ec2f996b0906abd6c1c",
+      "build": "Official Linux fm-suite Docker recipe, Intel oneAPI 2024 ifx, test-only Linux fix removing unconditional copy of Windows msvcr100.dll. Hydraulic source checkout unchanged.",
+      "source_url": "https://github.com/Deltares/Delft3D"
+    },
+    "execution_verified": false,
+    "note": "Image presence is not proof of a successful numerical run"
+  },
+  "case": {
+    "case_kind": "SHARED_SYNTHETIC_BENCHMARK",
+    "case_id": "closed_tank_column_collapse_1d_equivalent",
+    "source_commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+    "input_mode": "SYNTHETIC",
+    "site": "official schematic example; not Ujjani",
+    "physical_case": {
+      "horizontal_domain_m": [
+        0,
+        4,
+        0,
+        1
+      ],
+      "bed_m": 0,
+      "initial_column_x_m": [
+        0,
+        1
+      ],
+      "initial_depth_m": 2,
+      "initial_volume_m3_per_m_breadth": 2,
+      "gravity_m_s2": 9.81,
+      "closed_boundaries": true,
+      "external_forcing": "none",
+      "end_time_s": 2,
+      "output_interval_s": 0.01,
+      "comparison_interpretation": "D-Flow horizontal 2D channel depth averaged over unit breadth versus DualSPHysics vertical x/z section per unit breadth"
+    },
+    "source_case": "01_dflowfm_sequential",
+    "input_sha256": {
+      "dam_net.nc": "58782ca4e3f745eaddedc744dea1ff1fe897edb31db45caf3816decd17404753",
+      "f34.mdu": "b1735cbfa1431de9c28c3969f78047b86629769c5c3c7f5bde90f205e185ef06",
+      "dam_init.ext": "6ffdd485e3405d8280f42bf2719e1e9ecafbde9dab86bc6fa1f7d418a8d7e4a5",
+      "dam_init.xyz": "899a4a40402cd63ab341e065b092d2d05105fc8ad5049f144853fe510342f5df",
+      "f34_001.bc": "e6b7bc543bcbeb255f30593012b78d5033b6129702aaea92e410de07d319325f",
+      "f34_bnd.ext": "5d8df3be566c4e2b6f704bcffa068f278ff22879af2d12b9ace120c8a792cba5"
+    }
+  },
+  "execution_origin": "LOCAL",
+  "evidence_status": "UNASSESSED",
+  "state": "FAILED",
+  "reason": "D-Flow native log reports a solver error",
+  "stages": [
+    {
+      "stage": "solver",
+      "state": "SUCCEEDED",
+      "exit_code": 0,
+      "error": null,
+      "elapsed_seconds": 2.23499999998603,
+      "launcher_peak_rss_bytes": 21426176,
+      "argv": [
+        "docker",
+        "run",
+        "--name",
+        "damsafe-4b1235ed-4e08-4daf-bbd2-ea011aaf3936-solver",
+        "--network",
+        "none",
+        "--cpus",
+        "2",
+        "--memory",
+        "2048m",
+        "--memory-swap",
+        "2048m",
+        "--pids-limit",
+        "128",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--read-only",
+        "--tmpfs",
+        "/tmp:rw,size=128m",
+        "--mount",
+        "type=bind,source=C:\\Users\\kunal\\OneDrive\\Desktop\\DAM\\.local\\runs\\4b1235ed-4e08-4daf-bbd2-ea011aaf3936,target=/work",
+        "--workdir",
+        "/work",
+        "--env",
+        "OMP_NUM_THREADS=2",
+        "sha256:d439312899ce18fc3c498355b3c87ddda55a59b3b74e762bc2b08425b2980cd8",
+        "/delft3d/bin/run_dimr.sh",
+        "-m",
+        "dimr_config.xml"
+      ],
+      "log_sha256": "d8bf82a5fc9c654679d5d2216d1574e15c435bb88674eaf449b307706b859e92"
+    }
+  ]
+}

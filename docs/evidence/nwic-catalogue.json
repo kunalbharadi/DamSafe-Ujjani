@@ -1,0 +1,673 @@
+﻿{
+    "help":  "https://nwdp.nwic.gov.in/api/3/action/help_show?name=package_show",
+    "success":  true,
+    "result":  {
+                   "author":  "Maharashtra SW",
+                   "author_email":  "cehp.nashikwrd@maharashtra.gov.in",
+                   "creator_user_id":  "a96f51fb-efd9-467d-9aa2-d10853714ac9",
+                   "id":  "a0c6fb7a-cc0d-4c1b-be0f-9ba974c42164",
+                   "isopen":  true,
+                   "license_id":  "other-open",
+                   "license_title":  "Other (Open)",
+                   "maintainer":  "Maharashtra SW",
+                   "maintainer_email":  "cehp.nashikwrd@maharashtra.gov.in",
+                   "metadata_created":  "2025-03-06T11:26:05.521191",
+                   "metadata_modified":  "2026-09-12T02:46:49.621357",
+                   "name":  "reservoir_discharge_ujjani_dam_1_maharashtra_telemetry_hourly",
+                   "notes":  "This dataset comprises hourly telemetric reservoir discharge measurements collected from observation stations at Ujjani Dam_1, managed by the Maharashtra Surface Water Resource Department with SCADA system. Each record includes the date, station identifier with geographic hierarchy, and corresponding reservoir discharge values in cubic meters per second (m³/s).",
+                   "num_resources":  2,
+                   "num_tags":  69,
+                   "organization":  {
+                                        "id":  "e4f3ac58-7a47-4699-9a45-18ff76989d24",
+                                        "name":  "maharashtra-sw",
+                                        "title":  "Maharashtra SW",
+                                        "type":  "organization",
+                                        "description":  "The Maharashtra Surface Water Agency operates within the larger framework of the Maharashtra Water Resources Regulatory Authority (MWRRA), which oversees the state\u0027s water management and regulatory functions. The MWRRA, established in 2005, is responsible for ensuring the judicious, equitable, and sustainable use of the state\u0027s water resources, which includes managing surface water for irrigation, domestic use, and industry.\r\n\r\nThe state has a detailed water policy that emphasizes equitable water distribution, efficient usage, and the promotion of water conservation. The MWRRA also plays a significant role in regulating surface water distribution, managing water allocation for various sectors, and handling disputes regarding water resources. Key areas include controlling over-extraction, promoting water-use efficiency, and integrating sustainable practices across the state.\r\n\r\nMaharashtra\u0027s surface water management includes extensive infrastructure, such as dams and reservoirs, for storing water. The agency ensur",
+                                        "image_url":  "2025-01-15-072148.170934Screenshot3-12-202414280mwrra.maharashtra.gov.in.jpeg",
+                                        "created":  "2025-01-15T07:21:48.176000",
+                                        "is_organization":  true,
+                                        "approval_status":  "approved",
+                                        "state":  "active"
+                                    },
+                   "owner_org":  "e4f3ac58-7a47-4699-9a45-18ff76989d24",
+                   "private":  false,
+                   "state":  "active",
+                   "title":  "Reservoir Discharge , Ujjani Dam_1 , Maharashtra (Telemetry - Hourly) (2021-2025)",
+                   "type":  "dataset",
+                   "url":  "",
+                   "version":  "1.0",
+                   "extras":  [
+                                  {
+                                      "key":  "Citations",
+                                      "value":  "-"
+                                  },
+                                  {
+                                      "key":  "Data Access Control",
+                                      "value":  "Public"
+                                  },
+                                  {
+                                      "key":  "Data Error Handling",
+                                      "value":  "-"
+                                  },
+                                  {
+                                      "key":  "Data Format",
+                                      "value":  "CSV, API"
+                                  },
+                                  {
+                                      "key":  "Data Processing History",
+                                      "value":  "-"
+                                  },
+                                  {
+                                      "key":  "Data Quality Rating",
+                                      "value":  "-"
+                                  },
+                                  {
+                                      "key":  "Data Security Measures",
+                                      "value":  "-"
+                                  },
+                                  {
+                                      "key":  "Data Validation Method",
+                                      "value":  "-"
+                                  },
+                                  {
+                                      "key":  "Data Versioning",
+                                      "value":  "v1"
+                                  },
+                                  {
+                                      "key":  "Dataset Code",
+                                      "value":  "WQT00030"
+                                  },
+                                  {
+                                      "key":  "Dataset Type",
+                                      "value":  "Time series"
+                                  },
+                                  {
+                                      "key":  "Frequency",
+                                      "value":  "Hourly"
+                                  },
+                                  {
+                                      "key":  "Keywords",
+                                      "value":  "Reservoir Discharge, Barrage Gate Discharge , Reservoir Gate Flow "
+                                  },
+                                  {
+                                      "key":  "LGD Compliance",
+                                      "value":  "Yes"
+                                  },
+                                  {
+                                      "key":  "Location ",
+                                      "value":  "Yes"
+                                  },
+                                  {
+                                      "key":  "Mode of Acquisition",
+                                      "value":  "Telemetry"
+                                  },
+                                  {
+                                      "key":  "Related Datasets",
+                                      "value":  "-"
+                                  },
+                                  {
+                                      "key":  "Unit",
+                                      "value":  "m³/s"
+                                  },
+                                  {
+                                      "key":  "Version",
+                                      "value":  "v1"
+                                  }
+                              ],
+                   "groups":  [
+                                  {
+                                      "description":  "Data describing how much water is available, such as measurements of groundwater levels, reservoir levels, aquifer properties, stream flow, rural and urban water bodies such as lakes, ponds and tanks.",
+                                      "display_name":  "Water Quantity",
+                                      "id":  "8f68ba65-a267-428b-ade6-41ec44061839",
+                                      "image_display_url":  "https://nwdp.nwic.gov.in/uploads/group/2025-04-08-091709.933900water-quantity.png",
+                                      "name":  "water-quantity",
+                                      "title":  "Water Quantity"
+                                  }
+                              ],
+                   "resources":  [
+                                     {
+                                         "cache_last_updated":  null,
+                                         "cache_url":  null,
+                                         "created":  "2025-03-06T11:26:45.992105",
+                                         "datastore_active":  true,
+                                         "datastore_contains_all_records_of_source_file":  false,
+                                         "description":  null,
+                                         "format":  "CSV",
+                                         "hash":  "02fb3f370ed0f0cde7faa3b0bbc6be87",
+                                         "id":  "bb63b1bb-76df-4bbe-8cb9-60313254ccb3",
+                                         "last_modified":  "2026-01-24T23:36:19.534267",
+                                         "metadata_modified":  "2026-02-02T16:28:21.964807",
+                                         "mimetype":  "text/csv",
+                                         "mimetype_inner":  null,
+                                         "name":  "Reservior  Water Level Maharashtra_SW Maharashtra (2021 - 2025) Manual Daily",
+                                         "package_id":  "a0c6fb7a-cc0d-4c1b-be0f-9ba974c42164",
+                                         "position":  0,
+                                         "resource_type":  null,
+                                         "size":  978304,
+                                         "state":  "active",
+                                         "url":  "https://nwdp.nwic.gov.in/dataset/a0c6fb7a-cc0d-4c1b-be0f-9ba974c42164/resource/bb63b1bb-76df-4bbe-8cb9-60313254ccb3/download/reservior_discharge_tel_hr_maharashtra_sw_mh_ujjani_dam_1_2021_2025.csv",
+                                         "url_type":  "upload"
+                                     },
+                                     {
+                                         "cache_last_updated":  null,
+                                         "cache_url":  null,
+                                         "ckan_url":  "https://nwdp.nwic.gov.in",
+                                         "created":  "2026-02-02T16:28:22.058619",
+                                         "datastore_active":  true,
+                                         "datastore_contains_all_records_of_source_file":  true,
+                                         "description":  null,
+                                         "format":  "CSV",
+                                         "hash":  "316ccd57c764065ca8eae954a9f50530",
+                                         "id":  "696d5dc7-b8e2-4d3b-80d2-68512962ba35",
+                                         "ignore_hash":  false,
+                                         "last_modified":  "2026-09-12T00:16:11.022470",
+                                         "metadata_modified":  "2026-09-12T02:46:49.629497",
+                                         "mimetype":  "text/csv",
+                                         "mimetype_inner":  null,
+                                         "name":  "Reservior  Water Level Maharashtra_SW Maharashtra (2026 - 2030) Manual Daily",
+                                         "original_url":  "https://nwdp.nwic.gov.in/dataset/a0c6fb7a-cc0d-4c1b-be0f-9ba974c42164/resource/696d5dc7-b8e2-4d3b-80d2-68512962ba35/download/reservior_discharge_tel_hr_maharashtra_sw_mh_ujjani_dam_1_2026_2030.csv",
+                                         "package_id":  "a0c6fb7a-cc0d-4c1b-be0f-9ba974c42164",
+                                         "position":  1,
+                                         "resource_id":  "696d5dc7-b8e2-4d3b-80d2-68512962ba35",
+                                         "resource_type":  null,
+                                         "set_url_type":  false,
+                                         "size":  343968,
+                                         "state":  "active",
+                                         "task_created":  "2026-09-12 00:16:11.439621",
+                                         "url":  "https://nwdp.nwic.gov.in/dataset/a0c6fb7a-cc0d-4c1b-be0f-9ba974c42164/resource/696d5dc7-b8e2-4d3b-80d2-68512962ba35/download/reservior_discharge_tel_hr_maharashtra_sw_mh_ujjani_dam_1_2026_2030.csv",
+                                         "url_type":  "upload"
+                                     }
+                                 ],
+                   "tags":  [
+                                {
+                                    "display_name":  "API for Gate Discharge Monitoring",
+                                    "id":  "e42d0f26-4e71-4788-964a-e4cab1032ed2",
+                                    "name":  "API for Gate Discharge Monitoring",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Aggregate Dam Gate Discharge",
+                                    "id":  "8552b7a2-219d-4698-9a83-416551cb64c5",
+                                    "name":  "Aggregate Dam Gate Discharge",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Automated Gate Discharge Systems",
+                                    "id":  "0ce1f1eb-6185-4240-aad0-445916e69b11",
+                                    "name":  "Automated Gate Discharge Systems",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Barrage Flow Control",
+                                    "id":  "78e87774-3d23-4d5c-b311-1c00e34c0d7e",
+                                    "name":  "Barrage Flow Control",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Barrage Flow Spatial Mapping",
+                                    "id":  "a96860ae-6345-4294-85e4-be5390d58f12",
+                                    "name":  "Barrage Flow Spatial Mapping",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Barrage Gate Discharge",
+                                    "id":  "41242a9b-7edc-4106-abff-71dabfe7b6fa",
+                                    "name":  "Barrage Gate Discharge",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Barrage Gate Position and Flow",
+                                    "id":  "38c9c1a5-b723-41a1-8246-1b27b8df9dbc",
+                                    "name":  "Barrage Gate Position and Flow",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Barrage Infrastructure Monitoring",
+                                    "id":  "91c049c7-20e5-421a-ac32-645d35185e26",
+                                    "name":  "Barrage Infrastructure Monitoring",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Barrage Spillway Gate Operations",
+                                    "id":  "63a62cb5-e86a-4936-a726-8596835a7e9c",
+                                    "name":  "Barrage Spillway Gate Operations",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Controlled Discharge from Gates",
+                                    "id":  "070c3d2f-bae6-437a-a524-7cd61aa83cf2",
+                                    "name":  "Controlled Discharge from Gates",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Controlled vs. Uncontrolled Gate Flow",
+                                    "id":  "4e8f5b4a-a6a7-4e95-9f14-74b51a64acb2",
+                                    "name":  "Controlled vs. Uncontrolled Gate Flow",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Cumulative Flow Metrics for Barrages",
+                                    "id":  "fed17926-383e-43b5-bfb4-ba3011d8efda",
+                                    "name":  "Cumulative Flow Metrics for Barrages",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Cumulative Gate Discharge",
+                                    "id":  "d111bc27-da5d-4d2f-9c74-6dc72aa62487",
+                                    "name":  "Cumulative Gate Discharge",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Cumulative Gate Discharge Trends",
+                                    "id":  "ce764e28-7803-4fd7-b81a-775dcc246a9e",
+                                    "name":  "Cumulative Gate Discharge Trends",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Cumulative Water Flow Analysis",
+                                    "id":  "738f0227-4704-4ea4-99c5-7308585b7508",
+                                    "name":  "Cumulative Water Flow Analysis",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Cumulative Water Release",
+                                    "id":  "3a92dcf8-2ad4-461c-a2c1-cbd88534b096",
+                                    "name":  "Cumulative Water Release",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Dam Flow Regulation",
+                                    "id":  "bc6a9f33-c9e5-473c-8a39-f34292484da2",
+                                    "name":  "Dam Flow Regulation",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Dam Gate Discharge GIS",
+                                    "id":  "2b54dddb-3b5e-48a5-ac67-654ef53f55b7",
+                                    "name":  "Dam Gate Discharge GIS",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Dam Gate Discharge Time Series",
+                                    "id":  "f3ab2eeb-b6b6-4fb9-8b11-4d8637308cde",
+                                    "name":  "Dam Gate Discharge Time Series",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Dam Gate Flow Rate",
+                                    "id":  "855af90c-6e0a-44cb-a353-8dad5cea1b3e",
+                                    "name":  "Dam Gate Flow Rate",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Dam Gate Hydraulic Modeling",
+                                    "id":  "51f4873f-ada9-41e3-938f-0fcc46491158",
+                                    "name":  "Dam Gate Hydraulic Modeling",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Dam Gate Operation",
+                                    "id":  "d409fa30-e9ac-436b-8c50-b1b636f5638a",
+                                    "name":  "Dam Gate Operation",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Dam Gate Optimization Models",
+                                    "id":  "84316658-2d6c-402e-8a65-f9b93bc0e43d",
+                                    "name":  "Dam Gate Optimization Models",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Dam Gate Release Statistics",
+                                    "id":  "e8c97fbc-4c10-4ae8-8137-1d0df90539eb",
+                                    "name":  "Dam Gate Release Statistics",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Dam Outlet Gate Flow",
+                                    "id":  "0d132145-a9a9-4467-82e5-f2def3b4925b",
+                                    "name":  "Dam Outlet Gate Flow",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Discharge Simulation for Gates",
+                                    "id":  "c3a1b584-e94c-4408-a3d0-7fdf6b3fb9a0",
+                                    "name":  "Discharge Simulation for Gates",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Downstream Discharge Historical",
+                                    "id":  "6c63d5c2-2699-4bac-ba50-3e8acb392618",
+                                    "name":  "Downstream Discharge Historical",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Downstream Flow Monitoring",
+                                    "id":  "0cac5b60-0868-4778-beb9-bbe75bd116a5",
+                                    "name":  "Downstream Flow Monitoring",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Downstream Hydrological",
+                                    "id":  "83b4dcd5-dc05-464a-99c9-1a7aea21fc1c",
+                                    "name":  "Downstream Hydrological",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Downstream Impact Assessment",
+                                    "id":  "6032d217-a3e1-47ae-ae51-557e823f4eee",
+                                    "name":  "Downstream Impact Assessment",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Downstream Level Real-time",
+                                    "id":  "dc84996b-9800-41f9-bac8-7af7f4ec37df",
+                                    "name":  "Downstream Level Real-time",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Downstream River Level and Flow",
+                                    "id":  "8f7bbb1f-2621-436b-a9db-097a053116e5",
+                                    "name":  "Downstream River Level and Flow",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Environmental Impact of Gate Discharges",
+                                    "id":  "6f0d5dbe-1476-4b98-a9f7-1da793a4fde1",
+                                    "name":  "Environmental Impact of Gate Discharges",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Flood Discharge Management",
+                                    "id":  "6621324f-6f46-44dc-aa31-5fcd1dc64799",
+                                    "name":  "Flood Discharge Management",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Flood Risk from Downstream Releases",
+                                    "id":  "b506c9eb-c831-4ec7-947c-9c9f62778675",
+                                    "name":  "Flood Risk from Downstream Releases",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Flow Control through Gates",
+                                    "id":  "8d32c8b0-c127-437c-ab44-2ffb3131daee",
+                                    "name":  "Flow Control through Gates",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Discharge Coefficient",
+                                    "id":  "a8086c2e-7de1-492c-b849-b78da2b25e2a",
+                                    "name":  "Gate Discharge Coefficient",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Discharge Monitoring",
+                                    "id":  "a64c15b2-e048-4418-be7c-e295a26fd0c7",
+                                    "name":  "Gate Discharge Monitoring",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Flow Aggregation",
+                                    "id":  "68d64f0a-9371-4130-8d0b-cbc9370416d1",
+                                    "name":  "Gate Flow Aggregation",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Flow Calibration",
+                                    "id":  "76c7340e-4ee6-48aa-87dd-61fce5af280b",
+                                    "name":  "Gate Flow Calibration",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Flow Efficiency Metrics",
+                                    "id":  "a1d56506-40bc-416d-8282-0a714ceea75a",
+                                    "name":  "Gate Flow Efficiency Metrics",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Flow Patterns and River Dynamics",
+                                    "id":  "346ea38e-afb9-4792-b9c8-d472126c982e",
+                                    "name":  "Gate Flow Patterns and River Dynamics",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Height and Flow Relationship",
+                                    "id":  "66de903f-dab9-46b3-9010-4bc1ea7ab23f",
+                                    "name":  "Gate Height and Flow Relationship",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Opening vs. Discharge Relationship",
+                                    "id":  "94425342-aac2-460a-9ef2-a56d76d7211d",
+                                    "name":  "Gate Opening vs. Discharge Relationship",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Operations Forecasting",
+                                    "id":  "b436ef29-3e24-4061-bee4-f11b5b2e4396",
+                                    "name":  "Gate Operations Forecasting",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Operations and Discharge Models",
+                                    "id":  "56f410f1-f9cb-47fb-8535-eb078f9d94ae",
+                                    "name":  "Gate Operations and Discharge Models",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Release Discharge",
+                                    "id":  "909f6adf-e25d-487d-a886-696c554d8acc",
+                                    "name":  "Gate Release Discharge",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Gate Structure and Capacity",
+                                    "id":  "a74e4175-0ab2-44b5-93df-a13790d8aa15",
+                                    "name":  "Gate Structure and Capacity",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Historical Gate Flow",
+                                    "id":  "38fffef6-2df5-44b1-a3c5-d89a4c588fc9",
+                                    "name":  "Historical Gate Flow",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Hydraulic Behavior of Gates",
+                                    "id":  "b3eb214d-0630-4505-a902-9b6ec368f822",
+                                    "name":  "Hydraulic Behavior of Gates",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Hydraulic Gate Operations",
+                                    "id":  "8754e2c9-59d7-41b3-a3fb-8b9cd35dc8d9",
+                                    "name":  "Hydraulic Gate Operations",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Impact of Gates on Downstream Flow",
+                                    "id":  "8aa3b2cd-d460-4331-9d62-43461eff5776",
+                                    "name":  "Impact of Gates on Downstream Flow",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Integrated Gate Flow Management",
+                                    "id":  "59d64ddf-6b06-47bd-a90a-b9b62e0f12f8",
+                                    "name":  "Integrated Gate Flow Management",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Live Downstream Discharge Monitoring",
+                                    "id":  "3c7095c4-75a3-4bf0-97fa-8f09ea828ec5",
+                                    "name":  "Live Downstream Discharge Monitoring",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Open Access Dam Gate",
+                                    "id":  "96a5e52c-8c81-4f1b-8b5c-637f41354403",
+                                    "name":  "Open Access Dam Gate",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Predictive Models for Gate Discharge",
+                                    "id":  "20dd2bc7-1caf-4c29-9ec1-982b37ca8f0e",
+                                    "name":  "Predictive Models for Gate Discharge",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Real-time Flood Management via Gates",
+                                    "id":  "9a9a722c-b998-4966-89ee-58b231022f80",
+                                    "name":  "Real-time Flood Management via Gates",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Real-time Gate Discharge Monitoring",
+                                    "id":  "022676db-1303-4666-9a1c-fc928a9ab97d",
+                                    "name":  "Real-time Gate Discharge Monitoring",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Reservoir Gate Flow",
+                                    "id":  "543c7a29-bdec-49fa-b5e1-bb40a6af7abb",
+                                    "name":  "Reservoir Gate Flow",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Reservoir to Downstream Flow Rates",
+                                    "id":  "59feb922-68c6-40ef-afbc-046f0b7a50c7",
+                                    "name":  "Reservoir to Downstream Flow Rates",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Reservoir to Downstream Flow Transition",
+                                    "id":  "467bc563-774c-4df5-965b-f6d4b5611d9f",
+                                    "name":  "Reservoir to Downstream Flow Transition",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Seasonal Gate Discharge Variations",
+                                    "id":  "6da4099f-c76d-4706-aa5c-893dc3a0d233",
+                                    "name":  "Seasonal Gate Discharge Variations",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Spillway and Gate Discharge Capacity",
+                                    "id":  "727307ea-85c3-49f9-9d29-d401914078dd",
+                                    "name":  "Spillway and Gate Discharge Capacity",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Spillway and Outlet Discharge Trends",
+                                    "id":  "271b4f4b-42a1-48e7-848a-5f346097a34a",
+                                    "name":  "Spillway and Outlet Discharge Trends",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Structural of Dam Gates",
+                                    "id":  "329c6b53-a396-4984-a6c7-2700955d41cf",
+                                    "name":  "Structural of Dam Gates",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Total Discharge from Barrage Gates",
+                                    "id":  "c8545e4f-e492-4120-9276-21f7570f308c",
+                                    "name":  "Total Discharge from Barrage Gates",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Water Discharge Computation",
+                                    "id":  "23ae9f68-a8a1-44c2-b963-6c54ce4db7ee",
+                                    "name":  "Water Discharge Computation",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Water Level Changes Downstream",
+                                    "id":  "96153845-955c-4c19-a5f3-b19bec04a788",
+                                    "name":  "Water Level Changes Downstream",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                },
+                                {
+                                    "display_name":  "Water Release from Barrage Gates",
+                                    "id":  "f09290eb-b5e2-4de8-8b18-76ab7e1560d8",
+                                    "name":  "Water Release from Barrage Gates",
+                                    "state":  "active",
+                                    "vocabulary_id":  null
+                                }
+                            ],
+                   "relationships_as_subject":  [
+
+                                                ],
+                   "relationships_as_object":  [
+
+                                               ]
+               }
+}

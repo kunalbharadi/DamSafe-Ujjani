@@ -1,0 +1,188 @@
+{
+  "status": "executed synthetic benchmark sensitivity; differences are not accuracy",
+  "runs": {
+    "dflow_baseline_0p05m_0p01s": {
+      "id": "5f337ace-316f-487b-8962-330e97a11685",
+      "columns": 80,
+      "frames": 201,
+      "runtime_s": 4.26500000001397,
+      "initial_volume_native_units": 2.0,
+      "final_volume_native_units": 1.9999999951571223,
+      "normalized_sha256": "845add7a372f0b2496dd1406cfeab46cfa7778265c98f944b5942534010a86cd",
+      "manifest_sha256": "cc4c44d19b591613040b51e1d09c84d0b75f14633e5233cce06e3d14d34396b0"
+    },
+    "dflow_coarse_0p10m_0p01s": {
+      "id": "4e2a2a76-a878-4c4d-ab20-797e7d3d01db",
+      "columns": 40,
+      "frames": 201,
+      "runtime_s": 3.2189999999827705,
+      "initial_volume_native_units": 2.0,
+      "final_volume_native_units": 2.0000000134110447,
+      "normalized_sha256": "2ccc3375128e4fb48088b012b808562ccef54d176b17c82268c0282f2085c2c1",
+      "manifest_sha256": "f62141eace4718fbfd6c301d12a961e33d049c9b1478b43528214c9ca7a2b063"
+    },
+    "dflow_short_step_0p05m_0p005s": {
+      "id": "31597407-e29e-431e-a83a-64fd56b296c5",
+      "columns": 80,
+      "frames": 201,
+      "runtime_s": 5.094000000040978,
+      "initial_volume_native_units": 2.0,
+      "final_volume_native_units": 1.999999985843897,
+      "normalized_sha256": "3480b64889a1fa4af17a085ad888f54170bc963b8b6ef131eb28c5faba75a229",
+      "manifest_sha256": "f3ad7d898c3904cbe06b8cfc5938b90dd43dcde370af9cc3ec9722d9c5855d9d"
+    },
+    "dflow_fine_0p025m_0p005s": {
+      "id": "12f99e60-72c1-4aee-ba64-4f90f64d548e",
+      "columns": 160,
+      "frames": 201,
+      "runtime_s": 5.717999999993481,
+      "initial_volume_native_units": 2.0,
+      "final_volume_native_units": 1.9999999936670065,
+      "normalized_sha256": "d3832813245f9bba654a6e67b30952dbe6670535a737c29eb11b682e99c6f7d1",
+      "manifest_sha256": "a2c56c953b4a94e9fe610f451359118bf0245e373307929cd8281696518952cd"
+    },
+    "sph_official_0p01m": {
+      "id": "424a48cf-e381-4599-ac9a-25817559fe09",
+      "columns": 80,
+      "frames": 201,
+      "runtime_s": 688.25,
+      "initial_volume_native_units": 1.9975165563363801,
+      "final_volume_native_units": 1.9494480491251813,
+      "normalized_sha256": "315535b819672bd0336e84e95d65104ca88c42dd854a8107a93620ad36735ed8",
+      "manifest_sha256": "84c23a398243498469f78d2892847a806c6b74b8662313535ff1c608a9026a79"
+    },
+    "sph_variant_0p02m": {
+      "id": "7eac17d0-15d0-4113-91b1-8f3461329a5c",
+      "columns": 80,
+      "frames": 201,
+      "runtime_s": 142.03099999995902,
+      "initial_volume_native_units": 1.9975165977646103,
+      "final_volume_native_units": 1.957080176833348,
+      "normalized_sha256": "da19dce680cf54725c235b5058d3da65d086cc7a1a6c7d3fa07367269c98f97f",
+      "manifest_sha256": "00a991b409326cbb6f027c331cc1355b00c16778afbfc397e06a49d2603a593a"
+    }
+  },
+  "dflow_vs_baseline": {
+    "dflow_coarse_0p10m_0p01s": {
+      "reference_run_id": "5f337ace-316f-487b-8962-330e97a11685",
+      "candidate_run_id": "4e2a2a76-a878-4c4d-ab20-797e7d3d01db",
+      "common_frames": 201,
+      "depth_rmse_m": 0.0768772178302249,
+      "maximum_absolute_depth_difference_m": 1.7526795808225872,
+      "gauges": {
+        "0.525": {
+          "depth_rmse_m": 0.02312263664663652,
+          "peak_depth_difference_m": 0.0,
+          "peak_time_difference_s": 0.0
+        },
+        "1.525": {
+          "depth_rmse_m": 0.03272139547965558,
+          "peak_depth_difference_m": 0.028723813593387604,
+          "peak_time_difference_s": -0.010000000000000009
+        },
+        "2.525": {
+          "depth_rmse_m": 0.06147386880173124,
+          "peak_depth_difference_m": 0.08909963071346283,
+          "peak_time_difference_s": -0.020000000000000018
+        },
+        "3.525": {
+          "depth_rmse_m": 0.1051943299868673,
+          "peak_depth_difference_m": 0.15094617754220963,
+          "peak_time_difference_s": -0.030000000000000027
+        }
+      }
+    },
+    "dflow_short_step_0p05m_0p005s": {
+      "reference_run_id": "5f337ace-316f-487b-8962-330e97a11685",
+      "candidate_run_id": "31597407-e29e-431e-a83a-64fd56b296c5",
+      "common_frames": 201,
+      "depth_rmse_m": 0.026050509856344724,
+      "maximum_absolute_depth_difference_m": 0.3240911960601809,
+      "gauges": {
+        "0.525": {
+          "depth_rmse_m": 0.01011670988462767,
+          "peak_depth_difference_m": 0.0,
+          "peak_time_difference_s": 0.0
+        },
+        "1.525": {
+          "depth_rmse_m": 0.026571507431116286,
+          "peak_depth_difference_m": -0.01289948821067799,
+          "peak_time_difference_s": 0.010000000000000009
+        },
+        "2.525": {
+          "depth_rmse_m": 0.023733007640138245,
+          "peak_depth_difference_m": -0.0033217668533325195,
+          "peak_time_difference_s": 0.0
+        },
+        "3.525": {
+          "depth_rmse_m": 0.02963122293963449,
+          "peak_depth_difference_m": 0.0324753522872927,
+          "peak_time_difference_s": 0.010000000000000009
+        }
+      }
+    },
+    "dflow_fine_0p025m_0p005s": {
+      "reference_run_id": "5f337ace-316f-487b-8962-330e97a11685",
+      "candidate_run_id": "12f99e60-72c1-4aee-ba64-4f90f64d548e",
+      "common_frames": 201,
+      "depth_rmse_m": 0.03940210488204855,
+      "maximum_absolute_depth_difference_m": 0.4622529149055481,
+      "gauges": {
+        "0.525": {
+          "depth_rmse_m": 0.007900799306067042,
+          "peak_depth_difference_m": 0.0,
+          "peak_time_difference_s": 0.0
+        },
+        "1.525": {
+          "depth_rmse_m": 0.03656464067661991,
+          "peak_depth_difference_m": 0.04058043658733357,
+          "peak_time_difference_s": -0.030000000000000027
+        },
+        "2.525": {
+          "depth_rmse_m": 0.03953221822371759,
+          "peak_depth_difference_m": 0.08120103180408289,
+          "peak_time_difference_s": 0.010000000000000009
+        },
+        "3.525": {
+          "depth_rmse_m": 0.039116990809997886,
+          "peak_depth_difference_m": 0.14739879965781988,
+          "peak_time_difference_s": 0.010000000000000009
+        }
+      }
+    }
+  },
+  "sph_particle_spacing_0p01_vs_0p02m": {
+    "reference_run_id": "424a48cf-e381-4599-ac9a-25817559fe09",
+    "candidate_run_id": "7eac17d0-15d0-4113-91b1-8f3461329a5c",
+    "common_frames": 200,
+    "depth_rmse_m": 0.15959828095787332,
+    "maximum_absolute_depth_difference_m": 2.009827491022397,
+    "gauges": {
+      "0.525": {
+        "depth_rmse_m": 0.07767811746916603,
+        "peak_depth_difference_m": -0.4002788527948349,
+        "peak_time_difference_s": 0.0
+      },
+      "1.525": {
+        "depth_rmse_m": 0.0137056451234539,
+        "peak_depth_difference_m": -0.01393893445681571,
+        "peak_time_difference_s": 0.02000886034899496
+      },
+      "2.525": {
+        "depth_rmse_m": 0.015478569658624765,
+        "peak_depth_difference_m": -0.021946283915595166,
+        "peak_time_difference_s": 0.020003482204590584
+      },
+      "3.525": {
+        "depth_rmse_m": 0.0577545264480204,
+        "peak_depth_difference_m": -0.06588316472817835,
+        "peak_time_difference_s": 0.030009217139908007
+      }
+    }
+  },
+  "caveats": [
+    "D-Flow mesh and time step vary; one pair isolates the time step, whereas the fine-grid pair changes both.",
+    "SPH output is a 0.05 m reporting-column reduction of native particles; particle mass loss remains unresolved.",
+    "Intermodel differences and resolution sensitivity do not establish convergence or Ujjani validation."
+  ]
+}

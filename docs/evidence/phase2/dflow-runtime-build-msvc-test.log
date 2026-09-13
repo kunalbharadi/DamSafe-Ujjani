@@ -1,0 +1,1737 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from DFlowRuntime.Dockerfile
+#1 transferring dockerfile: 1.41kB done
+#1 DONE 0.0s
+
+#2 [auth] library/almalinux:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/almalinux:8
+#3 ...
+
+#4 [internal] load metadata for docker.io/library/damsafe-dflow-thirdparty:oneapi-2024
+#4 DONE 7.7s
+
+#3 [internal] load metadata for docker.io/library/almalinux:8
+#3 DONE 14.3s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 364B done
+#5 DONE 0.0s
+
+#6 [build 1/4] FROM docker.io/library/damsafe-dflow-thirdparty:oneapi-2024@sha256:5df273d79ea799cd918e49a222c6c4c8566b571391ec5ec2f996b0906abd6c1c
+#6 resolve docker.io/library/damsafe-dflow-thirdparty:oneapi-2024@sha256:5df273d79ea799cd918e49a222c6c4c8566b571391ec5ec2f996b0906abd6c1c 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] preparing inline document
+#7 CACHED
+
+#8 [stage-1 1/2] FROM docker.io/library/almalinux:8@sha256:9f355ae942d6a6c0561f0771dc053a2cfae9580fc45fa4252756db7c7e80c09f
+#8 resolve docker.io/library/almalinux:8@sha256:9f355ae942d6a6c0561f0771dc053a2cfae9580fc45fa4252756db7c7e80c09f 0.0s done
+#8 CACHED
+
+#9 [internal] load build context
+#9 transferring context: 6.68MB 1.6s done
+#9 DONE 1.6s
+
+#10 [build 2/4] WORKDIR /source
+#10 CACHED
+
+#11 [build 3/4] COPY . .
+#11 DONE 3.1s
+
+#12 [build 4/4] RUN --mount=type=cache,target=/source/build     --mount=type=cache,target=/root/.conan2     <<"EOF" (#!/usr/bin/env bash...)
+#12 0.520  
+#12 0.520 :: initializing oneAPI environment ...
+#12 0.520    EOF: BASH_VERSION = 4.4.20(1)-release
+#12 0.520    args: Using "$@" for setvars.sh arguments: 
+#12 0.525 :: compiler -- latest
+#12 0.545 :: debugger -- latest
+#12 0.561 :: dev-utilities -- latest
+#12 0.575 :: dpl -- latest
+#12 0.594 :: mkl -- latest
+#12 0.608 :: mpi -- latest
+#12 0.631 :: tbb -- latest
+#12 0.642 :: oneAPI environment initialized ::
+#12 0.642  
+#12 1.648 Copying file global.conf to /root/.conan2/.
+#12 1.648 Copying file settings_user.yml to /root/.conan2/.
+#12 1.648 Defining remotes from remotes.json
+#12 1.649 Copying file delft3d_alma8_intel_2024_v3 to /root/.conan2/profiles
+#12 1.649 Copying file delft3d_windows_msvc_194_v3 to /root/.conan2/profiles
+#12 1.649 Copying file delft3d_windows_msvc_195_v1 to /root/.conan2/profiles
+#12 1.649 Copying file delft3d_alma8_intel_2026_v1 to /root/.conan2/profiles
+#12 1.882 Removed remotes:
+#12 1.882 delft3d-conan-dev: https://internal-artifacts.deltares.nl/repository/delft3d-conan-dev [Verify SSL: True, Enabled: True]
+#12 1.882 deltares-conan-center-proxy: https://internal-artifacts.deltares.nl/repository/conan-proxy [Verify SSL: True, Enabled: True]
+#12 2.051 WARN: The cache folder for remote local-recipes existed, removing it
+#12 2.474 Using lockfile: '/source/conan.lock'
+#12 2.491 
+#12 2.491 ======== Input profiles ========
+#12 2.491 Profile host:
+#12 2.491 [settings]
+#12 2.491 arch=x86_64
+#12 2.491 build_type=Release
+#12 2.491 compiler=intel-cc
+#12 2.491 compiler.cppstd=20
+#12 2.491 compiler.libcxx=libstdc++11
+#12 2.491 compiler.mode=icx
+#12 2.491 compiler.version=2024.2
+#12 2.491 fortran_compiler=ifx
+#12 2.491 fortran_compiler.version=2024.2
+#12 2.491 os=Linux
+#12 2.491 os.distro=Alma8
+#12 2.491 &:build_type=Release
+#12 2.491 [conf]
+#12 2.491 tools.build:compiler_executables={'c': '/opt/intel/oneapi/compiler/2024.2/bin/icx', 'cpp': '/opt/intel/oneapi/compiler/2024.2/bin/icpx', 'fortran': '/opt/intel/oneapi/compiler/2024.2/bin/ifx'}
+#12 2.491 tools.intel:installation_path="/opt/intel/oneapi"
+#12 2.491 tools.intel:setvars_args=--force
+#12 2.491 
+#12 2.491 Profile build:
+#12 2.491 [settings]
+#12 2.491 arch=x86_64
+#12 2.491 build_type=Release
+#12 2.491 compiler=intel-cc
+#12 2.491 compiler.cppstd=20
+#12 2.491 compiler.libcxx=libstdc++11
+#12 2.491 compiler.mode=icx
+#12 2.491 compiler.version=2024.2
+#12 2.491 fortran_compiler=ifx
+#12 2.491 fortran_compiler.version=2024.2
+#12 2.491 os=Linux
+#12 2.491 os.distro=Alma8
+#12 2.491 &:build_type=Release
+#12 2.491 [conf]
+#12 2.491 tools.build:compiler_executables={'c': '/opt/intel/oneapi/compiler/2024.2/bin/icx', 'cpp': '/opt/intel/oneapi/compiler/2024.2/bin/icpx', 'fortran': '/opt/intel/oneapi/compiler/2024.2/bin/ifx'}
+#12 2.491 tools.intel:installation_path="/opt/intel/oneapi"
+#12 2.491 tools.intel:setvars_args=--force
+#12 2.491 
+#12 2.493 
+#12 2.493 ======== Computing dependency graph ========
+#12 2.562 Graph root
+#12 2.562     conanfile.py: /source/conanfile.py
+#12 2.562 Requirements
+#12 2.562     boost/1.90.0#a1b1e0a78c5a7c7d87c8bb4b7cbb728a - Cache
+#12 2.562     eigen/5.0.1#5f0f72e012979ebc4dfc038c701b81ea - Cache
+#12 2.562     expat/2.8.0#a853bee3816ac79a899532786508152a - Cache
+#12 2.562     gdal/3.12.1#6f414e825e44c0c83326681be6581b0a - Cache
+#12 2.562     gtest/1.18.0#e2507fc4efe2ec9e2db9e5c91eefab9f - Cache
+#12 2.562     hdf5/1.14.2#e11564a0e512f3387e8201ba38aea856 - Cache
+#12 2.562     json-c/0.17#c01dc2f90ca2785d218c9c12d2587c69 - Cache
+#12 2.562     libgeotiff/1.7.1#94cf0d7b12e8876c6590548445f02d6d - Cache
+#12 2.562     libtiff/4.7.1#c9a3c594b285692ffc74dabd0b1f7640 - Cache
+#12 2.562     libxml2/2.15.3#3406c6d8d327e9b84c0c894feb859514 - Cache
+#12 2.562     netcdf/4.9.2#e7c84a1fd8b54b8243cf5c79380e52d9 - Cache
+#12 2.562     netcdf-fortran/4.6.2#0297d442dccc836d6dd5b29493d447cc - Cache
+#12 2.562     nlohmann_json/3.11.3#45828be26eb619a2e04ca517bb7b828d - Cache
+#12 2.562     petsc/3.25.3#79677ca26746e29883aa1bafa4a5fd4e - Cache
+#12 2.562     precice/3.4.1#065ec24efacc1c68919346fbb8334559 - Cache
+#12 2.562     proj/9.3.1#29d7cde88e270fd3a138bb0f32a8438b - Cache
+#12 2.562     sqlite3/3.53.1#886c510c5d3908b84a9b0766ac958cce - Cache
+#12 2.562     triangle/1.6-deltares.2#2343c1384ebb66274e4ccae3f4babae0 - Cache
+#12 2.562     zlib/1.3.2#7785cdb3a85f7c138a9c4f91f36ba701 - Cache
+#12 2.562 Build requirements
+#12 2.562     b2/5.5.3#043a75bcbb090e3f81f7ac849850d0ca - Cache
+#12 2.562     cmake/4.3.2#5bae0b181463ca4dc3e924a981367ee6 - Cache
+#12 2.562     sqlite3/3.53.1#886c510c5d3908b84a9b0766ac958cce - Cache
+#12 2.562 
+#12 2.562 ======== Computing necessary packages ========
+#12 2.585 Requirements
+#12 2.585     boost/1.90.0#a1b1e0a78c5a7c7d87c8bb4b7cbb728a:ed3da4a9fab9a7eeef3a18dd812379c3a82838b7#ef4c30888f409d70c19a784fb93cf24b - Cache
+#12 2.585     eigen/5.0.1#5f0f72e012979ebc4dfc038c701b81ea:da39a3ee5e6b4b0d3255bfef95601890afd80709#c851e83a798693487394829d52b41fb7 - Cache
+#12 2.585     expat/2.8.0#a853bee3816ac79a899532786508152a:541a984c937f052b42bc560b219a97efce94bd8c#af03d2e5b968f750ccd26b903eb26d2d - Cache
+#12 2.585     gdal/3.12.1#6f414e825e44c0c83326681be6581b0a:51e359246ab0690394e25a8f5bd46e70b10c7313#dabd4817f49eb626354d32dbda984342 - Cache
+#12 2.585     gtest/1.18.0#e2507fc4efe2ec9e2db9e5c91eefab9f:8550609d9ce0c9d1605e0148756b4d351f0bdde6#5b5f030f39e109bff3eb77b33f81f58e - Cache
+#12 2.585     hdf5/1.14.2#e11564a0e512f3387e8201ba38aea856:78ae66d1a9a8987c424e71e1736d05751a57430c#fae15407ed109c5027ed38af195115e8 - Cache
+#12 2.585     libgeotiff/1.7.1#94cf0d7b12e8876c6590548445f02d6d:a47ee004ce4d2216e0cfcd00693b83e001a9c813#59a337aa8e430fdf97ad9efcf60da8fd - Cache
+#12 2.585     libtiff/4.7.1#c9a3c594b285692ffc74dabd0b1f7640:d9748e9ab8c6ca55cd4abeba49f17bbdb8363c79#42ef83a6075bd3d56801e6a050a4cea3 - Cache
+#12 2.585     libxml2/2.15.3#3406c6d8d327e9b84c0c894feb859514:f564cbebe07b2e59fb62de7d623d36ede41e196a#da9622b54ed8859216e38cffb87dfaf1 - Cache
+#12 2.585     netcdf-fortran/4.6.2#0297d442dccc836d6dd5b29493d447cc:e1f4fbff6d305ccc64749c52b2cd7785598c4ef4#71d5a85675e7823e4f8ac142afdbe91a - Cache
+#12 2.585     netcdf/4.9.2#e7c84a1fd8b54b8243cf5c79380e52d9:7f731ae39b45d1cc08d37880080911cf75153ba7#e6e1d308f91648add5b0c99981781839 - Cache
+#12 2.585     petsc/3.25.3#79677ca26746e29883aa1bafa4a5fd4e:f4f088056173a29bb0e444665ad767c7f31d43be#7be7bd254b567bcec86c206170d34045 - Cache
+#12 2.585     precice/3.4.1#065ec24efacc1c68919346fbb8334559:7d5dfd4e6b05f1ef0e7e93f88b0d0c5e538fee89#21cdfdc83595434fb2497dda25eb2c49 - Cache
+#12 2.585     proj/9.3.1#29d7cde88e270fd3a138bb0f32a8438b:c08868cca80f300115372fada89f90ddc9e2f489#e49bf8079a7799b491c2151599b3ad75 - Cache
+#12 2.585     triangle/1.6-deltares.2#2343c1384ebb66274e4ccae3f4babae0:e565e691cca38a02a8c74613b3501a3136e94fa5#37df028b9d3525db12cce82f778dee89 - Cache
+#12 2.585     zlib/1.3.2#7785cdb3a85f7c138a9c4f91f36ba701:d88782a729dc5e08252cf24acf46a5e17b53a083#154452e256e2975cfb731d4c7a60e9b0 - Cache
+#12 2.585 Build requirements
+#12 2.585 Skipped binaries
+#12 2.585     json-c/0.17, nlohmann_json/3.11.3, sqlite3/3.53.1, b2/5.5.3, cmake/4.3.2, sqlite3/3.53.1
+#12 2.585 
+#12 2.585 ======== Installing packages ========
+#12 2.586 eigen/5.0.1: Already installed! (1 of 16)
+#12 2.586 petsc/3.25.3: Already installed! (2 of 16)
+#12 2.587 triangle/1.6-deltares.2: Already installed! (3 of 16)
+#12 2.588 zlib/1.3.2: Already installed! (4 of 16)
+#12 2.588 boost/1.90.0: Already installed! (5 of 16)
+#12 2.590 expat/2.8.0: Already installed! (6 of 16)
+#12 2.590 gtest/1.18.0: Already installed! (7 of 16)
+#12 2.591 hdf5/1.14.2: Already installed! (8 of 16)
+#12 2.591 libtiff/4.7.1: Already installed! (9 of 16)
+#12 2.591 libxml2/2.15.3: Already installed! (10 of 16)
+#12 2.592 netcdf/4.9.2: Already installed! (11 of 16)
+#12 2.592 precice/3.4.1: Already installed! (12 of 16)
+#12 2.592 proj/9.3.1: Already installed! (13 of 16)
+#12 2.593 libgeotiff/1.7.1: Already installed! (14 of 16)
+#12 2.593 netcdf-fortran/4.6.2: Already installed! (15 of 16)
+#12 2.593 gdal/3.12.1: Already installed! (16 of 16)
+#12 2.593 WARN: deprecated: Usage of deprecated Conan 1.X features that will be removed in Conan 2.X:
+#12 2.593 WARN: deprecated:     'env_info' used in: boost/1.90.0
+#12 2.593 WARN: deprecated:     'cpp_info.filenames' used in: boost/1.90.0
+#12 2.593 WARN: deprecated:     'cpp_info.names' used in: hdf5/1.14.2, boost/1.90.0
+#12 2.593 WARN: deprecated:     'user_info' used in: boost/1.90.0
+#12 2.593 WARN: deprecated:     'cpp_info.build_modules' used in: hdf5/1.14.2
+#12 2.594 
+#12 2.594 ======== Finalizing install (deploy, generators) ========
+#12 2.594 conanfile.py: Writing generators to /source/build/conan/generators
+#12 2.600 conanfile.py: Generator 'CMakeDeps' calling 'generate()'
+#12 2.639 conanfile.py: CMakeDeps necessary find_package() and targets for your CMakeLists.txt
+#12 2.639     find_package(netCDF-Fortran)
+#12 2.639     find_package(netCDF)
+#12 2.639     find_package(HDF5)
+#12 2.639     find_package(GDAL)
+#12 2.639     find_package(proj)
+#12 2.639     find_package(TIFF)
+#12 2.639     find_package(expat)
+#12 2.639     find_package(PETSc)
+#12 2.639     find_package(triangle)
+#12 2.639     find_package(precice)
+#12 2.639     find_package(Boost)
+#12 2.639     find_package(Eigen3)
+#12 2.639     find_package(libxml2)
+#12 2.639     find_package(ZLIB)
+#12 2.639     find_package(GTest)
+#12 2.639     target_link_libraries(... netCDF::netcdff netCDF::netcdf HDF5::HDF5 GDAL::GDAL PROJ::proj TIFF::TIFF expat::expat PETSc::PETSc triangle::triangle precice::precice boost::boost Eigen3::Eigen LibXml2::LibXml2 ZLIB::ZLIB gtest::gtest)
+#12 2.644 conanfile.py: Calling generate()
+#12 2.644 conanfile.py: Generators folder: /source/build/conan/generators
+#12 2.646 conanfile.py: Generating aggregated env files
+#12 2.646 conanfile.py: Generated aggregated env files: ['conanbuild.sh', 'conanrun.sh']
+#12 2.646 Install finished successfully
+#12 2.694 -- Configuring
+#12 2.695 -- Conan: Target declared 'ZLIB::ZLIB'
+#12 2.696 -- Conan: Component target declared 'hdf5::hdf5'
+#12 2.696 -- Conan: Component target declared 'hdf5::hdf5_hl'
+#12 2.696 -- Conan: Target declared 'HDF5::HDF5'
+#12 2.697 -- Conan: Including build module from '/root/.conan2/p/b/hdf57a948b2e684da/p/lib/cmake/conan-official-hdf5-variables.cmake'
+#12 2.698 -- Conan: Component target declared 'netCDF::netcdf'
+#12 2.699 -- Conan: Target declared 'netCDF::netcdff'
+#12 2.700 -- Conan: Target declared 'expat::expat'
+#12 2.701 -- Conan: Target declared 'TIFF::TIFF'
+#12 2.702 -- Conan: Component target declared 'PROJ::proj'
+#12 2.704 -- Conan: Target declared 'GDAL::GDAL'
+#12 2.704 -- Conan: Target declared 'geotiff_library'
+#12 2.707 -- Conan: Target declared 'PETSc::PETSc'
+#12 2.708 -- Conan: Target declared 'triangle::triangle'
+#12 2.710 -- Conan: Component target declared 'Boost::diagnostic_definitions'
+#12 2.710 -- Conan: Component target declared 'Boost::disable_autolinking'
+#12 2.710 -- Conan: Component target declared 'Boost::dynamic_linking'
+#12 2.710 -- Conan: Component target declared 'Boost::headers'
+#12 2.710 -- Conan: Component target declared 'Boost::boost'
+#12 2.710 -- Conan: Component target declared 'boost::_libboost'
+#12 2.710 -- Conan: Component target declared 'Boost::atomic'
+#12 2.710 -- Conan: Component target declared 'Boost::chrono'
+#12 2.710 -- Conan: Component target declared 'Boost::container'
+#12 2.710 -- Conan: Component target declared 'Boost::date_time'
+#12 2.710 -- Conan: Component target declared 'Boost::exception'
+#12 2.710 -- Conan: Component target declared 'Boost::program_options'
+#12 2.710 -- Conan: Component target declared 'Boost::regex'
+#12 2.710 -- Conan: Component target declared 'Boost::serialization'
+#12 2.710 -- Conan: Component target declared 'Boost::filesystem'
+#12 2.710 -- Conan: Component target declared 'Boost::test'
+#12 2.710 -- Conan: Component target declared 'Boost::thread'
+#12 2.710 -- Conan: Component target declared 'Boost::wserialization'
+#12 2.710 -- Conan: Component target declared 'Boost::log'
+#12 2.710 -- Conan: Component target declared 'Boost::prg_exec_monitor'
+#12 2.710 -- Conan: Component target declared 'Boost::test_exec_monitor'
+#12 2.710 -- Conan: Component target declared 'Boost::unit_test_framework'
+#12 2.710 -- Conan: Component target declared 'Boost::log_setup'
+#12 2.710 -- Conan: Target declared 'boost::boost'
+#12 2.717 -- Conan: Target declared 'precice::precice'
+#12 2.718 -- Conan: Component target declared 'Eigen3::Eigen'
+#12 2.719 -- Conan: Target declared 'LibXml2::LibXml2'
+#12 2.720 -- Conan: Component target declared 'GTest::gtest'
+#12 2.720 -- Conan: Component target declared 'GTest::gtest_main'
+#12 2.720 -- Conan: Component target declared 'GTest::gmock'
+#12 2.720 -- Conan: Component target declared 'GTest::gmock_main'
+#12 2.720 -- Conan: Target declared 'gtest::gtest'
+#12 2.722 -- build nr: 
+#12 2.724 -- Setting Fortran compiler flags in Unix
+#12 3.583 -- f90tw_INCLUDE_DIR is /source/src/third_party_open/f90tw/f90tw-main/f90tw
+#12 3.583 -- Generating solution for Delft3D-FM ...
+#12 3.689 -- build_config 
+#12 3.689 --   D-WAQ kernel
+#12 3.689 --     --> waq_definition
+#12 3.690 --     --> waq_utils_c
+#12 3.691 --     --> waq_utils_f
+#12 3.693 --     --> waq_process
+#12 3.698 --     --> waq_data
+#12 3.700 --     --> waq_hyd_data
+#12 3.701 --     --> solvesaphe
+#12 3.702 --     --> intelredist
+#12 3.703 --     -->  - Installing Intel Redistributable Libraries
+#12 3.703 --     --> waq_netcdf
+#12 3.704 --     --> waq_validation
+#12 3.705 --     --> waq_external_access_layer
+#12 3.707 --     --> waq_preprocessor
+#12 3.708 --     --> waq_proc_preprocess
+#12 3.711 --     --> waq_computation
+#12 3.712 --     --> waq_kernel
+#12 3.716 --     --> waq_memory
+#12 3.717 --     --> waq_io
+#12 3.719 --     --> waq_plugin_wasteload
+#12 3.720 --     --> delwaq_lib
+#12 3.721 --     --> waq_logging
+#12 3.723 --     --> delwaq
+#12 3.724 --     --> wq_processes
+#12 3.725 --   D-WAQ tools
+#12 3.725 --     --> waqpb_lib
+#12 3.728 --     --> waqpb_import
+#12 3.729 --     --> waqpb_export
+#12 3.730 --     --> waqmerge
+#12 3.732 --     --> ddcouple
+#12 3.734 --     --> agrhyd
+#12 3.735 --     --> maptonetcdf
+#12 3.737 --     --> calcage
+#12 3.738 --     --> checkhydbal
+#12 3.739 --   D-PART kernel
+#12 3.739 --     --> part_data_f
+#12 3.741 --     --> part_utils_f
+#12 3.742 --     --> part_io_f
+#12 3.744 --     --> part_kernel_f
+#12 3.746 --     --> delpar
+#12 3.748 --   D-WAQ third party libraries
+#12 3.748 --     --> kdtree2
+#12 3.750 --     --> kdtree_wrapper
+#12 3.751 --     --> fortrangis
+#12 3.754 --     --> shp
+#12 3.756 --   D-WAQ utils
+#12 3.756 --     --> io_netcdf
+#12 3.757 --     --> io_netcdf_data
+#12 3.759 --     --> gridgeom
+#12 3.760 --     --> nefis
+#12 3.764 --     --> io_hyd
+#12 3.765 --     --> morphology_data
+#12 3.767 --   D-WAQ unit and integration tests
+#12 3.767 --     --> tests_unit_delwaq
+#12 3.779 --     --> tests_integration_delwaq
+#12 3.782 --     --> tests_utils_lgpl
+#12 4.157 -- Found OpenMP: TRUE (found version "5.0") found components: Fortran
+#12 4.178 -- Setting target_compile_definitions in Unix
+#12 4.183 -- Setting target_compile_definitions in Unix
+#12 4.278 -- checking for thread-local storage - found
+#12 4.281 -- Configuring 'metisoptions' with the following metis_include_path: /source/src/third_party_open/metis/cmake_deltares/../metis-5.1.0/include
+#12 4.316 -- swan lib:
+#12 4.319 -- swan mpi:
+#12 4.321 -- swan omp:
+#12 4.572 -- Found OpenMP: TRUE (found version "4.5")
+#12 4.578 -- Found Xerces-C: 3.2.5
+#12 4.628 -- Configuring done (1.9s)
+#12 5.454 -- Generating done (0.8s)
+#12 5.454 -- Build files have been written to: /source/build
+#12 5.523 [  0%] Built target generate_assertions_gtest_f90
+#12 5.524 [  0%] Built target test_deltares_common_gtest_f2h
+#12 5.528 [  0%] Built target generate_m_alloc_generated
+#12 5.531 [  0%] Building Fortran object fortrangis/CMakeFiles/fortranc.dir/source/src/third_party_open/fortrangis/libfortranc/fortranc.F90.o
+#12 5.533 [  0%] Built target getopt
+#12 5.533 [  0%] Building C object deltares_common_c/CMakeFiles/deltares_common_c.dir/src/bmi_shared_lib_fortran_api.c.o
+#12 5.534 [  0%] Built target waq_utils_c
+#12 5.535 [  0%] Building CXX object deltares_common_c/CMakeFiles/deltares_common_c.dir/src/getputarray.cpp.o
+#12 5.535 [  0%] Building C object deltares_common_c/CMakeFiles/deltares_common_c.dir/src/cutil.c.o
+#12 5.536 [  0%] Building C object nefis/CMakeFiles/nefis.dir/src/f2c.c.o
+#12 5.538 [  0%] Building C object deltares_common_c/CMakeFiles/deltares_common_c.dir/src/shared_library_fortran_api.c.o
+#12 5.538 [  0%] Building C object nefis/CMakeFiles/nefis.dir/src/gp.c.o
+#12 5.538 [  0%] Building CXX object deltares_common_c/CMakeFiles/deltares_common_c.dir/src/sems.cpp.o
+#12 5.540 [  0%] Built target shp
+#12 5.540 [  0%] Built target nefis_tests_f2h
+#12 5.541 [  0%] Building C object morphology_plugins_c/CMakeFiles/morphology_plugins_c.dir/src/shared_lib_fallve.c.o
+#12 5.542 [  0%] Building C object morphology_plugins_c/CMakeFiles/morphology_plugins_c.dir/src/shared_lib_trafrm.c.o
+#12 5.542 [  0%] Built target kdtree2
+#12 5.542 [  0%] Built target test_general_structure_f2h
+#12 5.544 [  0%] Built target calcage
+#12 5.544 [  0%] Building CXX object deltares_common_c/CMakeFiles/deltares_common_c.dir/src/throwexception.cpp.o
+#12 5.545 [  0%] Built target ftnunit
+#12 5.545 [  0%] Built target test_Readstructure_f2h
+#12 5.547 [  0%] Built target precicef
+#12 5.548 [  0%] Built target test_morphology_f2h
+#12 5.560 [  0%] Built target generate_unc_put_var_map
+#12 5.576 [  1%] Built target md5digest
+#12 5.576 [  1%] Built target libsigwatch
+#12 5.577 /source/src/utils_lgpl/deltares_common/packages/deltares_common_c/src/bmi_shared_lib_fortran_api.c:127:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.581   127 |         (void*)(*proc)(&time);
+#12 5.581       |         ^    ~
+#12 5.581 /source/src/utils_lgpl/deltares_common/packages/deltares_common_c/src/bmi_shared_lib_fortran_api.c:145:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.581   145 |         (void*)(*proc)(c_config_file);
+#12 5.581       |         ^    ~
+#12 5.581 /source/src/utils_lgpl/deltares_common/packages/deltares_common_c/src/bmi_shared_lib_fortran_api.c:187:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.581   187 |         (void*)(*proc)(c_var_name, &bmi_values);
+#12 5.581       |         ^    ~
+#12 5.581 /source/src/utils_lgpl/deltares_common/packages/deltares_common_c/src/bmi_shared_lib_fortran_api.c:205:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.581   205 |         (void*)(*proc)(var_name, xptr);
+#12 5.581       |         ^    ~
+#12 5.581 /source/src/utils_lgpl/deltares_common/packages/deltares_common_c/src/bmi_shared_lib_fortran_api.c:217:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.581   217 |         (void*)(*proc)(c_var_name, values);
+#12 5.581       |         ^    ~
+#12 5.581 /source/src/utils_lgpl/deltares_common/packages/deltares_common_c/src/bmi_shared_lib_fortran_api.c:234:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.581   234 |         (void*)(*proc)(c_var_name, values);
+#12 5.581       |         ^    ~
+#12 5.581 /source/src/utils_lgpl/deltares_common/packages/deltares_common_c/src/bmi_shared_lib_fortran_api.c:248:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.581   248 |         (void*)(*proc)(*dt);
+#12 5.581       |         ^    ~
+#12 5.581 /source/src/utils_lgpl/deltares_common/packages/deltares_common_c/src/bmi_shared_lib_fortran_api.c:261:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.581   261 |         (void*)(*proc)();
+#12 5.581       |         ^    ~
+#12 5.585 /source/src/utils_gpl/morphology/packages/morphology_plugins_c/src/shared_lib_trafrm.c:144:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.585   144 |         (void*)(*proc)(dll_integers, max_integers, dll_reals, max_reals, dll_strings, max_strings, sbc_total, sbc, sbcu,
+#12 5.585       |         ^    ~
+#12 5.585 /source/src/utils_gpl/morphology/packages/morphology_plugins_c/src/shared_lib_trafrm.c:209:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.585   209 |         (void*)(*proc)(dll_integers, max_integers, dll_reals, max_reals, dll_strings, max_strings, sink, source,
+#12 5.586       |         ^    ~
+#12 5.590 /source/src/utils_gpl/morphology/packages/morphology_plugins_c/src/shared_lib_fallve.c:137:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.590   137 |         (void*)(*proc)(dll_integers, max_integers, dll_reals, max_reals, dll_strings, max_strings, ws, message,
+#12 5.590       |         ^    ~
+#12 5.591 [  2%] Built target polypack
+#12 5.595 [  3%] Built target interacter_stub
+#12 5.595 [  5%] Built target spherepack
+#12 5.597 [  5%] Built target FLAP
+#12 5.597 21 warning generated.
+#12 5.598  warnings generated.
+#12 5.601 [  5%] Built target test_dflowfm_kernel_gtest_f2h
+#12 5.602 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:674:98: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.602   674 |         sprintf(error_text, "Gethdt: Supplied character string too small for header: %ld<%ld\n", header_length, LHDRDT);
+#12 5.602       |                                                                                      ~~~         ^~~~~~~~~~~~~
+#12 5.602       |                                                                                      %d
+#12 5.603 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:674:113: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.603   674 |         sprintf(error_text, "Gethdt: Supplied character string too small for header: %ld<%ld\n", header_length, LHDRDT);
+#12 5.603       |                                                                                          ~~~                    ^~~~~~
+#12 5.603       |                                                                                          %d
+#12 5.603 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:37:16: note: expanded from macro 'LHDRDT'
+#12 5.603    37 | #define LHDRDT 60
+#12 5.603       |                ^~
+#12 5.603 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:706:97: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.603   706 |         sprintf(error_text, "Gethdf: Supplied character string too small for header %ld<%ld\n", header_length, LHDRDF);
+#12 5.603       |                                                                                     ~~~         ^~~~~~~~~~~~~
+#12 5.603       |                                                                                     %d
+#12 5.603 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:706:112: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.603   706 |         sprintf(error_text, "Gethdf: Supplied character string too small for header %ld<%ld\n", header_length, LHDRDF);
+#12 5.603       |                                                                                         ~~~                    ^~~~~~
+#12 5.603       |                                                                                         %d
+#12 5.603 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:31:16: note: expanded from macro 'LHDRDF'
+#12 5.603    31 | #define LHDRDF 60
+#12 5.603       |                ^~
+#12 5.605 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:887:91: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.605   887 |         sprintf(error_text, "Getsat: User supplied attribute string too small %ld<%ld\n", at_value_length, MAX_NAME);
+#12 5.606       |                                                                               ~~~         ^~~~~~~~~~~~~~~
+#12 5.606       |                                                                               %d
+#12 5.606 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:887:108: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.606   887 |         sprintf(error_text, "Getsat: User supplied attribute string too small %ld<%ld\n", at_value_length, MAX_NAME);
+#12 5.607       |                                                                                   ~~~                      ^~~~~~~~
+#12 5.607       |                                                                                   %d
+#12 5.607 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.607    46 | #define MAX_NAME 16
+#12 5.607       |                  ^~
+#12 5.608 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:931:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.609   930 |         sprintf(error_text, "Inqcel: Supplied array too[  5%] Linking C static library libmorphology_plugins_c.a
+#12 5.610  small to contain all element names: \'%s\' %ld<%d\n", cel_name,
+#12 5.610       |                                                                                                    ~~~
+#12 5.610       |                                                                                                    %d
+#12 5.610   931 |                 el_names_length, MAX_NAME);
+#12 5.610       |                 ^~~~~~~~~~~~~~~
+#12 5.611 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:943:31: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.611   942 |             sprintf(error_text, "Inqcel: User supplied array too small to contain Cell properties: \'%s\' %ld<%ld \n",
+#12 5.611       |                                                                                                           ~~~
+#12 5.611       |                                                                                                           %d
+#12 5.611   943 |                     cel_name, *cl_num_dim, cel_num_dim);
+#12 5.611       |                               ^~~~~~~~~~~
+#12 5.611 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:943:44: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.611   942 |             sprintf(error_text, "Inqcel: User supplied array too small to contain Cell properties: \'%s\' %ld<%ld \n",
+#12 5.611       |                                                                                                               ~~~
+#12 5.611       |                                                                                                               %u
+#12 5.611   943 |                     cel_name, *cl_num_dim, cel_num_dim);
+#12 5.611       |                                            ^~~~~~~~~~~
+#12 5.612 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:980:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.615   979 |         sprintf(error_text, "Inqdat: User supplied array to store group definition too small: %ld<%ld \n",
+#12 5.616       |                                                                                               ~~~
+#12 5.616       |                                                                                               %d
+#12 5.617   980 |                 gr_defined_length, MAX_NAME);
+#12 5.617       |                 ^~~~~~~~~~~~~~~~~
+#12 5.617 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:980:36: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.617   979 |         sprintf(error_text, "Inqdat: User supplied array to store group definition too small: %ld<%ld \n",
+#12 5.617       |                                                                                                   ~~~
+#12 5.617       |                                                                                                   %d
+#12 5.617   980 |                 gr_defined_length, MAX_NAME);
+#12 5.617       |                                    ^~~~~~~~
+#12 5.617 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.617    46 | #define MAX_NAME 16
+#12 5.617       |                  ^~
+#12 5.618 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1054:26: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.618  1052 |                 "Inqelm: User supplied array's to store element definition too small: %s, %ld, %ld<%ld, %ld<%ld, "
+#12 5.618       |                                                                                           ~~~
+#12 5.618       |                                                                                           %u
+#12 5.618  1053 |                 "%ld<%ld, %ld<%ld\n",
+#12 5.618  1054 |                 el_name, el_name_length, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.618       |                          ^~~~~~~~~~~~~~
+#12 5.618 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1054:42: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.618  1052 |                 "Inqelm: User supplied array's to store element definition too small: %s, %ld, %ld<%ld, %ld<%ld, "
+#12 5.618       |                                                                                                ~~~
+#12 5.618       |                                                                                                %u
+#12 5.618  1053 |                 "%ld<%ld, %ld<%ld\n",
+#12 5.618  1054 |                 el_name, el_name_length, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.618       |                                          ^~~~~~~~~~~~~~
+#12 5.618 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1054:58: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.618  1052 |                 "Inqelm: User supplied array's to store element definition too small: %s, %ld, %ld<%ld, %ld<%ld, "
+#12 5.618       |                                                                                                    ~~~
+#12 5.618       |                                                                                                    %d
+#12 5.618  1053 |                 "%ld<%ld, %ld<%ld\n",
+#12 5.618  1054 |                 el_name, el_name_length, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.618       |                                                          ^~~~~~~~
+#12 5.618 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:49:18: note: expanded from macro 'MAX_TYPE'
+#12 5.618    49 | #define MAX_TYPE 8
+#12 5.618       |                  ^
+#12 5.618 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1054:68: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.618  1052 |                 "Inqelm: User supplied array's to store element definition too small: %s, %ld, %ld<%ld, %ld<%ld, "
+#12 5.618       |                                                                                                         ~~~
+#12 5.618       |                                                                                                         %u
+#12 5.618  1053 |                 "%ld<%ld, %ld<%ld\n",
+#12 5.618  1054 |                 el_name, el_name_length, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.618       |                                                                    ^~~~~~~~~~~~~~~~~~
+#12 5.618 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1054:88: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.618  1052 |                 "Inqelm: User supplied array's to store element definition too small: %s, %ld, %ld<%ld, %ld<%ld, "
+#12 5.618       |                                                                                                             ~~~
+#12 5.618       |                                                                                                             %d
+#12 5.618  1053 |                 "%ld<%ld, %ld<%ld\n",
+#12 5.618  1054 |                 el_name, el_name_length, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.619       |                                                                                        ^~~~~~~~
+#12 5.619 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.619    46 | #define MAX_NAME 16
+#12 5.619       |                  ^~
+#12 5.619 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1054:98: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.619  1053 |                 "%ld<%ld, %ld<%ld\n",
+#12 5.619       |                  ~~~
+#12 5.619       |                  %u
+#12 5.619  1054 |                 el_name, el_name_length, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.619       |                                                                                                  ^~~~~~~~~~~~~~~
+#12 5.620 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1055:17: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.620  1053 |                 "%ld<%ld, %ld<%ld\n",
+#12 5.620       |                      ~~~
+#12 5.620       |                      %d
+#12 5.620  1054 |                 el_name, el_name_length, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.620  1055 |                 MAX_NAME, el_desc_length, MAX_DESC);
+#12 5.620       |                 ^~~~~~~~
+#12 5.620 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.620    46 | #define MAX_NAME 16
+#12 5.620       |                  ^~
+#12 5.620 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1055:27: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.620  1053 |                 "%ld<%ld, %ld<%ld\n",
+#12 5.620       |                           ~~~
+#12 5.620       |                           %u
+#12 5.620  1054 |                 el_name, el_name_length, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.620  1055 |                 MAX_NAME, el_desc_length, MAX_DESC);
+#12 5.620       |                           ^~~~~~~~~~~~~~
+#12 5.620 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1055:43: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.620  1053 |                 "%ld<%ld, %ld<%ld\n",
+#12 5.620       |                               ~~~
+#12 5.620       |                               %d
+#12 5.620  1054 |                 el_name, el_name_length, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.620  1055 |                 MAX_NAME, el_desc_length, MAX_DESC);
+#12 5.620       |                                           ^~~~~~~~
+#12 5.620 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:44:18: note: expanded from macro 'MAX_DESC'
+#12 5.620    44 | #define MAX_DESC 64
+#12 5.620       |                  ^~
+#12 5.620 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1107:21: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.620  1106 |                     "%ld<%ld \n",
+#12 5.620       |                      ~~~
+#12 5.620       |                      %d
+#12 5.620  1107 |                     *el_num_dim, elm_num_dim);
+#12 5.620       |                     ^~~~~~~~~~~
+#12 5.621 [  5%] Building C object dfm_api_access/CMakeFiles/dfm_api_access.dir/src/dfm_lib_fortran_api.c.o
+#12 5.621 [  5%] Built target test_ec_module_f2h
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1107:34: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.622  1106 |                     "%ld<%ld \n",
+#12 5.622       |                          ~~~
+#12 5.622       |                          %u
+#12 5.622  1107 |                     *el_num_dim, elm_num_dim);
+#12 5.622       |                                  ^~~~~~~~~~~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1153:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.622  1152 |         sprintf(error_text, "Inqfst: User supplied array to contain names too small: %ld<%ld, %ld<%ld\n",
+#12 5.622       |                                                                                      ~~~
+#12 5.622       |                                                                                      %d
+#12 5.622  1153 |                 gr_name_length, MAX_NAME, gr_defined_length, MAX_NAME);
+#12 5.622       |                 ^~~~~~~~~~~~~~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1153:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.622  1152 |         sprintf(error_text, "Inqfst: User supplied array to contain names too small: %ld<%ld, %ld<%ld\n",
+#12 5.622       |                                                                                          ~~~
+#12 5.622       |                                                                                          %d
+#12 5.622  1153 |                 gr_name_length, MAX_NAME, gr_defined_length, MAX_NAME);
+#12 5.622       |                                 ^~~~~~~~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.622    46 | #define MAX_NAME 16
+#12 5.622       |                  ^~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1153:43: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.622  1152 |         sprintf(error_text, "Inqfst: User supplied array to contain names too small: %ld<%ld, %ld<%ld\n",
+#12 5.622       |                                                                                               ~~~
+#12 5.622       |                                                                                               %d
+#12 5.622  1153 |                 gr_name_length, MAX_NAME, gr_defined_length, MAX_NAME);
+#12 5.622       |                                           ^~~~~~~~~~~~~~~~~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1153:62: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.622  1152 |         sprintf(error_text, "Inqfst: User supplied array to contain names too small: %ld<%ld, %ld<%ld\n",
+#12 5.622       |                                                                                                   ~~~
+#12 5.622       |                                                                                                   %d
+#12 5.622  1153 |                 gr_name_length, MAX_NAME, gr_defined_length, MAX_NAME);
+#12 5.622       |                                                              ^~~~~~~~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.622    46 | #define MAX_NAME 16
+#12 5.622       |                  ^~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1249:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.622  1247 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.622       |                                                                                       ~~~
+#12 5.622       |                                                                                       %d
+#12 5.622  1248 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.622  1249 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.622       |                 ^~~~~~~~~~~~~~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1249:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.622  1247 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.622       |                                                                                           ~~~
+#12 5.622       |                                                                                           %d
+#12 5.622  1248 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.622  1249 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.622       |                                 ^~~~~~~~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.622    46 | #define MAX_NAME 16
+#12 5.622       |                  ^~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1249:43: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.622  1247 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.622       |                                                                                                ~~~
+#12 5.622       |                                                                                                %d
+#12 5.622  1248 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.622  1249 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.622       |                                           ^~~~~~~~~~~~~~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1249:59: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.622  1247 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.622       |                                                                                                    ~~~
+#12 5.622       |                                                                                                    %d
+#12 5.622  1248 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.622  1249 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.622       |                                                           ^~~~~~~~
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:49:18: note: expanded from macro 'MAX_TYPE'
+#12 5.622    49 | #define MAX_TYPE 8
+#12 5.622       |                  ^
+#12 5.622 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1249:69: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.622  1247 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.622       |                                                                                                         ~~~
+#12 5.622       |                                                                                                         %d
+#12 5.622  1248 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.622  1249 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.623       |                                                                     ^~~~~~~~~~~~~~~~~~
+#12 5.623 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1249:89: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.623  1247 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.623       |                                                                                                             ~~~
+#12 5.623       |                                                                                                             %d
+#12 5.623  1248 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.623  1249 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.623       |                                                                                         ^~~~~~~~
+#12 5.623 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.623    46 | #define MAX_NAME 16
+#12 5.623       |                  ^~
+#12 5.623 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1249:99: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.623  1248 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.623       |                  ~~~
+#12 5.623       |                  %d
+#12 5.623  1249 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.623       |                                                                                                   ^~~~~~~~~~~~~~~
+#12 5.623 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1250:17: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.623  1248 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.623       |                      ~~~
+#12 5.623       |                      %d
+#12 5.623  1249 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.623  1250 |                 MAX_NAME, el_desc_length, MAX_DESC);
+#12 5.623       |                 ^~~~~~~~
+#12 5.623 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.623    46 | #define MAX_NAME 16
+#12 5.623       |                  ^~
+#12 5.623 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1250:27: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.623  1248 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.623       |                           ~~~
+#12 5.623       |                           %d
+#12 5.623  1249 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.623  1250 |                 MAX_NAME, el_desc_length, MAX_DESC);
+#12 5.623       |                           ^~~~~~~~~~~~~~
+#12 5.623 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1250:43: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.623  1248 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.623       |                               ~~~
+#12 5.623       |                               %d
+#12 5.623  1249 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.623  1250 |                 MAX_NAME, el_desc_length, MAX_DESC);
+#12 5.623       |                                           ^~~~~~~~
+#12 5.623 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:44:18: note: expanded from macro 'MAX_DESC'
+#12 5.623    44 | #define MAX_DESC 64
+#12 5.623       |                  ^~
+#12 5.623 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1299:21: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.623  1298 |             sprintf(error_text, "Inqfel: User supplied array to contain element names too small: %ld<%ld \n",
+#12 5.623       |                                                                                                  ~~~
+#12 5.623       |                                                                                                  %d
+#12 5.623  1299 |                     *el_num_dim, elm_num_dim);
+#12 5.623       |                     ^~~~~~~~~~~
+#12 5.623 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1299:34: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.623  1298 |             sprintf(error_text, "Inqfel: User supplied array to contain element names too small: %ld<%ld \n",
+#12 5.623       |                                                                                                      ~~~
+#12 5.623       |                                                                                                      %d
+#12 5.623  1299 |                     *el_num_dim, elm_num_dim);
+#12 5.623       |                                  ^~~~~~~~~~~
+#12 5.624 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1382:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.624  1380 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.624       |                                                                                       ~~~
+#12 5.624       |                                                                                       %d
+#12 5.624  1381 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.624  1382 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.624       |                 ^~~~~~~~~~~~~~
+#12 5.624 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1382:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.624  1380 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.624       |                                                                                           ~~~
+#12 5.624       |                                                                                           %d
+#12 5.624  1381 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.624  1382 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.624       |                                 ^~~~~~~~
+#12 5.624 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h8 warnings generated.
+#12 5.624 :46:18: note: expanded from macro 'MAX_NAME'
+#12 5.624    46 | #define MAX_NAME 16
+#12 5.625       |                  ^~
+#12 5.625 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1382:43: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.625  1380 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.626       |                                                                                                ~~~
+#12 5.626       |                                                                                                %d
+#12 5.626  1381 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.626  1382 |                 el_name_length, MA[  5%] Built target plugin_culvert
+#12 5.626 X_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.626       |                                           ^~~~~~~~~~~~~~
+#12 5.626 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1382:59: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.626  1380 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.627       |                                                                                                    ~~~
+#12 5.627       |                                                                                                    %d
+#12 5.627  1381 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.628  1382 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.629       |                                                           ^~~~~~~~
+#12 5.629 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:49:18: note: expanded from macro 'MAX_TYPE'
+#12 5.629    49 | #define MAX_TYPE 8
+#12 5.629       |                  ^
+#12 5.629 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1382:69: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.629  [  5%] Built target esmfsm_version_number
+#12 5.631 [  5%] Building CXX object delftio_shm/CMakeFiles/delftio_shm.dir/src/diof90/dio-sync-ux.cpp.o
+#12 5.632 [  5%] Built target plugin_delftflow_traform
+#12 5.632 [  5%] Building CXX object delftio_shm/CMakeFiles/delftio_shm.dir/src/diof90/dio_shm.cpp.o
+#12 5.633 1380 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.633       |                                                                                                         ~~~
+#12 5.633       |                                                                                                         %d
+#12 5.633  1381 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.633  1382 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.633       |                                                                     ^~~~~~~~~~~~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1382:89: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.633  1380 |                 "Inqelm: User supplied array's to store element definition too small: %ld<%ld, %ld<%ld, %ld<%ld, "
+#12 5.633       |                                                                                                             ~~~
+#12 5.633       |                                                                                                             %d
+#12 5.633  1381 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.633  1382 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.633       |                                                                                         ^~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.633    46 | #define MAX_NAME 16
+#12 5.633       |                  ^~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1382:99: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.633  1381 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.633       |                  ~~~
+#12 5.633       |                  %d
+#12 5.633  1382 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.633       |                                                                                                   ^~~~~~~~~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1383:17: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.633  1381 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.633       |                      ~~~
+#12 5.633       |                      %d
+#12 5.633  1382 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.633  1383 |                 MAX_NAME, el_desc_length, MAX_DESC);
+#12 5.633       |                 ^~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.633    46 | #define MAX_NAME 16
+#12 5.633       |                  ^~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1383:27: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.633  1381 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.633       |                           ~~~
+#12 5.633       |                           %d
+#12 5.633  1382 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.633  1383 |                 MAX_NAME, el_desc_length, MAX_DESC);
+#12 5.633       |                           ^~~~~~~~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1383:43: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.633  1381 |                 "%ld<%ld, %ld<%ld \n",
+#12 5.633       |                               ~~~
+#12 5.633       |                               %d
+#12 5.633  1382 |                 el_name_length, MAX_NAME, el_type_length, MAX_TYPE, el_quantity_length, MAX_NAME, el_unity_length,
+#12 5.633  1383 |                 MAX_NAME, el_desc_length, MAX_DESC);
+#12 5.633       |                                           ^~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:44:18: note: expanded from macro 'MAX_DESC'
+#12 5.633    44 | #define MAX_DESC 64
+#12 5.633       |                  ^~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1432:21: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.633  1431 |             sprintf(error_text, "Inqfel: User supplied array to contain element names too small: %ld<%ld \n",
+#12 5.633       |                                                                                                  ~~~
+#12 5.633       |                                                                                                  %d
+#12 5.633  1432 |                     *el_num_dim, elm_num_dim);
+#12 5.633       |                     ^~~~~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1432:34: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.633  1431 |             sprintf(error_text, "Inqfel: User supplied array to contain element names too small: %ld<%ld \n",
+#12 5.633       |                                                                                                      ~~~
+#12 5.633       |                                                                                                      %d
+#12 5.633  1432 |                     *el_num_dim, elm_num_dim);
+#12 5.633       |                                  ^~~~~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1493:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.633  1492 |         sprintf(error_text, "Inqfcl: Supplied array too small to contain all element names: \'%s\' %ld>%d \n", cl_name,
+#12 5.633       |                                                                                                    ~~~
+#12 5.633       |                                                                                                    %d
+#12 5.633  1493 |                 el_names_length, MAX_NAME);
+#12 5.633       |                 ^~~~~~~~~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/gp.c:1662:85: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.633  1662 |                 sprintf(error_text, "On writing variable pointer table, table %ld", j);
+#12 5.633       |                                                                               ~~~   ^
+#12 5.633       |                                                                               %d
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1515:31: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.633  1514 |             sprintf(error_text, "Inqfcl: User supplied array too small to contain Cell properties: \'%s\' %ld>%ld \n",
+#12 5.633       |                                                                                                           ~~~
+#12 5.633       |                                                                                                           %u
+#12 5.633  1515 |                     cel_name, cel_num_dim, *cl_num_dim);
+#12 5.633       |                               ^~~~~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1515:44: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.633  1514 |             sprintf(error_text, "Inqfcl: User supplied array too small to contain Cell properties: \'%s\' %ld>%ld \n",
+#12 5.633       |                                                                                                               ~~~
+#12 5.633       |                                                                                                               %d
+#12 5.633  1515 |                     cel_name, cel_num_dim, *cl_num_dim);
+#12 5.633       |                                            ^~~~~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/gp.c:1730:89: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.633  1730 |                     sprintf(error_text, "On reading variable pointer table, table %ld", j);
+#12 5.633       |                                                                                   ~~~   ^
+#12 5.633       |                                                                                   %d
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1579:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.633  1578 |         sprintf(error_text, "Inqfcl: Supplied array too small to contain all element names: \'%s\' %ld>%d \n", cl_name,
+#12 5.633       |                                                                                                    ~~~
+#12 5.633       |                                                                                                    %d
+#12 5.633  1579 |                 el_names_length, MAX_NAME);
+#12 5.633       |                 ^~~~~~~~~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1601:31: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.633  1600 |             sprintf(error_text, "Inqncl: User supplied array too small to contain Cell properties: \'%s\' %ld>%ld \n",
+#12 5.633       |                                                                                                           ~~~
+#12 5.633       |                                                                                                           %u
+#12 5.633  1601 |                     cel_name, cel_num_dim, *cl_num_dim);
+#12 5.633       |                               ^~~~~~~~~~~
+#12 5.633 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1601:44: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.633  1600 |             sprintf(error_text, "Inqncl: User supplied array too small to contain Cell properties: \'%s\' %ld>%ld \n",
+#12 5.633       |                                                                                                               ~~~
+#12 5.633       |                                                                                                               %d
+#12 5.633  1601 |                     cel_name, cel_num_dim, *cl_num_dim);
+#12 5.633       |                                            ^~~~~~~~~~~
+#12 5.634 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1665:17: warning: /source/src/utils_lgpl/nefis/packages/nefis/src/gp.c:1897:89: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.635  1897 | format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.635  1664 |         sprintf(error_text, "Inqfgr: User supplied array to contain names too small: %ld<%ld, %ld<%ld \n",
+#12 5.635       |                                                                                      ~~~
+#12 5.635       |                                                                                      %d
+#12 5.635  1665 |                 gr_name_length, MAX_NAME, cl_name_length, MAX_NAME);
+#12 5.635       |                 ^~~~~~~~~~~~~~
+#12 5.635 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1665:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.635  1664 |   [  6%] Building CXX object delftio_shm/CMakeFiles/delftio_shm.dir/src/diof90/dio_shm_datablock.cpp.o
+#12 5.635 [  6%] Building CXX object delftio_shm/CMakeFiles/delftio_shm.dir/src/diof90/dio_shm_f2c_c.cpp.o
+#12 5.635       sprintf(error_text, "Inqfgr: User supplied a[  6%] Built target metis
+#12 5.636 rray to contain names too small: %ld<%ld, %ld<%ld \n " ,  
+#12 5.636          |                                                                                           ~~~ 
+#12 5.636          |                                                                                            %d 
+#12 5.636      sprintf(error_text, "On  r1665e | a di n g   v a r i a bl e  p oi n t egrr t_anblaem,e _tlaebnleg t%hl,d "M,A jX)_;NA
+#12 5.636 M      | E                                                                                  ~~~   ^,
+#12 5.636  c      l| _                                                                                  %un
+#12 5.636 ame_length, MAX_NAME);
+#12 5.636       |                                 ^~~~~~~~
+#12 5.636 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.636    46 | #define MAX_NAME 16
+#12 5.636       |                  ^~
+#12 5.636 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1665:43: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.636  1664 |         sprintf(error_text, "Inqfgr: User supplied array to contain names too small: %ld<%ld, %ld<%ld \n",
+#12 5.636       |                                                                                               ~~~
+#12 5.636       |                                                                                               %d
+#12 5.636  1665 |                 gr_name_length, MAX_NAME, cl_name_length, MAX_NAME);
+#12 5.636       |                                           ^~~~~~~~~~~~~~
+#12 5.636 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1665:59: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.636  1664 |         sprintf(error_text, "Inqfgr: User supplied array to contain names too small: %ld<%ld, %ld<%ld \n",
+#12 5.636       |                                                                                                   ~~~
+#12 5.636       |                                                                                                   %d
+#12 5.636  1665 |                 gr_name_length, MAX_NAME, cl_name_length, MAX_NAME);
+#12 5.636       |                                                           ^~~~~~~~
+#12 5.636 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.636    46 | #define MAX_NAME 16
+#12 5.636       |                  ^~
+#12 5.637 [  6%] Building CXX object delftio_shm/CMakeFiles/delftio_shm.dir/src/diof90/dio_shm_handle.cpp.o
+#12 5.637 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1687:31: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.637  1686 |             sprintf(error_text, "Inqfgr: User supplied array too small to contain group properties: \'%s\' %ld>%ld \n",
+#12 5.637       |                                                                                                            ~~~
+#12 5.637       |                                                                                                            %d
+#12 5.637  1687 |                     grp_name, grp_num_dim, *gr_num_dim);
+#12 5.637       |                               ^~~~~~~~~~~
+#12 5.637 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1687:44: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.637  1686 |             sprintf(error_text, "Inqfgr: User supplied array too small to contain group properties: \'%s\' %ld>%ld \n",
+#12 5.637       |                                                                                                                ~~~
+#12 5.637       |                                                                                                                %d
+#12 5.637  1687 |                     grp_name, grp_num_dim, *gr_num_dim);
+#12 5.637       |                                            ^~~~~~~~~~~
+#12 5.640 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1753:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.640  1752 |         sprintf(error_text, "Inqfgr: User supplied array to contain names too small: %ld<%ld, %ld<%ld \n",
+#12 5.640       |                                                                                      ~~~
+#12 5.640       |                                                                                      %d
+#12 5.641  1753 |                 gr_name_length, MAX_NAME, cl_name_length, MAX_NAME);
+#12 5.641       |                 ^~~~~~~~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1753:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.641  1752 |         sprintf(error_text, "Inqfgr: User supplied array to contain names too small: %ld<%ld, %ld<%ld \n",
+#12 5.641       |                                                                                          ~~~
+#12 5.641       |                                                                                          %d
+#12 5.641  1753 |                 gr_name_length, MAX_NAME, cl_name_length, MAX_NAME);
+#12 5.641       |                                 ^~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.641    46 | #define MAX_NAME 16
+#12 5.641       |                  ^~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1753:43: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.641  1752 |         sprintf(error_text, "Inqfgr: User supplied array to contain names too small: %ld<%ld, %ld<%ld \n",
+#12 5.641       |                                                                                               ~~~
+#12 5.641       |                                                                                               %d
+#12 5.641  1753 |                 gr_name_length, MAX_NAME, cl_name_length, MAX_NAME);
+#12 5.641       |                                           ^~~~~~~~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1753:59: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.641  1752 |         sprintf(error_text, "Inqfgr: User supplied array to contain names too small: %ld<%ld, %ld<%ld \n",
+#12 5.641       |                                                                                                   ~~~
+#12 5.641       |                                                                                                   %d
+#12 5.641  1753 |                 gr_name_length, MAX_NAME, cl_name_length, MAX_NAME);
+#12 5.641       |                                                           ^~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.641    46 | #define MAX_NAME 16
+#12 5.641       |                  ^~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1775:31: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.641  1774 |             sprintf(error_text, "Inqngr: User supplied array too small to contain group properties: \'%s\' %ld>%ld \n",
+#12 5.641       |                                                                                                            ~~~
+#12 5.641       |                                                                                                            %d
+#12 5.641  1775 |                     grp_name, grp_num_dim, *gr_num_dim);
+#12 5.641       |                               ^~~~~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1775:44: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.641  1774 |             sprintf(error_text, "Inqngr: User supplied array too small to contain group properties: \'%s\' %ld>%ld \n",
+#12 5.641       |                                                                                                                ~~~
+#12 5.641       |                                                                                                                %d
+#12 5.641  1775 |                     grp_name, grp_num_dim, *gr_num_dim);
+#12 5.641       |                                            ^~~~~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1828:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.641  1827 |         sprintf(error_text, "Inqfia: User supplied array to contain integer attribute names too small: %ld<%ld\n",
+#12 5.641       |                                                                                                        ~~~
+#12 5.641       |                                                                                                        %d
+#12 5.641  1828 |                 at_name_length, MAX_NAME);
+#12 5.641       |                 ^~~~~~~~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1828:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.641  1827 |         sprintf(error_text, "Inqfia: User supplied array to contain integer attribute names too small: %ld<%ld\n",
+#12 5.641       |                                                                                                            ~~~
+#12 5.641       |                                                                                                            %d
+#12 5.641  1828 |                 at_name_length, MAX_NAME);
+#12 5.641       |                                 ^~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.641    46 | #define MAX_NAME 16
+#12 5.641       |                  ^~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1884:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.641  1883 |         sprintf(error_text, "Inqfra: User supplied array to contain real attribute names too small: %ld<%ld\n",
+#12 5.641       |                                                                                                     ~~~
+#12 5.641       |                                                                                                     %d
+#12 5.641  1884 |                 at_name_length, MAX_NAME);
+#12 5.641       |                 ^~~~~~~~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1884:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.641  1883 |         sprintf(error_text, "Inqfra: User supplied array to contain real attribute names too small: %ld<%ld\n",
+#12 5.641       |                                                                                                         ~~~
+#12 5.641       |                                                                                                         %d
+#12 5.641  1884 |                 at_name_length, MAX_NAME);
+#12 5.641       |                                 ^~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.641    46 | #define MAX_NAME 16
+#12 5.641       |                  ^~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1941:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.641  1940 |                 "Inqfsa: User supplied array to contain string attribute names too small: %ld<%ld, %ld<%ld\n",
+#12 5.641       |                                                                                           ~~~
+#12 5.641       |                                                                                           %d
+#12 5.641  1941 |                 at_name_length, MAX_NAME, at_value_length, MAX_NAME);
+#12 5.641       |                 ^~~~~~~~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1941:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.641  1940 |                 "Inqfsa: User supplied array to contain string attribute names too small: %ld<%ld, %ld<%ld\n",
+#12 5.641       |                                                                                               ~~~
+#12 5.641       |                                                                                               %d
+#12 5.641  1941 |                 at_name_length, MAX_NAME, at_value_length, MAX_NAME);
+#12 5.641       |                                 ^~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.641    46 | #define MAX_NAME 16
+#12 5.641       |                  ^~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1941:43: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.641  1940 |                 "Inqfsa: User supplied array to contain string attribute names too small: %ld<%ld, %ld<%ld\n",
+#12 5.641       |                                                                                                    ~~~
+#12 5.641       |                                                                                                    %d
+#12 5.641  1941 |                 at_name_length, MAX_NAME, at_value_length, MAX_NAME);
+#12 5.641       |                                           ^~~~~~~~~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:1941:60: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.641  1940 |                 "Inqfsa: User supplied array to contain string attribute names too small: %ld<%ld, %ld<%ld\n",
+#12 5.641       |                                                                                                        ~~~
+#12 5.641       |                                                                                                        %d
+#12 5.641  1941 |                 at_name_length, MAX_NAME, at_value_length, MAX_NAME);
+#12 5.641       |                                                            ^~~~~~~~
+#12 5.641 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.641    46 | #define MAX_NAME 16
+#12 5.641       |                  ^~
+#12 5.642 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2016:21: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.642  2015 |             sprintf(error_text, "Inqgrp: User supplied array to contain group dimensions too smal[  6%] Built target morphology_plugins_c
+#12 5.642 l: %ld<%ld\n",
+#12 5.642       |                                                                                                     ~~~
+#12 5.642       |                                                                                                     %d
+#12 5.642  2016 |                     *gr_num_dim, grp_num_dim);
+#12 5.642       |                     ^~~~~~~~~~~
+#12 5.642 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2016:34: warning: format specifies type 'long' but the argument has type 'BUInt4' (aka 'unsigned int') [-Wformat]
+#12 5.642  2015 |             sprintf(error_text, "Inqgrp: User supplied array to contain group dimensions too small: %ld<%ld\n",
+#12 5.643       |                                                                                                         ~~~
+#12 5.643       |                                                                                                         %u
+#12 5.643  2016 |                     *gr_num_dim, grp_num_dim);
+#12 5.643       |                                  ^~~~~~~~~~~
+#12 5.644 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2079:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.644  2078 |         sprintf(error_text, "Inqnxt: User supplied array to contain names too small: %ld<%ld, %ld<%ld\n",
+#12 5.645       |                                                                                      ~~~
+#12 5.645       |                                                                                      %d
+#12 5.645  2079 |                 gr_name_length, MAX_NAME, gr_defined_length, MAX_NAME);
+#12 5.645       |                 ^~~~~~~~~~~~~~
+#12 5.645 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2079:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.645  2078 |         sprintf(error_text, "Inqnxt: User supplied array to contain names too small: %ld<%ld, %ld<%ld\n",
+#12 5.646       |                                                                                          ~~~
+#12 5.646       |                                                                                          %d
+#12 5.646  2079 |                 gr_name_length, MAX_NAME, gr_defined_length, MAX_NAME);
+#12 5.647       |                                 ^~~~~~~~
+#12 5.647 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.647    46 | #define MAX_NAME 16
+#12 5.647       |                  ^~
+#12 5.647 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2079:43: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.647  2078 |         sprintf(error_text, "Inqnxt: User supplied array to contain names too small: %ld<%ld, %ld<%ld\n",
+#12 5.647       |                                                                                               ~~~
+#12 5.647       |                                                                                               %d
+#12 5.647  2079 |                 gr_name_length, MAX_NAME, gr_defined_length, MAX_NAME);
+#12 5.647       |                                           ^~~~~~~~~~~~~~~~~
+#12 5.647 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2079:62: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.647  2078 |         sprintf(error_text, "Inqnxt: User supplied array to contain names too small: %ld<%ld, %ld<%ld\n",
+#12 5.647       |                                                                                                   ~~~
+#12 5.647       |                                                                                                   %d
+#12 5.647  2079 |                 gr_name_length, MAX_NAME, gr_defined_length, MAX_NAME);
+#12 5.647       |                                                              ^~~~~~~~
+#12 5.647 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.647    46 | #define MAX_NAME 16
+#12 5.647       |                  ^~
+#12 5.648 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2131:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.648  2130 |         sprintf(error_text, "Inqnia: User supplied array to contain integer attribute names too small: %ld<%ld\n",
+#12 5.648       |                                                                                                        ~~~
+#12 5.648       |                                                                                                        %d
+#12 5.648  2131 |                 at_name_length, MAX_NAME);
+#12 5.648       |                 ^~~~~~~~~~~~~~
+#12 5.648 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2131:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.648  2130 |         sprintf(error_text, "Inqnia: User supplied array to contain integer attribute names too small: %ld<%ld\n",
+#12 5.649       |                                                                                                            ~~~
+#12 5.649       |                                                                                                            %d
+#12 5.649  2131 |                 at_name_length, MAX_NAME);
+#12 5.649       |                                 ^~~~~~~~
+#12 5.649 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.649    46 | #define MAX_NAME 16
+#12 5.649       |                  ^~
+#12 5.650 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2178:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.650  2177 |         sprintf(error_text, "Inqnra: User supplied array to contain real attribute names too small: %ld<%ld\n",
+#12 5.651       |                                                                                                     ~~~
+#12 5.652       |                                                                                                     %d
+#12 5.652  2178 |                 at_name_length, MAX_NAME);
+#12 5.653       |                 ^~~~~~~~~~~~~~
+#12 5.654 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2178:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.656  2177 |         sprintf(error_text, "Inqnra: User supplied array to contain real attribute names too small: %ld<%ld\n",
+#12 5.656       |                                                                                                         ~~~
+#12 5.656       |                                                                                                         %d
+#12 5.656  2178 |                 at_name_length, MAX_NAME);
+#12 5.656       |                                 ^~~~~~~~
+#12 5.656 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.656    46 | #define MAX_NAME 16
+#12 5.657       |                  ^~
+#12 5.658 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2227:17: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.658  2226 |                 "Inqnra: User supplied array to contain string attributes (name/value) too small: %ld<%ld,  %ld<%ld\n",
+#12 5.659       |                                                                                                   ~~~
+#12 5.659       |                                                                                                   %d
+#12 5.659  2227 |                 at_name_length, MAX_NAME, at_value_length, MAX_NAME);
+#12 5.659       |                 ^~~~~~~~~~~~~~
+#12 5.659 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2227:33: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.660  2226 |                 "Inqnra: User supplied array to contain string attributes (name/value) too small: %ld<%ld,  %ld<%ld\n",
+#12 5.665       |                                                                                                       ~~~
+#12 5.665       |                                                                                                       %d
+#12 5.665  2227 |                 at_name_length, MAX_NAME, at_value_length, MAX_NAME);
+#12 5.665       |                                 ^~~~~~~~
+#12 5.665 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.665    46 | #define MAX_NAME 16
+#12 5.665       |                  ^~
+#12 5.665 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2227:43: warning: format specifies type 'long' but the argument has type 'BInt4' (aka 'int') [-Wformat]
+#12 5.665  2226 |                 "Inqnra: User supplied array to contain string attributes (name/value) too small: %ld<%ld,  %ld<%ld\n",
+#12 5.665       |                                                                                                             ~~~
+#12 5.665       |                                                                                                             %d
+#12 5.665  2227 |                 at_name_length, MAX_NAME, at_value_length, MAX_NAME);
+#12 5.665       |                                           ^~~~~~~~~~~~~~~
+#12 5.665 /source/src/utils_lgpl/nefis/packages/nefis/src/f2c.c:2227:60: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+#12 5.665  2226 |                 "Inqnra: User supplied array to contain string attributes (name/value) too small: %ld<%ld,  %ld<%ld\n",
+#12 5.665       |                                                                                                                 ~~~
+#12 5.665       |                                                                                                                 %d
+#12 5.665  2227 |                 at_name_length, MAX_NAME, at_value_length, MAX_NAME);
+#12 5.665       |                                                            ^~~~~~~~
+#12 5.665 /source/src/utils_lgpl/nefis/packages/nefis/include/nef-def.h:46:18: note: expanded from macro 'MAX_NAME'
+#12 5.665    46 | #define MAX_NAME 16
+#12 5.665       |                  ^~
+#12 5.666 [  6%] Building CXX object delftio_shm/CMakeFiles/delftio_shm.dir/src/diof90/dio_shm_sync.cpp.o
+#12 5.669 [  6%] Built target control_lib
+#12 5.682 /source/src/tools_gpl/dfm_volume_tool/packages/dfm_api_access/src/dfm_lib_fortran_api.c:92:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.682    92 |         (void*)(*proc)(*increment);
+#12 5.682       |         ^    ~
+#12 5.683 [  7%] Built target rr_rtc_tools
+#12 5.683 /source/src/tools_gpl/dfm_volume_tool/packages/dfm_api_access/src/dfm_lib_fortran_api.c:105:9: warning: expression result unused; should this cast be to 'void'? [-Wunused-value]
+#12 5.683   105 |         (void*)(*proc)(ncid);
+#12 5.683       |         ^    ~
+#12 5.684 [  7%] Built target rr_kernel_c
+#12 5.684 [  7%] Building CXX object rr_walrus_c/CMakeFiles/rr_walrus_c.dir/src/WalrusInterface.cpp.o
+#12 5.689 [  7%] Built target dsle
+#12 5.692 2 warnings generated.
+#12 5.693 [  7%] Built target Unity
+#12 5.699 [  7%] Built target dsle-static
+#12 5.703 [  7%] Linking C static library libdfm_api_access.a
+#12 5.715 [  7%] Built target f90twi_gtest
+#12 5.715 [  9%] Built target swan
+#12 5.716 [  9%] Linking CXX static library libdeltares_common_c.a
+#12 5.722 [  9%] Built target pre_c_sumo_lib
+#12 5.724 [  9%] Built target md5
+#12 5.725 [  9%] Building CXX object esmfsm_c/CMakeFiles/esmfsm_c.dir/src/esm/esm_f.cpp.o
+#12 5.725 [  9%] Built target metisoptions
+#12 5.728 [  9%] Building CXX object esmfsm_c/CMakeFiles/esmfsm_c.dir/src/esm/local.cpp.o
+#12 5.729 [  9%] Building CXX object esmfsm_c/CMakeFiles/esmfsm_c.dir/src/esm/esm.cpp.o
+#12 5.731 [ 11%] Built target swan_omp
+#12 5.733 [ 11%] Building CXX object esmfsm_c/CMakeFiles/esmfsm_c.dir/src/esm/shared.cpp.o
+#12 5.733 [ 12%] Building CXX object esmfsm_c/CMakeFiles/esmfsm_c.dir/src/fsm/fsm.cpp.o
+#12 5.756 [ 12%] Built target dfm_api_access
+#12 5.761 [ 12%] Linking Fortran static library libfortranc.a
+#12 5.761 [ 14%] Built target swan_mpi
+#12 5.763 [ 14%] Built target test_load_csv
+#12 5.767 [ 14%] Built target test_ini_read
+#12 5.772 [ 14%] Built target test_io_layer_distribution
+#12 5.775 [ 14%] Built target deltares_common_c
+#12 5.776 [ 14%] Built target test_dimr_bmi
+#12 5.779 In file included from /source/src/utils_lgpl/esmfsm/packages/esmfsm_c/src/esm/shared.cpp:39:
+#12 5.779 /source/src/utils_lgpl/esmfsm/packages/esmfsm_c/include/globals-esm.h:39:9: warning: "HAVE_STRUCT_TIMESPEC" redefined
+#12 5.779    39 | #define HAVE_STRUCT_TIMESPEC
+#12 5.779       |         ^~~~~~~~~~~~~~~~~~~~
+#12 5.779 <command-line>: note: this is the location of the previous definition
+#12 5.779 In file included from /source/src/utils_lgpl/esmfsm/packages/esmfsm_c/src/esm/esm.cpp:45:
+#12 5.779 /source/src/utils_lgpl/esmfsm/packages/esmfsm_c/include/globals-esm.h:39:9: warning: "HAVE_STRUCT_TIMESPEC" redefined
+#12 5.779    39 | #define HAVE_STRUCT_TIMESPEC
+#12 5.779       |         ^~~~~~~~~~~~~~~~~~~~
+#12 5.779 <command-line>: note: this is the location of the previous definition
+#12 5.785 [ 14%] Built target f90tw_gtest
+#12 5.789 [ 14%] Built target test_timestamp
+#12 5.793 In file included from /source/src/utils_lgpl/esmfsm/packages/esmfsm_c/src/fsm/fsm.cpp:45:
+#12 5.793 /source/src/utils_lgpl/esmfsm/packages/esmfsm_c/include/globals-fsm.h:39:9: warning: "HAVE_STRUCT_TIMESPEC" redefined
+#12 5.793    39 | #define HAVE_STRUCT_TIMESPEC
+#12 5.793       |         ^~~~~~~~~~~~~~~~~~~~
+#12 5.793 <command-line>: note: this is the location of the previous definition
+#12 5.794 In file included from /source/src/utils_lgpl/esmfsm/packages/esmfsm_c/src/esm/esm_f.cpp:1:
+#12 5.794 /source/src/utils_lgpl/esmfsm/packages/esmfsm_c/include/globals-fsm.h:39:9: warning: "HAVE_STRUCT_TIMESPEC" redefined
+#12 5.794    39 | #define HAVE_STRUCT_TIMESPEC
+#12 5.794       |         ^~~~~~~~~~~~~~~~~~~~
+#12 5.794 <command-line>: note: this is the location of the previous definition
+#12 5.800 In file included from /source/src/utils_lgpl/esmfsm/packages/esmfsm_c/src/esm/local.cpp:38:
+#12 5.800 /source/src/utils_lgpl/esmfsm/packages/esmfsm_c/include/globals-esm.h:39:9: warning: "HAVE_STRUCT_TIMESPEC" redefined
+#12 5.800    39 | #define HAVE_STRUCT_TIMESPEC
+#12 5.800       |         ^~~~~~~~~~~~~~~~~~~~
+#12 5.800 <command-line>: note: this is the location of the previous definition
+#12 5.802 [ 14%] Built target test_dsle_config
+#12 5.803 [ 14%] Built target test_sealock
+#12 5.810 [ 14%] Built target preC-SUMO
+#12 5.814 [ 14%] Built target fortranc
+#12 5.822 [ 16%] Built target FBCTools_static
+#12 5.823 [ 16%] Built target test_pre_c_sumo_lib
+#12 5.830 [ 17%] Building CXX object dimr_lib/CMakeFiles/dimr_lib.dir/src/component.cpp.o
+#12 5.830 [ 17%] Building CXX object dimr_lib/CMakeFiles/dimr_lib.dir/src/bmi.cpp.o
+#12 5.833 [ 17%] Built target fortrangis
+#12 5.836 [ 17%] Building CXX object dimr_lib/CMakeFiles/dimr_lib.dir/src/coredump.cpp.o
+#12 5.840 [ 17%] Building CXX object dimr_lib/CMakeFiles/dimr_lib.dir/src/dimr.cpp.o
+#12 5.841 [ 19%] Built target deltares_common
+#12 5.866 [ 19%] Built target test_deltares_common_gtest_f90
+#12 5.866 [ 19%] Built target FBCTools
+#12 5.868 /source/src/engines_gpl/dimr/packages/dimr_lib/src/bmi.cpp:1:9: warning: #pragma once in main file
+#12 5.868     1 | #pragma once
+#12 5.868       |         ^~~~
+#12 5.869 In file included from /source/src/engines_gpl/dimr/packages/dimr_lib/src/bmi.cpp:3:
+#12 5.869 /source/src/engines_gpl/dimr/packages/dimr_lib/include/dimr.h:42:9: warning: "HAVE_STRUCT_TIMESPEC" redefined
+#12 5.869    42 | #define HAVE_STRUCT_TIMESPEC
+#12 5.869       |         ^~~~~~~~~~~~~~~~~~~~
+#12 5.869 <command-line>: note: this is the location of the previous definition
+#12 5.873 [ 19%] Built target waq_definition
+#12 5.874 In file included from /source/src/engines_gpl/dimr/packages/dimr_lib/src/component.cpp:37:
+#12 5.874 /source/src/engines_gpl/dimr/packages/dimr_lib/include/dimr.h:42:9: warning: "HAVE_STRUCT_TIMESPEC" redefined
+#12 5.874    42 | #define HAVE_STRUCT_TIMESPEC
+#12 5.874       |         ^~~~~~~~~~~~~~~~~~~~
+#12 5.874 <command-line>: note: this is the location of the previous definition
+#12 5.878 [ 19%] Built target FBCTools_BMI
+#12 5.878 [ 19%] Built target morphology_data
+#12 5.879 In file included from /source/src/engines_gpl/dimr/packages/dimr_lib/src/coredump.cpp:37:
+#12 5.879 /source/src/engines_gpl/dimr/packages/dimr_lib/include/dimr.h:42:9: warning: "HAVE_STRUCT_TIMESPEC" redefined
+#12 5.879    42 | #define HAVE_STRUCT_TIMESPEC
+#12 5.879       |         ^~~~~~~~~~~~~~~~~~~~
+#12 5.883 [ 19%] Built target io_netcdf_data
+#12 5.885 <command-line>: note: this is the location of the previous definition
+#12 5.899 [ 19%] Linking Fortran executable tests_string_utils
+#12 5.924 [ 19%] Built target solvesaphe
+#12 5.925 [ 19%] Linking Fortran executable test_deltares_common
+#12 5.925 [ 19%] Built target kdtree_wrapper
+#12 5.925 [ 19%] Built target ice_data
+#12 5.930 [ 19%] Linking CXX executable test_deltares_common_gtest
+#12 5.931 [ 19%] Linking Fortran executable mormerge
+#12 5.933 [ 19%] Built target waq_logging
+#12 5.935 [ 19%] Linking CXX static library libdelftio_shm.a
+#12 5.937 [ 20%] Built target deltares_common_mpi
+#12 5.937 [ 20%] Built target dhydrology_kernel
+#12 5.938 [ 21%] Built target trachytopes_kernel
+#12 5.971 [ 21%] Built target waq_data
+#12 5.985 [ 21%] Built target waq_hyd_data
+#12 5.987 [ 22%] Built target waq_utils_f
+#12 5.991 [ 22%] Built target io_netcdf
+#12 5.999 [ 22%] Built target gridgeom
+#12 6.002 [ 22%] Built target ice_io
+#12 6.003 [ 22%] Built target trachytopes_io
+#12 6.024 [ 22%] Built target delftio_shm
+#12 6.038 [ 22%] Built target waq_validation
+#12 6.042 [ 22%] Built target waq_netcdf
+#12 6.047 [ 23%] Built target waq_memory
+#12 6.050 [ 23%] Built target part_data_f
+#12 6.050 [ 23%] Linking Fortran shared library libwaq_plugin_wasteload.so
+#12 6.063 [ 24%] Built target morphology_kernel
+#12 6.067 In file included from /source/src/engines_gpl/dimr/packages/dimr_lib/src/dimr.cpp:37:
+#12 6.067 /source/src/engines_gpl/dimr/packages/dimr_lib/include/dimr.h:42:9: warning: "HAVE_STRUCT_TIMESPEC" redefined
+#12 6.067    42 | #define HAVE_STRUCT_TIMESPEC
+#12 6.067       |         ^~~~~~~~~~~~~~~~~~~~
+#12 6.067 <command-line>: note: this is the location of the previous definition
+#12 6.069 [ 26%] Built target waq_proc_preprocess
+#12 6.085 [ 26%] Linking Fortran executable tests_file_path_utils_get_file_name
+#12 6.088 [ 26%] Linking Fortran executable tests_file_path_utils_get_filename_without_extension
+#12 6.097 [ 26%] Linking CXX shared library io_netcdf.so
+#12 6.111 [ 28%] Built target io_hyd
+#12 6.111 [ 28%] Linking Fortran executable dfmoutput
+#12 6.131 [ 28%] Linking Fortran executable test_io_netcdf
+#12 6.150 [ 28%] Built target flow1d_core
+#12 6.180 [ 28%] Linking Fortran executable waqmerge
+#12 6.184 [ 29%] Built target ec_module
+#12 6.188 [ 30%] Linking Fortran executable ddcouple
+#12 6.188 [ 30%] Linking Fortran executable checkhydbal
+#12 6.188 [ 30%] Built target delftio
+#12 6.195 [ 30%] Built target part_utils_f
+#12 6.208 3 warnings generated.
+#12 6.221 [ 30%] Linking Fortran executable agrhyd
+#12 6.229 [ 30%] Linking Fortran executable tests_aggregate_waqgeom
+#12 6.234 [ 30%] Built target test_general_structure_f90
+#12 6.246 90 warnings generated.
+#12 6.279 [ 30%] Linking Fortran executable ec_module_test
+#12 6.281 [ 30%] Linking CXX static library libnefis.a
+#12 6.302 [ 30%] Built target tests_string_utils
+#12 6.304 [ 30%] Built target wl_openmi_support
+#12 6.307 [ 30%] Linking CXX shared library gridgeom.so
+#12 6.309 [ 30%] Built target test_ec_module_f90
+#12 6.310 [ 32%] Built target csumo_nfio
+#12 6.310 [ 32%] Built target flow1d_io
+#12 6.311 [ 32%] Linking CXX executable test_general_structure
+#12 6.312 [ 32%] Linking CXX shared library ec_module.so
+#12 6.317 [ 33%] Built target morphology_io
+#12 6.366 [ 33%] Linking CXX static library libesmfsm_c.a
+#12 6.371 [ 33%] Built target test_Readstructure_f90
+#12 6.381 [ 33%] Built target flow1d
+#12 6.381 [ 33%] Linking Fortran shared library libcosumo_bmi.so
+#12 6.381 [ 33%] Built target test_morphology_f90
+#12 6.387 [ 39%] Built target flow1d_implicit
+#12 6.409 [ 39%] Linking CXX executable test_ec_module
+#12 6.427 [ 40%] Built target nefis
+#12 6.433 [ 40%] Linking CXX executable test_Readstructure
+#12 6.442 [ 40%] Built target test_deltares_common_gtest
+#12 6.444 [ 40%] Built target mormerge
+#12 6.444 [ 40%] Built target esmfsm_c
+#12 6.461 [ 40%] Linking CXX executable test_morphology
+#12 6.513 [ 41%] Built target waqpb_lib
+#12 6.523 [ 41%] Built target nefis_tests_f90
+#12 6.531 [ 41%] Built target esmfsm
+#12 6.543 [ 42%] Built target wave_data
+#12 6.562 [ 43%] Built target part_io_f
+#12 6.584 [ 43%] Linking Fortran executable waqpb_import
+#12 6.622 [ 43%] Linking Fortran executable waqpb_export
+#12 6.629 [ 49%] Built target waq_process
+#12 6.634 [ 49%] Linking CXX executable nefis_tests
+#12 6.658 [ 50%] Built target wave_io
+#12 6.661 [ 52%] Built target part_kernel_f
+#12 6.666 [ 53%] Built target waq_io
+#12 6.701 [ 53%] Built target tests_file_path_utils_get_file_name
+#12 6.703 [ 53%] Linking Fortran executable tests_meteo
+#12 6.705 [ 54%] Built target wq_processes
+#12 6.708 [ 54%] Built target test_deltares_common
+#12 6.711 [ 54%] Linking Fortran executable tests_rear
+#12 6.711 [ 54%] Linking Fortran executable tests_protist_mortality_salinity
+#12 6.728 [ 54%] Built target wave_kernel
+#12 6.740 [ 54%] Linking Fortran executable tests_tmode
+#12 6.748 [ 54%] Linking Fortran executable tests_debgrz_computations
+#12 6.766 [ 54%] Built target waq_preprocessor
+#12 6.772 [ 54%] Linking Fortran executable delpar
+#12 6.778 [ 54%] Built target wave_manager
+#12 6.842 [ 54%] Linking Fortran executable wave_exe
+#12 6.848 [ 54%] Linking Fortran shared library libwave.so
+#12 6.880 [ 54%] Built target tests_file_path_utils_get_filename_without_extension
+#12 6.999 [ 54%] Built target ec_module_dll
+#12 7.005 [ 54%] Built target io_netcdf_dll
+#12 7.053 [ 54%] Built target test_io_netcdf
+#12 7.153 [ 54%] Built target waq_plugin_wasteload
+#12 7.202 [ 54%] Built target test_general_structure
+#12 7.224 /source/src/engines_gpl/dimr/packages/dimr_lib/src/dimr.cpp: In member function ‘void Dimr::createDistributeMPISubGroupCommunicator(dimr_component*)’:
+#12 7.224 /source/src/engines_gpl/dimr/packages/dimr_lib/src/dimr.cpp:383:30: warning: converting to non-pointer type ‘MPI_Comm’ {aka ‘int’} from NULL [-Wconversion-null]
+#12 7.224   383 |         component->mpiComm = NULL;
+#12 7.224       |                              ^~~~
+#12 7.286 [ 54%] Built target dfmoutput
+#12 7.295 [ 56%] Built target waq_kernel
+#12 7.311 /source/src/engines_gpl/dimr/packages/dimr_lib/src/dimr.cpp: In member function ‘void Dimr::runParallelFinish(dimr_control_block*)’:
+#12 7.311 /source/src/engines_gpl/dimr/packages/dimr_lib/src/dimr.cpp:1545:72: warning: NULL used in arithmetic [-Wpointer-arith]
+#12 7.311  1545 |             if (use_mpi && cb->subBlocks[i].unit.component->mpiComm != NULL)
+#12 7.311       |                                                                        ^~~~
+#12 7.338 [ 56%] Linking CXX static library librr_walrus_c.a
+#12 7.338 [ 56%] Built target waq_computation
+#12 7.358 [ 56%] Linking Fortran executable maptonetcdf
+#12 7.382 [ 56%] Built target waq_external_access_layer
+#12 7.386 [ 56%] Built target test_ec_module
+#12 7.408 [ 56%] Built target gridgeom_dll
+#12 7.423 [ 57%] Built target test_morphology
+#12 7.431 [ 57%] Built target rr_walrus_c
+#12 7.436 [ 57%] Built target waqpb_import
+#12 7.444 [ 57%] Linking Fortran shared library libdelwaq.so
+#12 7.449 [ 57%] Linking Fortran executable test_connection_manager
+#12 7.451 [ 58%] Linking Fortran executable test_connection_parser
+#12 7.456 [ 58%] Linking Fortran executable delwaq
+#12 7.483 [ 58%] Built target ddcouple
+#12 7.494 [ 58%] Linking Fortran executable test_connection_data_mapping
+#12 7.506 [ 58%] Built target tests_aggregate_waqgeom
+#12 7.536 [ 58%] Linking CXX static library libdflowfm_kernel.a
+#12 7.540 [ 58%] Built target tests_protist_mortality_salinity
+#12 7.579 [ 58%] Built target test_Readstructure
+#12 7.601 [ 60%] Built target rr_kernel_f
+#12 7.639 [ 60%] Built target tests_meteo
+#12 7.646 [ 60%] Linking CXX shared library librr_dll.so
+#12 7.648 [ 60%] Built target nefis_tests
+#12 7.651 [ 60%] Built target agrhyd
+#12 7.662 [ 60%] Built target checkhydbal
+#12 7.666 [ 60%] Built target tests_tmode
+#12 7.685 [ 60%] Built target waqmerge
+#12 7.695 [ 60%] Built target tests_debgrz_computations
+#12 7.713 [ 60%] Built target waqpb_export
+#12 7.736 [ 60%] Built target tests_rear
+#12 7.756 [ 60%] Built target ec_module_test
+#12 7.799 [ 60%] Built target cosumo_bmi
+#12 7.892 [ 60%] Built target delpar
+#12 8.167 [ 60%] Built target wave
+#12 8.232 [ 60%] Built target rr_dll
+#12 8.238 [ 60%] Built target wave_exe
+#12 8.250 [ 60%] Linking Fortran executable rr
+#12 8.307 [ 60%] Built target maptonetcdf
+#12 8.328 [ 60%] Built target test_connection_manager
+#12 8.329 [ 60%] Built target test_connection_data_mapping
+#12 8.337 [ 60%] Built target test_connection_parser
+#12 8.373 [ 60%] Built target delwaq_lib
+#12 8.384 [ 60%] Linking Fortran executable test_read_boundary_concentrations
+#12 8.385 [ 60%] Linking Fortran executable test_delwaq_dimr
+#12 8.414 [ 60%] Built target delwaq
+#12 8.602 [ 60%] Built target test_delwaq_dimr
+#12 8.681 [ 60%] Built target rr
+#12 8.729 [ 60%] Built target test_read_boundary_concentrations
+#12 9.268 [ 60%] Linking CXX shared library libdimr.so
+#12 9.358 [ 60%] Built target dimr_lib
+#12 9.368 [ 60%] Building CXX object dimr/CMakeFiles/dimr.dir/src/dimr_exe.cpp.o
+#12 9.874 [ 60%] Linking CXX executable dimr
+#12 9.964 [ 60%] Built target dimr
+#12 12.52 Checking directory: /source/src/engines_gpl/dflowfm/packages/dflowfm_kernel
+#12 12.52 Checked 1516 files, 0 need conversion
+#12 12.52 
+#12 12.52 Timing statistics:
+#12 12.52   ArrayDelimiterConverter: 1.405s (60.0%)
+#12 12.52   DoublePrecisionConverter: 0.868s (37.1%)
+#12 12.52   SemicolonSeparatorConverter: 0.068s (2.9%)
+#12 12.52   Total: 2.341s
+#12 12.52 All files conform to style guide.
+#12 12.90 [ 98%] Built target dflowfm_kernel
+#12 12.91 [ 98%] Building Fortran object dflowfm_cli_exe/CMakeFiles/dflowfm-cli.dir/src/net_main.F90.o
+#12 12.91 [ 98%] Building Fortran object dfm_volume_tool/CMakeFiles/dfm_volume_tool.dir/src/dfm_volume_tool_static_version_info.F90.o
+#12 12.91 [ 98%] Building Fortran object dfm_volume_tool/CMakeFiles/dfm_volume_tool.dir/src/m_storagetable.f90.o
+#12 12.91 [ 98%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_airdensity.f90.o
+#12 12.91 [ 98%] Building Fortran object dflowfm_lib/CMakeFiles/dflowfm_dll.dir/src/unstruc_bmi.F90.o
+#12 12.91 [ 98%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_1d_grid.f90.o
+#12 12.91 [ 98%] Building Fortran object dflowfm_kernel/test/helpers/CMakeFiles/test_helpers.dir/file_helpers.f90.o
+#12 12.91 [ 98%] Building Fortran object dflowfm_kernel/test/helpers/CMakeFiles/test_helpers.dir/network_helpers.f90.o
+#12 12.91 [ 98%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_cross_section.f90.o
+#12 12.91 [ 98%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_iniField_1dField.f90.o
+#12 12.91 [ 98%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_observ_Cross_Sections.f90.o
+#12 12.91 [ 98%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_laterals.f90.o
+#12 12.91 [ 98%] Building Fortran object dflowfm_lib/CMakeFiles/dflowfm_dll.dir/src/unstruc_dll_api.F90.o
+#12 12.91 [ 98%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_observations.f90.o
+#12 12.91 [ 98%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_read_statistical_output.f90.o
+#12 12.91 [ 99%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_read_property.f90.o
+#12 12.92 [ 99%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_roughness.f90.o
+#12 12.93 [ 99%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_statistical_output.f90.o
+#12 12.93 [ 99%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_storage_nodes.f90.o
+#12 12.94 [ 99%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_temporal_statistics.f90.o
+#12 12.99 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_dll_api.F90(46): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 12.99 !DEC$ ATTRIBUTES DLLEXPORT :: dfm_generate_volume_tables
+#12 12.99 -----------------^
+#12 13.00 [ 99%] Building Fortran object dfm_volume_tool/CMakeFiles/dfm_volume_tool.dir/src/dfm_volume_tool_version.F90.o
+#12 13.00 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_dll_api.F90(67): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.01 !DEC$ ATTRIBUTES DLLEXPORT :: write_1D_flowgeom_ugrid
+#12 13.01 -----------------^
+#12 13.08 [ 99%] Building Fortran object dfm_volume_tool/CMakeFiles/dfm_volume_tool.dir/src/m_netcdf_output.f90.o
+#12 13.11 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(101): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.12 !DEC$ ATTRIBUTES DLLEXPORT :: PREFIX
+#12 13.12 -----------------^
+#12 13.12 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(104): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.12 !DEC$ ATTRIBUTES DLLEXPORT :: MAXSTRLEN
+#12 13.12 -----------------^
+#12 13.12 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(106): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.12 !DEC$ ATTRIBUTES DLLEXPORT :: MAXDIMS
+#12 13.12 -----------------^
+#12 13.12 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(122): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.12 !DEC$ ATTRIBUTES DLLEXPORT :: main
+#12 13.12 -----------------^
+#12 13.12 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(193): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.12 !DEC$ ATTRIBUTES DLLEXPORT :: get_attribute
+#12 13.12 -----------------^
+#12 13.13 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(234): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.13 !DEC$ ATTRIBUTES DLLEXPORT :: initialize
+#12 13.13 -----------------^
+#12 13.13 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(336): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.13 !DEC$ ATTRIBUTES DLLEXPORT :: set_logger_c_callback
+#12 13.13 -----------------^
+#12 13.13 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(345): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.13 !DEC$ ATTRIBUTES DLLEXPORT :: get_version_string
+#12 13.13 -----------------^
+#12 13.13 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(358): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.13 !DEC$ ATTRIBUTES DLLEXPORT :: deactivate_time_step_checking
+#12 13.13 -----------------^
+#12 13.14 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(372): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.14 !DEC$ ATTRIBUTES DLLEXPORT :: dfm_init_user_timestep
+#12 13.14 -----------------^
+#12 13.14 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(399): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.14 !DEC$ ATTRIBUTES DLLEXPORT :: dfm_run_user_timestep
+#12 13.14 -----------------^
+#12 13.14 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(408): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.14 !DEC$ ATTRIBUTES DLLEXPORT :: dfm_finalize_user_timestep
+#12 13.14 -----------------^
+#12 13.14 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(420): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.14 !DEC$ ATTRIBUTES DLLEXPORT :: dfm_init_computational_timestep
+#12 13.14 -----------------^
+#12 13.14 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(459): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.14 !DEC$ ATTRIBUTES DLLEXPORT :: dfm_run_computational_timestep
+#12 13.14 -----------------^
+#12 13.14 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(478): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.14 !DEC$ ATTRIBUTES DLLEXPORT :: dfm_finalize_computational_timestep
+#12 13.14 -----------------^
+#12 13.14 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(485): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.14 !DEC$ ATTRIBUTES DLLEXPORT :: update
+#12 13.14 -----------------^
+#12 13.14 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(508): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.14 !DEC$ ATTRIBUTES DLLEXPORT :: finalize
+#12 13.14 -----------------^
+#12 13.14 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(527): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.14 !DEC$ ATTRIBUTES DLLEXPORT :: get_start_time
+#12 13.14 -----------------^
+#12 13.15 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(536): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.15 !DEC$ ATTRIBUTES DLLEXPORT :: get_end_time
+#12 13.15 -----------------^
+#12 13.15 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(546): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.15 !DEC$ ATTRIBUTES DLLEXPORT :: get_time_step
+#12 13.15 -----------------^
+#12 13.15 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(555): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.15 !DEC$ ATTRIBUTES DLLEXPORT :: get_current_time
+#12 13.15 -----------------^
+#12 13.15 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(564): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.15 !DEC$ ATTRIBUTES DLLEXPORT :: dfm_compute_1d2d_coefficients
+#12 13.15 -----------------^
+#12 13.15 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(651): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.15 !DEC$ ATTRIBUTES DLLEXPORT :: get_string_attribute
+#12 13.15 -----------------^
+#12 13.15 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(679): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.15 !DEC$ ATTRIBUTES DLLEXPORT :: get_var_count
+#12 13.15 -----------------^
+#12 13.15 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(700): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.15 !DEC$ ATTRIBUTES DLLEXPORT :: get_var_name
+#12 13.15 -----------------^
+#12 13.15 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(782): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.15 !DEC$ ATTRIBUTES DLLEXPORT :: get_var_type
+#12 13.15 -----------------^
+#12 13.15 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(865): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.15 !DEC$ ATTRIBUTES DLLEXPORT :: get_var_location
+#12 13.15 -----------------^
+#12 13.15 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(896): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.15 !DEC$ ATTRIBUTES DLLEXPORT :: get_var_rank
+#12 13.15 -----------------^
+#12 13.17 [ 99%] Linking CXX static library libtest_helpers.a
+#12 13.18 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(967): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.18 !DEC$ ATTRIBUTES DLLEXPORT :: get_var_shape
+#12 13.18 -----------------^
+#12 13.18 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(1117): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.18 !DEC$ ATTRIBUTES DLLEXPORT :: get_2d_int
+#12 13.18 -----------------^
+#12 13.19 [ 99%] Built target test_helpers
+#12 13.20 [ 99%] Linking Fortran executable dflowfm
+#12 13.20 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(1169): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.20 !DEC$ ATTRIBUTES DLLEXPORT :: get_var
+#12 13.20 -----------------^
+#12 13.21 [ 99%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/dflowfm_test_cleanup.f90.o
+#12 13.21 [ 99%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_compute_horton_infiltration.f90.o
+#12 13.21 [ 99%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_dflowfm_dambreak.f90.o
+#12 13.21 [ 99%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_bubblescreen.f90.o
+#12 13.21 [ 99%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_dflowfm_kernel_example.f90.o
+#12 13.21 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(1430): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.21 !DEC$ ATTRIBUTES DLLEXPORT :: set_var
+#12 13.21 -----------------^
+#12 13.21 [ 99%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_atmospheric_stability.f90.o
+#12 13.22 [ 99%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_3d_layer_administration.f90.o
+#12 13.22 [ 99%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_ec_module_block.f90.o
+#12 13.22 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(1740): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPOR[100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_ec_module_data_value.f90.o
+#12 13.22 T]
+#12 13.22 !DEC$ ATTRIBUTES DLLEXPORT :: set_var_slice
+#12 13.22 -----------------^
+#12 13.22 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(1879): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.22 !DEC$ ATTRIBUTES DLLEXPORT :: on_land_change
+#12 13.22 -----------------^
+#12 13.22 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(1885): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.22 !DEC$ ATTRIBUTES DLLEXPORT :: update_land
+#12 13.22 -----------------^
+#12 13.22 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(1902): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.22 !DEC$ ATTRIBUTES DLLEXPORT :: dfm_add_features
+#12 13.22 -----------------^
+#12 13.23 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_fm_external_forcings_utils.f90.o
+#12 13.24 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_mdu_file_read_write.f90.o
+#12 13.24 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_pol_to_cellmask.f90.o
+#12 13.24 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_getprof_1d.f90.o
+#12 13.24 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_init_spatial_field.f90.o
+#12 13.24 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_offline_wave_external_forcing.f90.o
+#12 13.25 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_longculverts.f90.o
+#12 13.25 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_init_spatial_field_integration.f90.o
+#12 13.25 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_precice_adapter.f90.o
+#12 13.26 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(2016): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.27 !DEC$ ATTRIBUTES DLLEXPORT :: get_compound_field
+#12 13.27 -----------------^
+#12 13.28 [100%] Building Fortran object dfm_volume_tool/CMakeFiles/dfm_volume_tool.dir/src/dfm_volume_tool_main.F90.o
+#12 13.28 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_sources_sinks.f90.o
+#12 13.29 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_timespace_parameters.f90.o
+#12 13.29 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_unstruc_inifields.f90.o
+#12 13.30 [100%] Building Fortran object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest_f90.dir/src/test_unstruc_model.f90.o
+#12 13.31 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(2555): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.32 !DEC$ ATTRIBUTES DLLEXPORT :: set_compound_field
+#12 13.32 -----------------^
+#12 13.32 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(2854): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.32 !DEC$ ATTRIBUTES DLLEXPORT :: get_compound_field_name
+#12 13.32 -----------------^
+#12 13.32 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(2988): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.32 !DEC$ ATTRIBUTES DLLEXPORT :: get_compound_field_type
+#12 13.32 -----------------^
+#12 13.32 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3016): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.33 !DEC$ ATTRIBUTES DLLEXPORT :: get_compound_field_rank
+#12 13.33 -----------------^
+#12 13.33 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3042): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.33 !DEC$ ATTRIBUTES DLLEXPORT :: get_compound_field_shape
+#12 13.33 -----------------^
+#12 13.33 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3063): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.34 !DEC$ ATTRIBUTES DLLEXPORT :: get_1d_double
+#12 13.34 -----------------^
+#12 13.34 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3084): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.35 !DEC$ ATTRIBUTES DLLEXPORT :: get_1d_int
+#12 13.35 -----------------^
+#12 13.35 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3103): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.35 !DEC$ ATTRIBUTES DLLEXPORT :: get_2d_double
+#12 13.35 -----------------^
+#12 13.36 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3138): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.36 !DEC$ ATTRIBUTES DLLEXPORT :: set_1d_double_at_index
+#12 13.36 -----------------^
+#12 13.37 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3222): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.37 !DEC$ ATTRIBUTES DLLEXPORT :: set_1d_double
+#12 13.37 -----------------^
+#12 13.38 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3243): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.38 !DEC$ ATTRIBUTES DLLEXPORT :: set_2d_double
+#12 13.38 -----------------^
+#12 13.39 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3264): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.40 !DEC$ ATTRIBUTES DLLEXPORT :: set_1d_int
+#12 13.40 -----------------^
+#12 13.41 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3285): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.41 !DEC$ ATTRIBUTES DLLEXPORT :: set_2d_int
+#12 13.41 -----------------^
+#12 13.42 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3389): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.42 !DEC$ ATTRIBUTES DLLEXPORT :: find_cells
+#12 13.42 -----------------^
+#12 13.43 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3450): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.43 !DEC$ ATTRIBUTES DLLEXPORT :: get_snapped_feature
+#12 13.43 -----------------^
+#12 13.48 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3647): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.48 !DEC$ ATTRIBUTES DLLEXPORT :: write_netgeom
+#12 13.48 -----------------^
+#12 13.54 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3666): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.54 !DEC$ ATTRIBUTES DLLEXPORT :: write_partition_metis
+#12 13.54 -----------------^
+#12 13.58 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3730): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.58 !DEC$ ATTRIBUTES DLLEXPORT :: write_partition_pol
+#12 13.58 -----------------^
+#12 13.59 /source/src/engines_gpl/dflowfm/packages/dflowfm_lib/src/unstruc_bmi.F90(3790): remark #7841: DLL IMPORT/EXPORT is not supported on this platform.   [DLLEXPORT]
+#12 13.59 !DEC$ ATTRIBUTES DLLEXPORT :: get_snapped_flow_links_indexes
+#12 13.59 -----------------^
+#12 14.07 [100%] Linking Fortran executable dfm_volume_tool
+#12 14.14 [100%] Building Fortran object test_dflowfm_kernel/CMakeFiles/dflowfm_kernel_test.dir/src/test_dflowfm_kernel_f.f90.o
+#12 14.20 [100%] Linking Fortran executable dflowfm_kernel_test
+#12 14.70 [100%] Built target dflowfm-cli
+#12 14.84 [100%] Built target dfm_volume_tool
+#12 15.20 [100%] Built target dflowfm_kernel_test
+#12 15.36 [100%] Linking CXX static library libtest_dflowfm_kernel_gtest_f90.a
+#12 15.44 [100%] Built target test_dflowfm_kernel_gtest_f90
+#12 15.45 [100%] Building CXX object dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest.dir/test_dflowfm_kernel.cpp.o
+#12 17.70 [100%] Linking CXX executable test_dflowfm_kernel_gtest
+#12 17.72 Error copying file (if different) from "/source/src/cmake/../third_party_open/pthreads/bin/x64/msvcr100.dll" to "/source/build/dflowfm_kernel/test".
+#12 17.72 gmake[2]: *** [dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest.dir/build.make:180: dflowfm_kernel/test/test_dflowfm_kernel_gtest] Error 1
+#12 17.72 gmake[1]: *** [CMakeFiles/Makefile2:7870: dflowfm_kernel/test/CMakeFiles/test_dflowfm_kernel_gtest.dir/all] Error 2
+#12 17.72 gmake[1]: *** Waiting for unfinished jobs....
+#12 21.53 [100%] Linking CXX shared library libdflowfm.so
+#12 21.94 [100%] Built target dflowfm_dll
+#12 21.94 gmake: *** [Makefile:146: all] Error 2
+#12 21.94   config     : fm-suite
+#12 21.94   build_type : Release
+#12 21.94   build      : True
+#12 21.94   keep_build : True
+#12 21.94 
+#12 21.94 Running Conan dependency install...
+#12 21.94 Running CMake configure for fm-suite...
+#12 21.94 Building fm-suite (Release)...
+#12 21.94 Traceback (most recent call last):
+#12 21.94   File "/source/build.py", line 281, in <module>
+#12 21.94     main()
+#12 21.94   File "/source/build.py", line 270, in main
+#12 21.94     run_cmake_build(args.config, build_type=args.build_type, build_dir=build_dir)
+#12 21.94   File "/source/build.py", line 148, in run_cmake_build
+#12 21.94     subprocess.run(
+#12 21.94   File "/opt/uv/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/subprocess.py", line 571, in run
+#12 21.94     raise CalledProcessError(retcode, process.args,
+#12 21.94 subprocess.CalledProcessError: Command '['cmake', '--build', '/source/build', '--config', 'Release', '--parallel']' returned non-zero exit status 2.
+#12 ERROR: process "/bin/sh -c /dev/pipes/EOF" did not complete successfully: exit code: 1
+------
+ > [build 4/4] RUN --mount=type=cache,target=/source/build     --mount=type=cache,target=/root/.conan2     <<"EOF" (#!/usr/bin/env bash...):
+21.94 Traceback (most recent call last):
+21.94   File "/source/build.py", line 281, in <module>
+21.94     main()
+21.94   File "/source/build.py", line 270, in main
+21.94     run_cmake_build(args.config, build_type=args.build_type, build_dir=build_dir)
+21.94   File "/source/build.py", line 148, in run_cmake_build
+21.94     subprocess.run(
+21.94   File "/opt/uv/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/subprocess.py", line 571, in run
+21.94     raise CalledProcessError(retcode, process.args,
+21.94 subprocess.CalledProcessError: Command '['cmake', '--build', '/source/build', '--config', 'Release', '--parallel']' returned non-zero exit status 2.
+------
+DFlowRuntime.Dockerfile:20
+--------------------
+  19 |     ENV CMAKE_BUILD_PARALLEL_LEVEL=4
+  20 | >>> RUN --mount=type=cache,target=/source/build \
+  21 | >>>     --mount=type=cache,target=/root/.conan2 \
+  22 | >>>     <<"EOF"
+  23 | >>> #!/usr/bin/env bash
+  24 | >>> source /etc/bashrc
+  25 | >>> set -eo pipefail
+  26 | >>> export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+  27 | >>> export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+  28 | >>> export CMAKE_PREFIX_PATH=/usr/local:$CMAKE_PREFIX_PATH
+  29 | >>> export CMAKE_INCLUDE_PATH=/usr/local/include:$CMAKE_INCLUDE_PATH
+  30 | >>> export CMAKE_LIBRARY_PATH=/usr/local/lib:$CMAKE_LIBRARY_PATH
+  31 | >>> 
+  32 | >>> python run_conan.py initialize external --ci
+  33 | >>> 
+  34 | >>> python build.py \
+  35 | >>>     --config "${CONFIGURATION}" \
+  36 | >>>     --build \
+  37 | >>>     --build-type "${BUILD_TYPE}" \
+  38 | >>>     --build-dir "${PWD}/build" \
+  39 | >>>     --install-dir /delft3d \
+  40 | >>>     --keep-build \
+  41 | >>>     --ci \
+  42 | >>>     --build-dependencies
+  43 | >>> EOF
+  44 |     
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c /dev/pipes/EOF" did not complete successfully: exit code: 1
+25400 v0.36.1-desktop.1 C:\Program Files\Docker\cli-plugins\docker-buildx.exe buildx build -f C:\Users\kunal\OneDrive\Desktop\DAM\scripts\engines\DFlowRuntime.Dockerfile --build-arg THIRDPARTYLIBS_IMAGE_URL=damsafe-dflow-thirdparty --build-arg BASE_TAG=oneapi-2024 --build-arg BASE_IMAGE_URL=almalinux:8 --build-arg CONFIGURATION=fm-suite -t damsafe-dflowfm:local C:\Users\kunal\OneDrive\Desktop\DAM\external\Delft3D
+github.com/docker/buildx/commands.runBuildWithOptions
+	github.com/docker/buildx/commands/build.go:504
+github.com/docker/buildx/commands.runBuild
+	github.com/docker/buildx/commands/build.go:419
+github.com/docker/buildx/commands.buildCmd.func1
+	github.com/docker/buildx/commands/build.go:540
+github.com/docker/cli/cli-plugins/plugin.RunPlugin.func1.1.2
+	github.com/docker/cli@v29.6.2+incompatible/cli-plugins/plugin/plugin.go:65
+github.com/spf13/cobra.(*Command).execute
+	github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	github.com/spf13/cobra@v1.10.2/command.go:1071
+github.com/docker/cli/cli-plugins/plugin.RunPlugin
+	github.com/docker/cli@v29.6.2+incompatible/cli-plugins/plugin/plugin.go:80
+main.runPlugin
+	github.com/docker/buildx/cmd/buildx/main.go:66
+main.run
+	github.com/docker/buildx/cmd/buildx/main.go:80
+main.main
+	github.com/docker/buildx/cmd/buildx/main.go:90
+runtime.main
+	runtime/proc.go:290
+runtime.goexit
+	runtime/asm_amd64.s:1771
+
+143  /usr/local/bin/dockerd --config-file /run/config/docker/daemon.json
+github.com/moby/buildkit/executor/runcexecutor.exitError
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/executor/runcexecutor/executor.go:434
+github.com/moby/buildkit/executor/runcexecutor.(*runcExecutor).Run
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/executor/runcexecutor/executor.go:382
+github.com/moby/buildkit/solver/llbsolver/ops.(*ExecOp).Exec
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/llbsolver/ops/exec.go:524
+github.com/moby/buildkit/solver.(*sharedOp).Exec.func2
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/jobs.go:1248
+github.com/moby/buildkit/util/flightcontrol.(*call[...]).run
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/util/flightcontrol/flightcontrol.go:122
+sync.(*Once).doSlow
+	/usr/local/go/src/sync/once.go:78
+sync.(*Once).Do
+	/usr/local/go/src/sync/once.go:69
+runtime.goexit
+	/usr/local/go/src/runtime/asm_amd64.s:1771
+
+25400 v0.36.1-desktop.1 C:\Program Files\Docker\cli-plugins\docker-buildx.exe buildx build -f C:\Users\kunal\OneDrive\Desktop\DAM\scripts\engines\DFlowRuntime.Dockerfile --build-arg THIRDPARTYLIBS_IMAGE_URL=damsafe-dflow-thirdparty --build-arg BASE_TAG=oneapi-2024 --build-arg BASE_IMAGE_URL=almalinux:8 --build-arg CONFIGURATION=fm-suite -t damsafe-dflowfm:local C:\Users\kunal\OneDrive\Desktop\DAM\external\Delft3D
+google.golang.org/grpc.(*ClientConn).Invoke
+	google.golang.org/grpc@v1.82.1/call.go:35
+github.com/moby/buildkit/api/services/control.(*controlClient).Solve
+	github.com/moby/buildkit@v0.32.2/api/services/control/control_grpc.pb.go:88
+github.com/moby/buildkit/client.(*Client).solve.func2
+	github.com/moby/buildkit@v0.32.2/client/solve.go:337
+golang.org/x/sync/errgroup.(*Group).Go.func1
+	golang.org/x/sync@v0.22.0/errgroup/errgroup.go:93
+runtime.goexit
+	runtime/asm_amd64.s:1771
+
+143  /usr/local/bin/dockerd --config-file /run/config/docker/daemon.json
+github.com/moby/buildkit/solver.(*edge).execOp
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/edge.go:979
+github.com/moby/buildkit/solver/internal/pipe.NewWithFunction[...].func2
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/internal/pipe/pipe.go:78
+runtime.goexit
+	/usr/local/go/src/runtime/asm_amd64.s:1771
+
+25400 v0.36.1-desktop.1 C:\Program Files\Docker\cli-plugins\docker-buildx.exe buildx build -f C:\Users\kunal\OneDrive\Desktop\DAM\scripts\engines\DFlowRuntime.Dockerfile --build-arg THIRDPARTYLIBS_IMAGE_URL=damsafe-dflow-thirdparty --build-arg BASE_TAG=oneapi-2024 --build-arg BASE_IMAGE_URL=almalinux:8 --build-arg CONFIGURATION=fm-suite -t damsafe-dflowfm:local C:\Users\kunal\OneDrive\Desktop\DAM\external\Delft3D
+github.com/moby/buildkit/client.(*Client).solve.func2
+	github.com/moby/buildkit@v0.32.2/client/solve.go:339
+golang.org/x/sync/errgroup.(*Group).Go.func1
+	golang.org/x/sync@v0.22.0/errgroup/errgroup.go:93
+
+143  /usr/local/bin/dockerd --config-file /run/config/docker/daemon.json
+github.com/moby/buildkit/solver/llbsolver/ops.(*ExecOp).Exec
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/llbsolver/ops/exec.go:555
+github.com/moby/buildkit/solver.(*sharedOp).Exec.func2
+	/root/build-deb/engine/vendor/github.com/moby/buildkit/solver/jobs.go:1248
+

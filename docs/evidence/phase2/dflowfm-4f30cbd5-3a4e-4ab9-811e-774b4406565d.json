@@ -1,0 +1,147 @@
+{
+  "id": "4f30cbd5-3a4e-4ab9-811e-774b4406565d",
+  "engine": {
+    "engine": "dflowfm",
+    "available": true,
+    "image_id": "sha256:d439312899ce18fc3c498355b3c87ddda55a59b3b74e762bc2b08425b2980cd8",
+    "image": "damsafe-dflowfm:local",
+    "source_commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+    "build_provenance": {
+      "image_id": "sha256:d439312899ce18fc3c498355b3c87ddda55a59b3b74e762bc2b08425b2980cd8",
+      "source_commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+      "dimr_sha256": "82778434af480601dbec525e62bf035322c6ffb99a0a1d6072be1afa3b9d7eb8",
+      "dflowfm_library_sha256": "8a2183004ed05fb22e9ea1ac4fd68d64897489f98c84c0b780046dd352469b6d",
+      "run_dimr_script_sha256": "eb844d8b3537e033db894b5e561d054826fa1b1ce8b57d98a4f5c0438a38482a",
+      "buildtools_image_id": "sha256:f6d8f80b01bde8e605bf92164f9cb13ed03327369803a89a8f6a7e0cdd526aa6",
+      "thirdparty_image_id": "sha256:5df273d79ea799cd918e49a222c6c4c8566b571391ec5ec2f996b0906abd6c1c",
+      "build": "Official Linux fm-suite Docker recipe, Intel oneAPI 2024 ifx, test-only Linux fix removing unconditional copy of Windows msvcr100.dll. Hydraulic source checkout unchanged.",
+      "source_url": "https://github.com/Deltares/Delft3D"
+    },
+    "execution_verified": false,
+    "note": "Image presence is not proof of a successful numerical run"
+  },
+  "case": {
+    "case_kind": "OFFICIAL_EXAMPLE",
+    "case_id": "01_dflowfm_sequential",
+    "source_commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+    "input_mode": "SYNTHETIC",
+    "site": "official schematic example; not Ujjani"
+  },
+  "execution_origin": "LOCAL",
+  "evidence_status": "UNASSESSED",
+  "state": "SUCCEEDED",
+  "stages": [
+    {
+      "stage": "solver",
+      "state": "SUCCEEDED",
+      "exit_code": 0,
+      "error": null,
+      "elapsed_seconds": 5.51500000001397,
+      "launcher_peak_rss_bytes": 22691840,
+      "argv": [
+        "docker",
+        "run",
+        "--name",
+        "damsafe-4f30cbd5-3a4e-4ab9-811e-774b4406565d-solver",
+        "--network",
+        "none",
+        "--cpus",
+        "2",
+        "--memory",
+        "2048m",
+        "--memory-swap",
+        "2048m",
+        "--pids-limit",
+        "128",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--read-only",
+        "--tmpfs",
+        "/tmp:rw,size=128m",
+        "--mount",
+        "type=bind,source=C:\\Users\\kunal\\OneDrive\\Desktop\\DAM\\.local\\runs\\4f30cbd5-3a4e-4ab9-811e-774b4406565d,target=/work",
+        "--workdir",
+        "/work",
+        "--env",
+        "OMP_NUM_THREADS=2",
+        "sha256:d439312899ce18fc3c498355b3c87ddda55a59b3b74e762bc2b08425b2980cd8",
+        "/delft3d/bin/run_dimr.sh",
+        "-m",
+        "dimr_config.xml"
+      ],
+      "log_sha256": "f37a4fe773dda99ce6a2ec4fabe428d41d74c493e8b1b5e32bdd8ca32ad794eb"
+    }
+  ],
+  "normalization": {
+    "frames": 31,
+    "cells": 222,
+    "duration_seconds": 90000.0,
+    "valid_cell_frames": 6882,
+    "provenance": {
+      "engine": {
+        "engine": "dflowfm",
+        "available": true,
+        "image_id": "sha256:d439312899ce18fc3c498355b3c87ddda55a59b3b74e762bc2b08425b2980cd8",
+        "image": "damsafe-dflowfm:local",
+        "source_commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+        "build_provenance": {
+          "image_id": "sha256:d439312899ce18fc3c498355b3c87ddda55a59b3b74e762bc2b08425b2980cd8",
+          "source_commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+          "dimr_sha256": "82778434af480601dbec525e62bf035322c6ffb99a0a1d6072be1afa3b9d7eb8",
+          "dflowfm_library_sha256": "8a2183004ed05fb22e9ea1ac4fd68d64897489f98c84c0b780046dd352469b6d",
+          "run_dimr_script_sha256": "eb844d8b3537e033db894b5e561d054826fa1b1ce8b57d98a4f5c0438a38482a",
+          "buildtools_image_id": "sha256:f6d8f80b01bde8e605bf92164f9cb13ed03327369803a89a8f6a7e0cdd526aa6",
+          "thirdparty_image_id": "sha256:5df273d79ea799cd918e49a222c6c4c8566b571391ec5ec2f996b0906abd6c1c",
+          "build": "Official Linux fm-suite Docker recipe, Intel oneAPI 2024 ifx, test-only Linux fix removing unconditional copy of Windows msvcr100.dll. Hydraulic source checkout unchanged.",
+          "source_url": "https://github.com/Deltares/Delft3D"
+        },
+        "execution_verified": false,
+        "note": "Image presence is not proof of a successful numerical run"
+      },
+      "case": {
+        "case_kind": "OFFICIAL_EXAMPLE",
+        "case_id": "01_dflowfm_sequential",
+        "source_commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+        "input_mode": "SYNTHETIC",
+        "site": "official schematic example; not Ujjani"
+      },
+      "execution_origin": "LOCAL",
+      "crs": "LOCAL_CARTESIAN_OFFICIAL_F34",
+      "vertical_reference": "official model bed reference",
+      "source_time_units": "seconds since 1990-08-05 00:00:00 +00:00",
+      "source_initial_time": 0.0,
+      "velocity_orientation": "Cartesian face x/y; geographic and edge-normal velocities unsupported",
+      "unavailable_fields": [],
+      "native_file": "f34_map.nc",
+      "native_topology": "preserved in original NetCDF"
+    },
+    "water_balance": {
+      "source_history_file": "f34_his.nc",
+      "history_frames": 301,
+      "time_units": "seconds since 1990-08-05 00:00:00 +00:00",
+      "initial_volume_m3": 2975439104.0,
+      "final_volume_m3": 2615516160.0,
+      "pathways_cumulative_final_m3": {
+        "boundaries_in": 3227098112.0,
+        "boundaries_out": 3587021056.0,
+        "boundaries_total": -359922944.0,
+        "exchange_with_1D_total": 0.0,
+        "precipitation_total": 0.0,
+        "evaporation": 0.0,
+        "source_sink": 0.0,
+        "groundwater_total": 0.0,
+        "laterals_total": 0.0,
+        "Qext_total": 0.0
+      },
+      "native_max_absolute_volume_error_m3": 7.152557373046875e-06,
+      "map_history_max_absolute_difference_m3": 122.05364179611206,
+      "reporting_precision_allowance_m3": 3546.9998168945312,
+      "wet_dry_treatment": "Native global storage and face water depths include the solver's wet/dry state; no extra inferred wetting flux is added.",
+      "component_warning": "Qext/laterals subdivisions and 1D/2D exchange are reported, not blindly summed with parent global fields."
+    },
+    "normalized_sha256": "276661bb0942b0cc84577bfececa392cea35db8d1183e28b13fa0324108334cc",
+    "normalized_file": "normalized.nc"
+  }
+}

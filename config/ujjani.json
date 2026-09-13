@@ -1,0 +1,10 @@
+{
+  "site_key": "ujjani-bhima",
+  "name": "Ujjani · Bhima",
+  "synthetic": false,
+  "description": "One-site demonstrator. Downstream endpoint awaits terrain, structure and station audit.",
+  "verified_bounds_wgs84": null,
+  "computation_crs": null,
+  "vertical_reference": null,
+  "source_url": "https://www.nwdp.nwic.gov.in/dataset/reservoir_discharge_ujjani_dam_1_maharashtra_telemetry_hourly"
+}

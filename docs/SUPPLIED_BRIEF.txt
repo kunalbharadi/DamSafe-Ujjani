@@ -1,0 +1,109 @@
+Prepared for SIH PS 26161. This is an implementation brief, not evidence that a solver, dataset, or application has already been validated.
+
+Use: Put this file in the intended project repository. Paste each of the four numbered prompt blocks into Codex, sequentially, in that same repository. Keep the generated project documents between stages. A stage can require a long coding session and corrections; four messages cannot guarantee scientific validity or remove unavailable-data and installation blockers.
+
+Scope and working model
+
+Use Ujjani Dam and a bounded downstream reach of the Bhima River as the only demonstration site. Determine the downstream endpoint after inspecting terrain, tributaries, hydraulic structures, and observation stations. Do not promise to reach Pandharpur before this inspection. Keep datasets and site configuration external to the application code so the framework remains reusable.
+
+There are two separate simulation modes:
+
+Historical release replay: import an actual discharge-versus-time series, combine it with the river's initial state and relevant tributary/downstream conditions, then simulate a recorded event. Compare matching observations where available.
+
+Hypothetical failure scenario: use documented reservoir geometry or level–storage information and an explicitly assumed breach evolution to generate an outflow hydrograph, then route it downstream. The failure assumption is not a forecast of Ujjani failing. A user-supplied hypothetical hydrograph can support exploratory routing but is not itself a calculated breach model.
+
+A hydrograph Q(t) specifies discharge in cubic metres per second through time. The reservoir routing accounts for incoming water, all outgoing pathways, and remaining storage. Prescribed release mode and computed breach mode must have separate input contracts: do not independently force a discharge and calculate a second release from the same water volume.
+
+Use Delft3D Flexible Mesh / D-Flow FM as the proposed primary 2D river/floodplain engine. Use DualSPHysics for a small, physically compatible local comparison case. Start comparison with a shared benchmark; a Ujjani local comparison remains a separate deliverable. Full-domain SPH is not required by this plan, and this interpretation of the PS should be checked with the problem owner if the expected spatial comparison scope is unclear.
+
+Both solvers produce numerical results. Postprocessing derives flood extent, depth, velocity, arrival time, duration, and exposure. The browser displays those stored outputs; it does not invent water movement. A separate Google Earth Engine path extracts timestamped observed water/flood masks. Only a matching historical simulation can be assessed against that observation.
+
+Comparison with the uploaded PRD
+
+The supplied Pasted markdown(6).md is a PRD, not implementation evidence. Its section 35 already proposes a single-site MVP; we are specializing and correcting that scope, not replacing an existing implemented model.
+
+PRD reference
+
+Issue
+
+Correction for this build
+
+Section 13, partial-failure scenario
+
+Calls partial failure controlled release
+
+Keep a failure scenario separate from an operational release scenario
+
+Section 13, complete-failure scenario
+
+Percentage failure implies maximum release without a physical definition
+
+Use documented geometry, reservoir state, and time-dependent assumptions; do not infer a discharge from a percentage label
+
+Sections 12 and 32
+
+River width/centreline and a few scalar fields are insufficient contracts
+
+Add channel geometry, level–storage relation where needed, initial states, tributary inputs, downstream boundary, vertical datum, and time series
+
+Section 11
+
+Blanket sink filling is treated as simulation-ready terrain
+
+Preserve physical depressions/storage and barriers; keep drainage-conditioned terrain separate from hydraulic terrain
+
+Sections 14–16
+
+Does not define a common comparison domain or common observables
+
+Define equivalent forcing, common gauges, time alignment, masks, and SPH-to-depth-averaged comparison
+
+Section 16
+
+Model differences are described as accuracy
+
+Call them inter-model agreement; assess accuracy only against suitable independent reference evidence
+
+Sections 20–21 and 43
+
+Satellite validation is presented as following any scenario
+
+Assess a historical event at satellite acquisition time; hypothetical failure maps have no matching observed failure by default
+
+Section 19
+
+Depth-only categories called risk
+
+Call these depth/hazard classes; broader hazard considers velocity/duration and risk also requires exposure/vulnerability and, where relevant, likelihood
+
+Sections 18 and 44
+
+Exposure is the main impact output
+
+Keep exposure distinct from economic loss; damage estimates require asset values and justified vulnerability relationships
+
+Section 32
+
+A single arrival_time per result
+
+Store arrival-time maps or per-location series, a stated threshold, and explicit not-reached/no-data values
+
+Sections 34 and 48
+
+Example metrics and relaxed comparison completion language can hide unfinished physics
+
+No sample numbers on real cases; require actual runs or explicitly attributed imported results; imported results do not prove automatic solver integration
+
+Sections 35 and 48
+
+3D is treated as core completion
+
+Prioritize numerical engines, comparison, GIS outputs, and validation; terrain rendering is optional polish
+
+Sections 36–37
+
+AI suggestions and broad platform features imply innovation
+
+Defer LLM parameter suggestions. Focus on input provenance, uncertainty, and explainable evidence
+
+The first release covers controlled/prescribed releases and hypothetical breach scenarios. Natural blockage failure, erosion/debris transport, rainfall-runoff generation, and full 3D regional CFD are explicitly deferred. This is a scoped demonstrator, not a claim to cover every scenario in the PS.

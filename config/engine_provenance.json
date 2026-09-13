@@ -1,0 +1,23 @@
+{
+  "dflowfm": {
+    "image_id": "sha256:d439312899ce18fc3c498355b3c87ddda55a59b3b74e762bc2b08425b2980cd8",
+    "source_commit": "18f8ebb239e5a746a2ac1a7c85631b539fb15e51",
+    "dimr_sha256": "82778434af480601dbec525e62bf035322c6ffb99a0a1d6072be1afa3b9d7eb8",
+    "dflowfm_library_sha256": "8a2183004ed05fb22e9ea1ac4fd68d64897489f98c84c0b780046dd352469b6d",
+    "run_dimr_script_sha256": "eb844d8b3537e033db894b5e561d054826fa1b1ce8b57d98a4f5c0438a38482a",
+    "buildtools_image_id": "sha256:f6d8f80b01bde8e605bf92164f9cb13ed03327369803a89a8f6a7e0cdd526aa6",
+    "thirdparty_image_id": "sha256:5df273d79ea799cd918e49a222c6c4c8566b571391ec5ec2f996b0906abd6c1c",
+    "build": "Official Linux fm-suite Docker recipe, Intel oneAPI 2024 ifx, test-only Linux fix removing unconditional copy of Windows msvcr100.dll. Hydraulic source checkout unchanged.",
+    "source_url": "https://github.com/Deltares/Delft3D"
+  },
+  "dualsphysics": {
+    "image_id": "sha256:eaf9d4fa9f427dbd787ebe2479e31f969f6ceab0623faca485125b2642090411",
+    "source_commit": "ef3721a861fda961f0e2f9ec4cd317b19de99086",
+    "solver_sha256": "1ea889f84e3d2af5ac8c361d0aa875e5b5c1bc92a2abaaedb38aba6a945beb3a",
+    "gencase_sha256": "a1b6414e0f716669363d1a80a05e133085c04995e15716e3c1f0406e0d023226",
+    "partvtk_sha256": "ef711ee081613ddb97ac4f86f24652dc92eab3fc37c6e78c3fb9ef4ec02ad400",
+    "build": "GCC 12, official Makefile_cpu, Chrono/wavegen/MoorDyn disabled, fast-math disabled",
+    "source_url": "https://github.com/DualSPHysics/DualSPHysics",
+    "licence": "LGPL-2.1 source; bundled helper licences retained externally"
+  }
+}

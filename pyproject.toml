@@ -1,0 +1,27 @@
+[project]
+name = "damsafe"
+version = "0.1.0"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "fastapi>=0.115,<1", "uvicorn>=0.34,<1", "pydantic>=2.10,<3",
+  "sqlalchemy>=2.0,<2.1", "alembic>=1.14,<2", "psycopg[binary]>=3.2,<4",
+  "rasterio>=1.4,<2", "fiona>=1.10,<2", "shapely>=2.0,<3", "pyproj>=3.7,<4",
+  "boto3>=1.36,<2", "tzdata>=2025.1", "httpx>=0.28,<1",
+  "netCDF4>=1.7,<2", "psutil>=7,<8"
+]
+
+[dependency-groups]
+dev = ["pytest>=8.3,<10", "ruff>=0.11,<1"]
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["backend"]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+
+[tool.ruff]
+line-length = 110
