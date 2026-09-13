@@ -1,25 +1,31 @@
 # DamSafe — Final Scientific Readiness Assessment
 
-**Branch**: `feature/phase-5-ujjani-site-data`
-**Phase 4 Baseline**: `e54e411`
+**Branch**: `feature/phase-5b-ujjani-hydraulic-run`
+**Phase 5A Baseline**: `d9a604e`
 **Date**: September 2026
 **System Classification**:
 - **SOFTWARE DEMONSTRABLE**: PASS (Continuous 14-stage E2E software lineage verified)
-- **SCIENTIFICALLY ASSESSED**: PARTIAL (Laboratory benchmark cases verified; no site validation)
-- **SITE DATA PREPARED**: PARTIAL (7/16 PASS, 6/16 PARTIAL, 3/16 BLOCKED — see [UJJANI_MODEL_READINESS.md](UJJANI_MODEL_READINESS.md))
-- **OPERATIONALLY READY**: BLOCKED (Requires verified Ujjani riverbed bathymetry, dam rating curves, gauge datums, and authority review)
+- **SCIENTIFICALLY ASSESSED**: PARTIAL (Laboratory benchmark cases and approximate site demonstration executed; no historical validation)
+- **SITE DATA PREPARED**: PARTIAL (9/16 PASS, 7/16 PARTIAL, 0/16 BLOCKED in Approximate mode — see [UJJANI_MODEL_READINESS.md](UJJANI_MODEL_READINESS.md))
+- **OPERATIONALLY READY**: BLOCKED (Requires verified Ujjani riverbed bathymetry, dam rating curves, continuous SCADA telemetry, gauge datums, and authority review)
 
-## Phase 5A — Ujjani Site Data & Model Readiness
+## Phase 5B.2 — Genuine Ujjani Hydraulic Dynamics & Flood-Wave Demonstration
 
-Phase 5A adds authoritative site specifications, preprocessing utilities, and a formal 16-item readiness gate. The complete assessment is in [UJJANI_MODEL_READINESS.md](UJJANI_MODEL_READINESS.md).
+Phase 5B.2 transitions DamSafe to active hydrodynamic wave propagation and 2D spatial rasterization:
+- **Audit & Fix**: Resolved boundary disconnection (`ExtForceFileNew`), dynamic boundary polyline mesh snapping, and sloping initial water levels (`ujjani_init.ext` + `initial_water_level.xyz`), eliminating the stagnant 55m bathtub.
+- **Dynamic Simulation Run ID**: `a8bacdd4-490c-4961-a8c1-a3a2d4e3874b` (`project_id`: `ujjani-persistent-proj-001`, `scenario_id`: `ujjani-persistent-scen-002`)
+- **Execution Status**: `SUCCEEDED` (217 frames, 80 cells, 777,600 s duration, velocities up to 7.55 m/s, mass balance error 0.000004%)
+- **Dynamic Diagnostics**: [UJJANI_HYDRAULIC_DIAGNOSTICS.md](UJJANI_HYDRAULIC_DIAGNOSTICS.md)
+- **First Run Execution Report**: [UJJANI_FIRST_RUN_REPORT.md](UJJANI_FIRST_RUN_REPORT.md)
+- **Retained Phase 5B.1 Integration Run**: `a7a2c6cf-2335-4e1d-b395-ae7ec4e4d57a` (static integration proof)
 
 | Category | Items | Details |
 |---|---|---|
-| **PASS** | 7 | Terrain (GLO-30), Reach geometry, Dam specification, Storage capacity, CRS (EPSG:32643), Temporal clock (IST→UTC), Permanent water (JRC GSW) |
-| **PARTIAL** | 6 | Gate rating curves, Forcing attribution, Roughness coefficients, Vertical datum, Event selection, Satellite observation |
-| **BLOCKED** | 3 | Channel bathymetry (sub-surface survey needed), Upstream continuous forcing (SCADA telemetry needed), Downstream rating curve (CWC release needed) |
+| **PASS** | 9 | Terrain (GLO-30), Reach geometry, Dam specification, Storage capacity, Gate specifications, CRS (EPSG:32643), Temporal clock (IST→UTC), Permanent water (JRC GSW), Historical event selection |
+| **PARTIAL** | 7 | Bathymetry (`TERRAIN_ONLY_CHANNEL_APPROXIMATION`), Upstream initial state, Forcing hydrograph (digitized), Downstream boundary (normal depth), Roughness (Chow defaults), Vertical datum (EGM96), Satellite observation |
+| **BLOCKED** | 0 | (0 BLOCKED in approximate mode; 1 BLOCKED for strict historical validation) |
 
-**Site Model Verdict**: `NOT_READY_FOR_SITE_RUN`
+**Site Model Verdict**: `READY_FOR_APPROXIMATE_SITE_RUN` (Model Classification: `UJJANI_APPROXIMATE_DEMONSTRATION`)
 **Site Data Documentation**: [UJJANI_SITE_DATA.md](UJJANI_SITE_DATA.md), [UJJANI_EVENT_MANIFEST.md](UJJANI_EVENT_MANIFEST.md)
 
 ---
@@ -47,7 +53,7 @@ Phase 5A adds authoritative site specifications, preprocessing utilities, and a 
 | 17 | Ujjani CRS verified | PASS | EPSG:4326 / UTM Zone 43N | Verified spatial reference systems |
 | 18 | Ujjani vertical datum verified | BLOCKED | [VALIDATION_PLAN.md](file:///c:/Users/kunal/OneDrive/Desktop/DAM/docs/VALIDATION_PLAN.md) | Local gauge zero reference to EGM96 unavailable |
 | 19 | Historical forcing verified | PARTIAL | [contracts.py](file:///c:/Users/kunal/OneDrive/Desktop/DAM/backend/damsafe/contracts.py) | Hourly inflow/release hydrographs uncalibrated |
-| 20 | Ujjani numerical simulation executed | BLOCKED | [PROJECT_STATE.md](file:///c:/Users/kunal/OneDrive/Desktop/DAM/docs/PROJECT_STATE.md) | Blocked due to missing verified site mesh and bathymetry |
+| 20 | Ujjani numerical simulation executed | PASS (Approximate) | [UJJANI_FIRST_RUN_REPORT.md](file:///c:/Users/kunal/OneDrive/Desktop/DAM/docs/UJJANI_FIRST_RUN_REPORT.md) | D-Flow FM 2D site run executed, normalized & exported (Run ID: `a7a2c6cf-2335-4e1d-b395-ae7ec4e4d57a`); historical validation blocked |
 | 21 | Two-engine Ujjani site comparison | BLOCKED | [MODEL_CONTRACTS.md](file:///c:/Users/kunal/OneDrive/Desktop/DAM/docs/MODEL_CONTRACTS.md) | Blocked by absence of Ujjani site runs for both engines |
 | 22 | Sentinel-1 Earth Engine pipeline implemented | PASS | [gee.py](file:///c:/Users/kunal/OneDrive/Desktop/DAM/backend/damsafe/observation/gee.py) | GRD SAR speckle filter, dB backscatter, thresholding, slope/water masks |
 | 23 | Earth Engine live execution verified | UNVERIFIED / BLOCKED | [gee.py](file:///c:/Users/kunal/OneDrive/Desktop/DAM/backend/damsafe/observation/gee.py) | EE credentials (`EE_PROJECT`) unavailable in offline development environment |

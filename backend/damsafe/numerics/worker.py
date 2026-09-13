@@ -30,11 +30,13 @@ def finalize(engine_name, directory, case, capability):
         native = list(directory.rglob("*_map.nc"))
         if len(native) != 1:
             raise ValueError("Expected one sequential map file; partition merge requires an explicit adapter")
+        crs = case.get("physical_case", {}).get("crs", "LOCAL_CARTESIAN_OFFICIAL_F34")
+        datum = case.get("physical_case", {}).get("vertical_datum", "official model bed reference")
         result = normalize_dflow(
             native[0],
             destination,
-            crs="LOCAL_CARTESIAN_OFFICIAL_F34",
-            datum="official model bed reference",
+            crs=crs,
+            datum=datum,
             threshold=0.01,
             source_provenance={"engine": capability, "case": case, "execution_origin": "LOCAL"},
         )
@@ -42,7 +44,10 @@ def finalize(engine_name, directory, case, capability):
         if expected is None or result["duration_seconds"] < expected - max(1e-6, 1e-6 * expected):
             raise ValueError("D-Flow map stopped before the documented case end time")
         history = native[0].with_name(native[0].name.replace("_map.nc", "_his.nc"))
-        result["water_balance"] = native_dflow_balance(history, native[0])
+        try:
+            result["water_balance"] = native_dflow_balance(history, native[0])
+        except Exception as exc:
+            result["water_balance"] = {"status": "PARTIAL", "reason": str(exc)}
     result["normalized_sha256"] = sha256(destination)
     result["normalized_file"] = "normalized.nc"
     save_json(directory / "diagnostics.json", result)
@@ -84,7 +89,12 @@ def work_once(engine):
         last_save = time.monotonic()
 
     try:
-        case = prepare_official(request["engine"], destination, request.get("particle_spacing_m"))
+        if request.get("case_kind") == "SITE_SCENARIO":
+            from .adapters import prepare_ujjani_site
+
+            case = prepare_ujjani_site(destination)
+        else:
+            case = prepare_official(request["engine"], destination, request.get("particle_spacing_m"))
         save_json(destination / "input-manifest.json", {**submission, "case": case})
         result = run_stages(
             request["engine"],

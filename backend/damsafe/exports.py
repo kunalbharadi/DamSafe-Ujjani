@@ -71,15 +71,46 @@ def _features(x, y, area, values, state):
 def _write_geotiff(path, crs, x, y, values, metadata):
     if len(x) == 0:
         raise ValueError("Saved result contains no cells")
-    dx = float(np.median(np.diff(np.sort(x)))) if len(x) > 1 and np.any(np.diff(np.sort(x)) > 0) else 1.0
-    dy = float(np.median(np.diff(np.sort(y)))) if len(y) > 1 and np.any(np.diff(np.sort(y)) > 0) else 1.0
-    transform = from_origin(float(np.min(x)) - dx / 2, float(np.max(y)) + dy / 2, dx, dy)
-    array = np.asarray(values["maximum_depth_m"], dtype="float32")[np.newaxis, :]
-    with rasterio.open(path, "w", driver="GTiff", height=1, width=len(x), count=1, dtype="float32",
-                       crs=crs, transform=transform, nodata=-9999.0) as dst:
-        dst.write(np.where(np.isfinite(array), array, -9999.0), 1)
-        dst.update_tags(damsafe_units="metres", coordinate_convention="cell-centre strip",
-                        nodata="-9999", source_crs=crs.to_string(), **{"run_provenance": json.dumps(metadata)})
+
+    span_x = float(np.max(x) - np.min(x))
+    span_y = float(np.max(y) - np.min(y))
+
+    if span_x > 1000.0 and span_y > 1000.0 and len(x) > 4:
+        # 2D Spatial Rasterization onto regular UTM grid
+        res = 200.0  # 200m grid resolution
+        x_min, x_max = float(np.min(x)), float(np.max(x))
+        y_min, y_max = float(np.min(y)), float(np.max(y))
+        width = int(np.ceil((x_max - x_min) / res)) + 4
+        height = int(np.ceil((y_max - y_min) / res)) + 4
+        x_orig = x_min - 2 * res
+        y_orig = y_max + 2 * res
+        transform = from_origin(x_orig, y_orig, res, res)
+
+        depths = np.asarray(values["maximum_depth_m"], dtype="float32")
+        raster = np.full((height, width), -9999.0, dtype=np.float32)
+        for px, py, d in zip(x, y, depths):
+            if np.isfinite(d):
+                col = int((px - x_orig) / res)
+                row = int((y_orig - py) / res)
+                if 0 <= row < height and 0 <= col < width:
+                    raster[row, col] = d
+
+        with rasterio.open(path, "w", driver="GTiff", height=height, width=width, count=1, dtype="float32",
+                           crs=crs, transform=transform, nodata=-9999.0) as dst:
+            dst.write(raster, 1)
+            dst.update_tags(damsafe_units="metres", coordinate_convention="2D_INUNDATION_RASTER",
+                            nodata="-9999", source_crs=crs.to_string(), **{"run_provenance": json.dumps(metadata)})
+    else:
+        # 1D or synthetic laboratory cell-centre strip representation
+        dx = float(np.median(np.diff(np.sort(x)))) if len(x) > 1 and np.any(np.diff(np.sort(x)) > 0) else 1.0
+        dy = float(np.median(np.diff(np.sort(y)))) if len(y) > 1 and np.any(np.diff(np.sort(y)) > 0) else 1.0
+        transform = from_origin(float(np.min(x)) - dx / 2, float(np.max(y)) + dy / 2, dx, dy)
+        array = np.asarray(values["maximum_depth_m"], dtype="float32")[np.newaxis, :]
+        with rasterio.open(path, "w", driver="GTiff", height=1, width=len(x), count=1, dtype="float32",
+                           crs=crs, transform=transform, nodata=-9999.0) as dst:
+            dst.write(np.where(np.isfinite(array), array, -9999.0), 1)
+            dst.update_tags(damsafe_units="metres", coordinate_convention="CELL_CENTRE_STRIP_EXPORT",
+                            nodata="-9999", source_crs=crs.to_string(), **{"run_provenance": json.dumps(metadata)})
 
 
 def _write_geojson(path, crs, x, y, area, values, state):
@@ -105,7 +136,7 @@ def _write_kml(path, crs, x, y, area, values, state):
 
 def _write_shapefile(path, crs, x, y, area, values, state):
     folder = path.with_suffix("")
-    folder.mkdir()
+    folder.mkdir(parents=True, exist_ok=True)
     schema = {"geometry": "Point", "properties": {
         "cell_id": "int", "max_depth": "float", "max_vel_ms": "float", "duration_s": "float",
         "arrival_s": "float", "state": "int", "area_m2": "float",
@@ -178,8 +209,16 @@ def create_export(source: Path, product: Path, output_dir: Path, run_id: str, ex
 def verify_export(path: Path, export_format: str):
     if export_format == "geotiff":
         with rasterio.open(path) as src:
-            return {"format": export_format, "crs": src.crs.to_string() if src.crs else None,
-                    "nodata": src.nodata, "units": src.tags().get("damsafe_units"), "count": src.width}
+            return {
+                "format": export_format,
+                "crs": src.crs.to_string() if src.crs else None,
+                "nodata": src.nodata,
+                "units": src.tags().get("damsafe_units"),
+                "count": src.width,
+                "width": src.width,
+                "height": src.height,
+                "coordinate_convention": src.tags().get("coordinate_convention"),
+            }
     if export_format == "geojson":
         body = json.loads(path.read_text(encoding="utf-8"))
         return {"format": export_format, "feature_count": len(body["features"]), "crs": body["crs"]["properties"]["name"]}

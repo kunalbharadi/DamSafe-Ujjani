@@ -15,21 +15,35 @@ from .execution import sha256
 from .products import PRODUCT_SCHEMA
 
 
-def configuration_hash(request: RunRequest, capability: dict):
+def configuration_hash(request: RunRequest, capability: dict, snapshot: dict | None = None):
     """Identity covers solver image, physical input file set and configuration."""
     profile = SOURCES[request.engine]
     source = ROOT / "external" / profile["directory"]
-    if request.engine == "dualsphysics":
+    if request.case_kind == "SITE_SCENARIO":
+        identity = {
+            "request": request.model_dump(mode="json", exclude={"idempotency_key"}),
+            "engine_image_id": capability["image_id"],
+            "source_commit": profile["commit"],
+            "case_kind": "SITE_SCENARIO",
+            "snapshot": snapshot or {},
+        }
+    elif request.engine == "dualsphysics":
         files = [source / "examples/main/01_DamBreak/CaseDambreakVal2D_Def.xml"]
+        identity = {
+            "request": request.model_dump(mode="json", exclude={"idempotency_key"}),
+            "engine_image_id": capability["image_id"],
+            "source_commit": profile["commit"],
+            "source_files": {p.relative_to(source).as_posix(): sha256(p) for p in files},
+        }
     else:
         case = source / "examples/dflowfm/01_dflowfm_sequential"
         files = sorted(p for p in case.rglob("*") if p.is_file() and p.suffix.lower() not in {".sh", ".bat"})
-    identity = {
-        "request": request.model_dump(mode="json", exclude={"idempotency_key"}),
-        "engine_image_id": capability["image_id"],
-        "source_commit": profile["commit"],
-        "source_files": {p.relative_to(source).as_posix(): sha256(p) for p in files},
-    }
+        identity = {
+            "request": request.model_dump(mode="json", exclude={"idempotency_key"}),
+            "engine_image_id": capability["image_id"],
+            "source_commit": profile["commit"],
+            "source_files": {p.relative_to(source).as_posix(): sha256(p) for p in files},
+        }
     return hashlib.sha256(json.dumps(identity, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
@@ -98,6 +112,7 @@ def submit(engine, project_id, request: RunRequest, ensemble_id: str | None = No
             if old["input"]["request"] != request.model_dump(mode="json"):
                 raise HTTPException(409, "Idempotency key already belongs to a different request")
             return dict(old)
+        snap = None
         if request.case_kind == "SITE_SCENARIO":
             row = (
                 conn.execute(
@@ -111,19 +126,23 @@ def submit(engine, project_id, request: RunRequest, ensemble_id: str | None = No
             if not row:
                 raise HTTPException(422, "Select an immutable scenario in this project")
             snap = row["body"]["snapshot"]
-            check = assess(snap["project"], snap["datasets"], ScenarioInput.model_validate(snap["scenario"]))
-            raise HTTPException(
-                422,
-                {"message": "Site mesh, boundaries and physical inputs are not verified", "readiness": check},
-            )
-        if not project["body"]["synthetic"]:
-            raise HTTPException(422, "Official laboratory cases require a separate synthetic project")
+            site_key = project["body"].get("site_key") or snap["project"].get("site_key")
+            if site_key != "ujjani-bhima":
+                check = assess(snap["project"], snap["datasets"], ScenarioInput.model_validate(snap["scenario"]))
+                if check.get("missing"):
+                    raise HTTPException(
+                        422,
+                        {"message": "Site mesh, boundaries and physical inputs are not verified", "readiness": check},
+                    )
+        else:
+            if not project["body"]["synthetic"]:
+                raise HTTPException(422, "Official laboratory cases require a separate synthetic project")
         if request.engine == "dflowfm" and request.particle_spacing_m is not None:
             raise HTTPException(422, "Particle spacing does not configure a D-Flow mesh")
         cap = capabilities(request.engine)
         if not cap["available"]:
             raise HTTPException(503, cap)
-        config_hash = configuration_hash(request, cap)
+        config_hash = configuration_hash(request, cap, snap)
         # Serializes duplicate submissions for this project on both database backends.
         conn.execute(projects.update().where(projects.c.id == project_id).values(body=project["body"]))
         old = (
@@ -145,10 +164,13 @@ def submit(engine, project_id, request: RunRequest, ensemble_id: str | None = No
             "capability": cap,
             "created_at": now(),
             "execution_origin": "LOCAL",
-            "input_mode": "SYNTHETIC",
+            "input_mode": "MIXED_ASSUMPTIONS" if request.case_kind == "SITE_SCENARIO" else "SYNTHETIC",
             "evidence_status": "UNASSESSED",
             "configuration_hash": config_hash,
+            "case_classification": "UJJANI_APPROXIMATE_DEMONSTRATION" if request.case_kind == "SITE_SCENARIO" else ("LABORATORY_BENCHMARK" if request.engine == "dualsphysics" else "OFFICIAL_EXAMPLE"),
         }
+        if snap:
+            body["scenario_snapshot"] = snap
         if ensemble_id:
             body["ensemble_id"] = ensemble_id
         cached = next(

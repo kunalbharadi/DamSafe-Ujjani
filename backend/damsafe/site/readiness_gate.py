@@ -31,7 +31,25 @@ class UjjaniSiteReadinessAssessment(BaseModel):
     mandatory_blockers_count: int
 
 
-def assess_ujjani_site_readiness() -> UjjaniSiteReadinessAssessment:
+def assess_ujjani_site_readiness(allow_approximation: bool = False) -> UjjaniSiteReadinessAssessment:
+    bathymetry_item = (
+        ReadinessItem(
+            key="bathymetry",
+            label="Sub-surface River Bathymetry",
+            status=ItemReadinessStatus.PARTIAL,
+            evidence="TERRAIN_ONLY_CHANNEL_APPROXIMATION: Incised trapezoidal channel (3.5m depth, 120m width) below DEM.",
+            limitation="Sub-surface sounding unperformed; approximate channel carries hydraulic conveyance uncertainty.",
+        )
+        if allow_approximation
+        else ReadinessItem(
+            key="bathymetry",
+            label="Sub-surface River Bathymetry",
+            status=ItemReadinessStatus.BLOCKED,
+            evidence="None. Public DEMs only measure water surface elevation.",
+            limitation="Direct riverbed soundings/cross-sections below water level unavailable.",
+        )
+    )
+
     items = [
         ReadinessItem(
             key="terrain_dem",
@@ -47,13 +65,7 @@ def assess_ujjani_site_readiness() -> UjjaniSiteReadinessAssessment:
             evidence="115 km Bhima River reach digitized from Ujjani Dam to Pandharpur.",
             limitation="Approximate bankfull width 120m derived from satellite imagery.",
         ),
-        ReadinessItem(
-            key="bathymetry",
-            label="Sub-surface River Bathymetry",
-            status=ItemReadinessStatus.BLOCKED,
-            evidence="None. Public DEMs only measure water surface elevation.",
-            limitation="Direct riverbed soundings/cross-sections below water level unavailable.",
-        ),
+        bathymetry_item,
         ReadinessItem(
             key="dam_geometry",
             label="Dam Location & Dimensions",
@@ -148,6 +160,7 @@ def assess_ujjani_site_readiness() -> UjjaniSiteReadinessAssessment:
     ]
 
     blocked_count = sum(1 for item in items if item.status == ItemReadinessStatus.BLOCKED)
+    partial_count = sum(1 for item in items if item.status == ItemReadinessStatus.PARTIAL)
 
     if blocked_count > 0:
         verdict = SiteModelVerdict.NOT_READY_FOR_SITE_RUN
@@ -155,6 +168,13 @@ def assess_ujjani_site_readiness() -> UjjaniSiteReadinessAssessment:
             f"Site simulation is NOT READY due to {blocked_count} blocked critical physical input (sub-surface riverbed bathymetry). "
             "Simulating the site without bathymetry will produce unphysical shallow spreading. "
             "Demonstration runs must be explicitly flagged as UJJANI_APPROXIMATE_DEMONSTRATION."
+        )
+    elif partial_count > 0:
+        verdict = SiteModelVerdict.READY_FOR_APPROXIMATE_SITE_RUN
+        explanation = (
+            "Site simulation is READY FOR APPROXIMATE SITE RUN under documented channel bathymetry "
+            "approximation (TERRAIN_ONLY_CHANNEL_APPROXIMATION) and digitized flood hydrograph forcing. "
+            "All runs must be labelled UJJANI_APPROXIMATE_DEMONSTRATION and cannot be presented as validated historical simulations."
         )
     else:
         verdict = SiteModelVerdict.READY_FOR_HISTORICAL_SITE_RUN

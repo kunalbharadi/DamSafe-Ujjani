@@ -130,6 +130,14 @@ def prepare_official(engine, target: Path, particle_spacing=None):
     }
 
 
+def prepare_ujjani_site(target: Path, config=None):
+    from ..site.hydraulic_case import UjjaniApproximateCaseConfig, build_ujjani_approximate_case
+
+    if config is None:
+        config = UjjaniApproximateCaseConfig()
+    return build_ujjani_approximate_case(target, config)
+
+
 def docker_argv(image_id, run_dir, command, limits, name):
     return [
         "docker",

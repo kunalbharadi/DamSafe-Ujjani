@@ -1,3 +1,35 @@
+# PS 26161 Phase 5B.2 implementation note
+
+Phase 5B.2 establishes genuine hydrodynamic wave propagation and 2D spatial rasterization for the Ujjani–Bhima reach on branch `feature/phase-5b-ujjani-hydraulic-run`.
+
+The dynamic run (`run_id`: `a8bacdd4-490c-4961-a8c1-a3a2d4e3874b`, `project_id`: `ujjani-persistent-proj-001`, `scenario_id`: `ujjani-persistent-scen-002`) resolved boundary decoupling and standing backwater via `ExtForceFileNew`, polyline node snapping, and sloping initial water levels (`ujjani_init.ext`).
+
+Dynamic velocities (up to 7.55 m/s), wave celerity (~38.3 km/h), mass balance residual (-102.0 m³, 0.000004% relative error), and true 2D GeoTIFF rasterization ($111 \times 216$ cells, 200m res) were achieved and verified. All 6 export formats were generated and independently reopened. Retained Phase 5B.1 run `a7a2c6cf-2335-4e1d-b395-ae7ec4e4d57a` for regression comparison. Model classification remains strictly `UJJANI_APPROXIMATE_DEMONSTRATION`.
+
+| Deliverable | Status | Code / evidence | Missing completion evidence |
+| --- | --- | --- | --- |
+| Dynamic boundary coupling | tested | `hydraulic_case.py` (`ExtForceFileNew`, dynamic `.pli`), `test_phase5b2_hydraulic_dynamics.py` | Live SCADA boundary streaming |
+| Sloping initial water surface | tested | `hydraulic_case.py` (`ujjani_init.ext` + `initial_water_level.xyz`) | Measured dry-season water surface survey |
+| Mass conservation verification | tested | `diagnostics.py` (0.000004% mass error) | Multi-tributary lateral balance |
+| 2D spatial GeoTIFF rasterization | tested | `exports.py` (200m grid, $111 \times 216$ cells) | LiDAR fine-grid rasterization |
+| Independent export verification | tested | `test_phase5b2_hydraulic_dynamics.py` (all 6 formats) | Production cartographic map series |
+
+# PS 26161 Phase 5B.1 implementation note
+
+Phase 5B.1 turns the successful approximate Ujjani D-Flow FM execution into a persistent, reproducible DamSafe run with complete provenance, normalization, derived products, independently reopened GIS exports, and restart persistence on branch `feature/phase-5b-ujjani-hydraulic-run`.
+
+The persistent run (`run_id`: `a7a2c6cf-2335-4e1d-b395-ae7ec4e4d57a`, `project_id`: `ujjani-persistent-proj-001`, `scenario_id`: `ujjani-persistent-scen-001`) was submitted through `run_service.submit_run()`, processed by `run_worker.process_next_job()` through states `QUEUED` → `RUNNING` → `SUCCEEDED`, and saved to `.local/runs/a7a2c6cf-2335-4e1d-b395-ae7ec4e4d57a/`.
+
+Normalized results (`normalized.nc`), products (`products.nc`), and 6 export formats (GeoTIFF, GeoJSON, CSV, Shapefile, KML, HTML) were generated and verified. Restart persistence was proven across isolated database connections. The run is strictly classified as `UJJANI_APPROXIMATE_DEMONSTRATION`.
+
+| Deliverable | Status | Code / evidence | Missing completion evidence |
+| --- | --- | --- | --- |
+| Persistent site run lifecycle | tested | `backend/damsafe/numerics/service.py`, `worker.py`, `test_phase5b1_persistent_run.py` | Full multi-worker production queue |
+| Ujjani NetCDF normalization | tested | `backend/damsafe/numerics/results.py`, `normalized.nc` (217 frames, 80 cells) | Verified 3D bathymetry |
+| Site postprocessing & products | tested | `backend/damsafe/numerics/products.py`, `products.nc` (depth, arrival, duration) | Field high-water calibration |
+| Reopened site GIS exports | tested | `backend/damsafe/exports.py`, all 6 formats verified | Production cartographic styling |
+| Restart persistence verification | tested | `test_phase5b1_persistent_run.py` (engine re-instantiation) | Multi-node cluster failover |
+
 # PS 26161 Phase 5A implementation note
 
 Phase 5A adds Ujjani site data acquisition and model-readiness assessment. The site specification module (`backend/damsafe/site/ujjani.py`) codifies authoritative dam parameters from CWC/WRD sources. Preprocessing utilities (`backend/damsafe/site/preprocessing.py`) provide traceable unit conversion (cusecs ↔ m³/s), timezone alignment (IST → UTC), and coordinate projection (WGS84 ↔ UTM Zone 43N). The 16-item readiness gate (`backend/damsafe/site/readiness_gate.py`) formally evaluates site simulation prerequisites and returns `NOT_READY_FOR_SITE_RUN` due to missing sub-surface bathymetry, continuous forcing telemetry, and downstream rating curve.

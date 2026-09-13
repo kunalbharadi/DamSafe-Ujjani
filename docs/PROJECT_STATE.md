@@ -1,3 +1,31 @@
+# Project state — Phase 5B.2 Ujjani Hydraulic Dynamics Audit & Flood-Wave Demonstration
+
+Date: 2026-09-13. Phase 5B.2 on branch `feature/phase-5b-ujjani-hydraulic-run` resolves the static backwater / boundary disconnection defect identified in Phase 5B.1 and executes the first genuine dynamic flood-wave simulation of the Bhima River downstream of Ujjani Dam (`run_id`: `a8bacdd4-490c-4961-a8c1-a3a2d4e3874b`, `project_id`: `ujjani-persistent-proj-001`, `scenario_id`: `ujjani-persistent-scen-002`).
+
+Root Cause Analysis resolved 4 critical configuration bugs:
+1. Updated D-Flow FM boundary keywords to modern standard (`ExtForceFileNew = ujjani_bhima.ext`).
+2. Dynamically snapped `.pli` polylines and `BndLink` coverage across all mesh boundary nodes with explicit time series epochs.
+3. Replaced flat 492.0 m initial water level with spatially varying sloping initial condition `ujjani_init.ext` + `initial_water_level.xyz` (bed + 1.5 m baseflow depth).
+4. Configured high-accuracy subgrid conveyance (`Conveyance2D = 3`) and monotonic limiters (`Limtyphu = 1`, `Limtypmom = 1`).
+
+Controlled Experiments & Dynamics:
+- Forcing Sensitivity: Low baseflow ($150\text{ m}^3/\text{s}$) vs High flood release ($7,079.2\text{ m}^3/\text{s}$ peak).
+- Mesh Sensitivity: Coarse 80-cell vs Medium 320-cell grids demonstrate consistent wave arrival times ($c \approx 38.3\text{ km/h}$).
+- Dynamic Results: Inflow $2.344\times 10^9\text{ m}^3$, Outflow $2.342\times 10^9\text{ m}^3$, Storage change $2.202\times 10^6\text{ m}^3$, Mass balance residual $-102.0\text{ m}^3$ ($0.000004\%$ relative error).
+- Wave Progression: Dam Toe peak depth 6.44m (velocity 7.55 m/s) at $t = 72\text{ h}$; Mid-Reach peak depth 8.51m (velocity 2.67 m/s) at $t = 74\text{ h}$; Pandharpur peak depth 8.57m (velocity 2.80 m/s) at $t = 75\text{ h}$.
+- True 2D Rasterization: Upgraded GeoTIFF generation to 200m spatial grid ($111 \times 216$ cells) tagged `2D_INUNDATION_RASTER` in `EPSG:32643`.
+- Exports & Persistence: All 6 formats independently reopened and verified. Retained Phase 5B.1 run for regression traceability. Classified strictly as `UJJANI_APPROXIMATE_DEMONSTRATION`.
+
+Verification: 65 backend pytest tests pass, frontend production build and typechecks pass with 0 errors, `git diff --check` clean.
+
+# Project state — Phase 5B.1 Ujjani Hydraulic Run Persistence, Normalization & Export
+
+Date: 2026-09-13. Phase 5B.1 on branch `feature/phase-5b-ujjani-hydraulic-run` turns the approximate Ujjani D-Flow FM execution into a persistent, reproducible DamSafe run with complete provenance, normalization, derived products, independently reopened GIS exports, and restart persistence.
+
+The simulation models the peak flood release of the October 2020 Bhima Flood (~250,000 cusecs / 7,079.2 m³/s) along an 115 km reach from Ujjani Dam to Pandharpur in `EPSG:32643` (UTM Zone 43N). Executed through the standard `run_service` and `run_worker` lifecycle (`QUEUED` → `RUNNING` → `SUCCEEDED`), the persistent run (`run_id`: `a7a2c6cf-2335-4e1d-b395-ae7ec4e4d57a`, `project_id`: `ujjani-persistent-proj-001`, `scenario_id`: `ujjani-persistent-scen-001`) completed across 217 timesteps (777,600 s duration) and 80 grid cells without NaN, Inf, or negative depths. The water volume balance passed with 0.0006 m³ native error. All 6 export formats (GeoTIFF, GeoJSON, CSV, Shapefile, KML, HTML) were generated and verified. State survival was proven by recreating the database engine and querying the persisted records. The run is strictly classified as `UJJANI_APPROXIMATE_DEMONSTRATION`.
+
+Verification: 62 backend pytest tests pass (including comprehensive Phase 5B.1 persistent lifecycle tests), frontend production build (`tsc -b && vite build`) passes, TypeScript checks pass with 0 errors, `git diff --check` passes with no whitespace issues.
+
 # Project state — Phase 5A Ujjani Site Data & Model Readiness
 
 Date: 2026-09-13. Phase 5A on branch `feature/phase-5-ujjani-site-data` transitions DamSafe from "software-demonstrable with laboratory solver evidence" to "scientifically prepared for the first real Ujjani–Bhima hydraulic simulation." This phase adds the authoritative Ujjani Dam specification module (`backend/damsafe/site/ujjani.py`) with CWC/WRD-sourced engineering parameters (crest 497.0 m, 41 radial gates, FRL 496.83 m, gross storage 3.14 km³, catchment 14,858 km²), preprocessing utilities (`backend/damsafe/site/preprocessing.py`) for discharge conversion (cusecs ↔ m³/s), timezone alignment (IST → UTC), and coordinate transformation (WGS84 ↔ UTM Zone 43N), and a formal 16-item model-readiness gate (`backend/damsafe/site/readiness_gate.py`).
