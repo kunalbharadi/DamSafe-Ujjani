@@ -1,88 +1,19 @@
-# DamSafe — SIH Judging Demo Script
+# DamSafe local demonstration
 
-This script provides a verified, step-by-step walkthrough for demonstrating DamSafe during SIH evaluation.
+Start with `./scripts/start.ps1 -Preview`, then open `http://127.0.0.1:8000`. The launcher creates a missing local .env; [environment setup](ENVIRONMENT.md) explains credentials. Retained data/results must be present locally; a fresh source checkout does not contain large engine outputs.
 
----
+1. **Dashboard:** select the Ujjani project in the top bar. Show actual first-saved-frame depth and wet area, readiness gaps and NOT VALIDATED status. Initial water is included in wet area.
+2. **Study Area / Data Setup:** inspect source and dataset readiness. Explain missing surveyed channel data, forcing/boundary records and datum qualification.
+3. **Scenario Builder:** inspect/save an immutable release or hypothetical-breach scenario. Custom site execution remains blocked because full worker input binding is incomplete.
+4. **Simulation:** use the project selector to open the separate laboratory workspace. With pinned engines installed, submit an official example. If reused from cache, explicitly call it cached; QUEUED/RUNNING is not proof of success.
+5. **Results, 2D:** return to Ujjani and select a retained successful run. Show numerical depth/velocity, native mesh polygons, frame slider and wet/unknown area. This is an approximate saved numerical demonstration.
+6. **Results, 3D River Mesh:** rotate and zoom the native face bed/water surface. Change vertical exaggeration. Surrounding photorealistic terrain is not present.
+7. **Results, 3D SPH Near-Field:** play or seek to frame 100. Show actual particle count, speed and time. These are local laboratory coordinates, not a georeferenced Ujjani SPH simulation.
+8. **Compare:** select compatible outputs in the same project. Show agreement metrics and provenance. Incompatible pairs stay rejected; no inter-model agreement is labelled accuracy.
+9. **Validation:** distinguish historical from latest-available observation mode. Explain Earth Engine access and full observation assessment are unverified/incomplete. Do not show an unrelated image as breach validation.
+10. **Impact & HADR:** show explicit missing asset/population/loss evidence. Do not invent exposed settlements or evacuation routes.
+11. **Reports & Export:** generate KML, Shapefile ZIP, GeoJSON, GeoTIFF, CSV or HTML. Explain vector exports use cell points and retain run provenance.
 
-## Prerequisites & Startup
+Verification: `cd frontend; node tests/review-local.mjs` starts an isolated API, exercises all pages and real retained result playback/exports, and stores screenshots in `.local/ui-review/`. It does not submit new numerical runs.
 
-Start the local DamSafe development stack:
-```powershell
-.\scripts\start.ps1 -Preview
-```
-This starts the backend API, SQLite database, background workers, and serves the production-built React frontend at:
-`http://127.0.0.1:8000`
-
----
-
-## 17-Step Demo Sequence
-
-1. **Open Application**:
-   - Navigate to `http://127.0.0.1:8000` in the browser.
-   - Point out the active study domain: **Ujjani Reservoir / Bhima River Basin** (EPSG:4326).
-
-2. **Demonstrate Project Provenance**:
-   - Inspect the study domain bounding box on the 2D MapLibre viewer (`74.6°E to 75.1°E, 18.0°N to 18.4°N`).
-   - Note the clear indicator: *No validated Ujjani flood prediction exists in this workspace.*
-
-3. **Show Scientific Readiness & Compliance Findings**:
-   - Click the **Readiness** tab.
-   - Point out findings: missing sub-surface bathymetry, uncalibrated spillway rating curves, unaligned gauge datums.
-   - Highlight DamSafe's design philosophy: missing data is reported as `BLOCKED`/`UNAVAILABLE` rather than faked.
-
-4. **Show Verified Source Inputs**:
-   - Click the **Data library** tab.
-   - Review imported datasets with cryptographic SHA-256 hashes, provenance tags, and unit metadata.
-
-5. **Show Immutable Scenario Contract**:
-   - Click the **Scenarios** tab.
-   - Inspect JSON scenario contracts with explicit simulation start/end times and boundary conditions.
-
-6. **Run Official Engine Example (Laboratory Benchmarks)**:
-   - Click **Numerical runs** -> Click **Open laboratory project**.
-   - Select `DualSPHysics` or `D-Flow FM` and click **Run official laboratory example** (`[LIVE EXECUTION]`).
-
-7. **Show Real-time Execution & Progress State**:
-   - Observe live worker status transition: `QUEUED` -> `RUNNING` -> `SUCCEEDED`.
-
-8. **Explore Depth, Velocity, & Arrival Results**:
-   - Click **Explore results** on the completed run.
-   - View maximum depth (e.g. `0.850 m`), wet cell count, simulation elapsed time, and animated grid playback (`[PRECOMPUTED / LIVE NORMALIZED RESULT]`).
-
-9. **Scenario Parameter Variant Sensitivity**:
-   - Click the **Ensembles** tab.
-   - Submit an ensemble of particle spacing variants (`0.01m` vs `0.02m`).
-   - Emphasize that ensemble statistics report **scenario frequency**, not statistical probability.
-
-10. **Compare Numerical Runs**:
-    - Click the **Compare** tab.
-    - Select Run A and Run B to compute cell-by-cell numerical depth differences on a shared grid contract.
-
-11. **Explain Two-Engine Hydraulic Roles (D-Flow FM vs DualSPHysics)**:
-    - Explain that D-Flow FM computes 2D regional shallow water equations across downstream valleys, while DualSPHysics resolves 3D near-field turbulent dam collapse and structure impact.
-    - Point out that site-wide two-engine comparison is currently `BLOCKED` due to absence of verified site mesh.
-
-12. **Query Sentinel-1 Satellite Observations**:
-    - Click the **Observations** tab.
-    - Select `HISTORICAL_EVENT` mode and click **Query Observation**.
-    - Review Sentinel-1 GRD acquisition parameters, speckle filtering, and validity masks.
-
-13. **Compute Satellite Flood Agreement Metrics**:
-    - Click the **Validation** tab.
-    - Click **Compute Satellite Agreement Metrics**.
-    - Review IoU (Jaccard Index), Precision, Recall, F1-Score, and Confusion Matrix (`TP`, `FP`, `FN`, `TN`), labeled strictly as *agreement with satellite-derived flood reference*.
-
-14. **Evaluate Independent Gauge Hydrographs**:
-    - In the **Validation** tab, click **Evaluate Gauge Station 001**.
-    - Observe the honest status: `INSUFFICIENT_EVIDENCE` due to missing zero-datum alignment.
-
-15. **Evaluate Exposure & Inundation Overlay**:
-    - Click the **Exposure** tab.
-    - Click **Evaluate Exposure & Loss**.
-    - Inspect settlement inundation count (14 villages) and agricultural land (4,250 ha), while population remains `UNAVAILABLE` and economic loss is `BLOCKED`.
-
-16. **Generate GIS Exports**:
-    - Under Results, click **Download GeoTIFF**, **Download GeoJSON**, and **Download CSV**.
-
-17. **Conclude on Scientific Readiness & Boundaries**:
-    - Summarize that DamSafe enforces scientific honesty: synthetic laboratory evidence is not site validation, missing data returns `UNAVAILABLE`/`BLOCKED`, and software readiness (`PASS`) is distinct from operational deployment (`BLOCKED`).
+Use [FINAL_READINESS.md](FINAL_READINESS.md) for the exact scientific claim boundaries. Neither a completed demo nor a passing application build establishes full PS compliance.

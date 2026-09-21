@@ -57,17 +57,23 @@ def write_frame(out, index, h, eta=None, u=None, v=None):
     valid = ~np.ma.getmaskarray(depth) & np.isfinite(depth.filled(np.nan))
     if np.any(depth.filled(0)[valid] < 0):
         raise ValueError("Negative water depth in numerical output")
-    out["h"][index] = np.where(valid, depth.filled(np.nan), np.nan)
-    out["valid"][index] = valid.astype("i1")
-    out["wet"][index] = np.where(valid, (depth.filled(0) >= out.wet_threshold_m).astype("i1"), -1)
+    h_arr = np.where(valid, depth.filled(np.nan), np.nan)
+    out["h"][index, :] = h_arr
+    out["valid"][index, :] = valid.astype("i1")
+    out["wet"][index, :] = np.where(valid, (depth.filled(0) >= out.wet_threshold_m).astype("i1"), -1)
     for name, field in (("eta", eta), ("u", u), ("v", v)):
         if field is not None:
             value = np.ma.asarray(field, dtype=float).filled(np.nan)
             if value.shape != depth.shape:
                 raise ValueError(f"{name} staggering/shape differs from cell depth")
+            if name == "eta":
+                wet_mask = valid & (depth.filled(0) >= out.wet_threshold_m)
+                missing_eta = wet_mask & ~np.isfinite(value)
+                if np.any(missing_eta):
+                    value = np.where(missing_eta, out["bed"][:] + depth.filled(0), value)
             if np.any(~np.isfinite(value[valid & (depth.filled(0) >= out.wet_threshold_m)])):
                 raise ValueError(f"{name} nonfinite on wet valid depth cells")
-            out[name][index] = np.where(valid, value, np.nan)
+            out[name][index, :] = np.where(valid, value, np.nan)
 
 
 def normalize_dflow(

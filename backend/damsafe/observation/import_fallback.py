@@ -1,7 +1,15 @@
-from datetime import datetime, timezone
-from typing import Any, Literal
+from datetime import UTC, datetime
+from typing import Literal
+
 from pydantic import BaseModel, Field
-from damsafe.observation.gee import SARProcessingConfig, Sentinel1Scene, SatelliteObservation, ObservationMode, ObservationState
+
+from damsafe.observation.gee import (
+    ObservationMode,
+    ObservationState,
+    SARProcessingConfig,
+    SatelliteObservation,
+    Sentinel1Scene,
+)
 
 
 class ImportedObservationInput(BaseModel):
@@ -24,7 +32,7 @@ class ImportedObservationInput(BaseModel):
 
 
 def import_authentic_observation(data: ImportedObservationInput) -> SatelliteObservation:
-    proc_time = datetime.now(timezone.utc).isoformat()
+    proc_time = datetime.now(UTC).isoformat()
 
     scene = Sentinel1Scene(
         scene_id=",".join(data.scene_ids),
@@ -80,7 +88,7 @@ def import_authentic_observation(data: ImportedObservationInput) -> SatelliteObs
         site_key=data.site_key,
         mode=ObservationMode.HISTORICAL_EVENT,
         provenance_type="AUTHENTIC_IMPORTED_OBSERVATION",
-        execution_state=ObservationState.PASS,
+        execution_state=ObservationState.OBSERVATION_READY,
         scene_info=scene,
         processing_config=config,
         acquisition_time=data.acquisition_time,

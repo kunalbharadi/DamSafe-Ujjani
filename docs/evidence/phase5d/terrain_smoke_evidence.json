@@ -1,0 +1,54 @@
+{
+  "case_id": "ujjani_bhima_oct2020",
+  "event_name": "October 2020 Bhima River Flood",
+  "mode": "TERRAIN_BASED",
+  "domain_width_m": 2000.0,
+  "channel_width_m": 300.0,
+  "classification": "UJJANI_APPROXIMATE_DEMONSTRATION",
+  "solver_state": "SUCCEEDED",
+  "elapsed_seconds": 2.219000000040978,
+  "mesh_info": {
+    "n_stream": 20,
+    "n_cross": 4,
+    "num_nodes": 105,
+    "num_elements": 80,
+    "time_frames": 11,
+    "max_depth_m": 33.37617492675781,
+    "max_velocity_m_s": 6.555787086486816
+  },
+  "dem_provenance": {
+    "dem_source": "Copernicus DEM GLO-30",
+    "resolution_m": 30.0,
+    "version": "2020_baseline",
+    "source_crs": "EPSG:4326",
+    "projected_crs": "EPSG:32643",
+    "vertical_datum": "EGM96",
+    "vertical_units": "m",
+    "bounds_wgs84": [
+      75.11164745274189,
+      17.674022271816014,
+      75.33686635354502,
+      18.081930142097207
+    ],
+    "file_sha256": {
+      "Copernicus_DSM_COG_10_N18_00_E075_00_DEM.tif": "b5dd4430e76d8a08eda1c96c07ad9a181b7c53b08904b83cc2230fd42f370268",
+      "Copernicus_DSM_COG_10_N17_00_E075_00_DEM.tif": "15d4e570bf421766e78562c20eab00ed0143e60c5bb0ebb9067fdb4bd34f3c3c"
+    },
+    "processing_operations": [
+      "validate_single_band_geotiff",
+      "verify_epsg4326_crs",
+      "coordinate_transform_utm43n_to_wgs84",
+      "bilinear_elevation_sampling"
+    ]
+  },
+  "export_verification": {
+    "format": "geotiff",
+    "crs": "EPSG:32643",
+    "nodata": -9999.0,
+    "units": "metres",
+    "count": 117,
+    "width": 117,
+    "height": 218,
+    "coordinate_convention": "2D_INUNDATION_RASTER"
+  }
+}

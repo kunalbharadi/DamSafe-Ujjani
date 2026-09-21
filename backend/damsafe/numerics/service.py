@@ -7,9 +7,8 @@ import netCDF4
 from fastapi import HTTPException
 from sqlalchemy import insert, select
 
-from ..contracts import RunRequest, ScenarioInput
+from ..contracts import RunRequest
 from ..db import now, projects, runs, scenarios, uid
-from ..readiness import assess
 from .adapters import ROOT, SOURCES, capabilities
 from .execution import sha256
 from .products import PRODUCT_SCHEMA
@@ -126,14 +125,14 @@ def submit(engine, project_id, request: RunRequest, ensemble_id: str | None = No
             if not row:
                 raise HTTPException(422, "Select an immutable scenario in this project")
             snap = row["body"]["snapshot"]
-            site_key = project["body"].get("site_key") or snap["project"].get("site_key")
-            if site_key != "ujjani-bhima":
-                check = assess(snap["project"], snap["datasets"], ScenarioInput.model_validate(snap["scenario"]))
-                if check.get("missing"):
-                    raise HTTPException(
-                        422,
-                        {"message": "Site mesh, boundaries and physical inputs are not verified", "readiness": check},
-                    )
+            # The current site worker calls prepare_ujjani_site() with defaults.
+            # Do not claim that an arbitrary immutable scenario was executed.
+            raise HTTPException(
+                422,
+                "Custom site execution is blocked until the worker binds the saved scenario's "
+                "forcing, datasets, boundaries and time settings. Retained site demonstrations "
+                "remain available for viewing and export; laboratory runs remain supported.",
+            )
         else:
             if not project["body"]["synthetic"]:
                 raise HTTPException(422, "Official laboratory cases require a separate synthetic project")

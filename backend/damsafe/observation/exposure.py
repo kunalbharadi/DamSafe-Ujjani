@@ -1,4 +1,5 @@
 from enum import StrEnum
+
 from pydantic import BaseModel
 
 
@@ -42,13 +43,13 @@ def evaluate_exposure(run_id: str, site_key: str) -> ExposureAssessmentResult:
         site_key=site_key,
         settlements=ExposureMetrics(
             category="settlements",
-            status=ExposureStatus.AVAILABLE,
-            dataset_provider="Survey of India / OpenStreetMap",
-            dataset_name="Ujjani Reservoir Downstream Settlement Vectors",
-            licence="Open Data",
-            exposed_count_or_area=14.0,
+            status=ExposureStatus.UNAVAILABLE,
+            dataset_provider=None,
+            dataset_name=None,
+            licence=None,
+            exposed_count_or_area=None,
             unit="villages/towns inundated",
-            notes="Derived from spatial overlay of simulation flood extent with settlement layer.",
+            notes="DATA REQUIRED: Import a licensed settlement layer and implement a verified flood overlay before estimating exposure.",
         ),
         population=ExposureMetrics(
             category="population",
@@ -62,13 +63,13 @@ def evaluate_exposure(run_id: str, site_key: str) -> ExposureAssessmentResult:
         ),
         farmland_ha=ExposureMetrics(
             category="farmland",
-            status=ExposureStatus.AVAILABLE,
-            dataset_provider="Bhuvan / LULC",
-            dataset_name="Maharashtra Agricultural Land Cover 2023",
-            licence="ISRO Bhuvan Open",
-            exposed_count_or_area=4250.0,
+            status=ExposureStatus.UNAVAILABLE,
+            dataset_provider=None,
+            dataset_name=None,
+            licence=None,
+            exposed_count_or_area=None,
             unit="hectares",
-            notes="Derived from agricultural land mask intersection with >0.3m flood depth.",
+            notes="DATA REQUIRED: Import a licensed agricultural layer and implement a verified flood overlay before estimating hectares.",
         ),
         critical_facilities=ExposureMetrics(
             category="critical_facilities",

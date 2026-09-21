@@ -4,7 +4,6 @@ from pathlib import Path
 import netCDF4
 import numpy as np
 import pytest
-
 from damsafe.numerics.adapters import prepare_ujjani_site
 from damsafe.numerics.execution import sha256
 from damsafe.site.hydraulic_case import (
@@ -200,8 +199,8 @@ def test_reopen_and_inspect_grid_netcdf(tmp_path: Path):
 
         # Bed elevation profile slopes downstream
         assert nodes_z[0] > nodes_z[-1]  # Upstream is higher than downstream
-        assert 430.0 < np.min(nodes_z) < 450.0  # Pandharpur reach bed
-        assert 480.0 < np.max(nodes_z) < 495.0  # Ujjani Dam reach bed
+        assert 430.0 < np.min(nodes_z) < 460.0  # Pandharpur reach bed
+        assert 475.0 < np.max(nodes_z) < 525.0  # Ujjani Dam reach and flanking terrain
 
 
 def test_prevent_laboratory_defaults_in_site_run(tmp_path: Path):

@@ -46,7 +46,7 @@ def finalize(engine_name, directory, case, capability):
         history = native[0].with_name(native[0].name.replace("_map.nc", "_his.nc"))
         try:
             result["water_balance"] = native_dflow_balance(history, native[0])
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 -- persist diagnostic failure as PARTIAL
             result["water_balance"] = {"status": "PARTIAL", "reason": str(exc)}
     result["normalized_sha256"] = sha256(destination)
     result["normalized_file"] = "normalized.nc"

@@ -1,26 +1,30 @@
-import pytest
-from damsafe.observation.gee import EarthEngineService, SARProcessingConfig, ObservationMode, ObservationState
-from damsafe.observation.import_fallback import import_authentic_observation, ImportedObservationInput
 from damsafe.observation.comparison import compare_simulation_with_observation
-from damsafe.observation.gauges import evaluate_gauge_observations, GaugeAssessmentStatus
-from damsafe.observation.exposure import evaluate_exposure, ExposureStatus
+from damsafe.observation.exposure import ExposureStatus, evaluate_exposure
+from damsafe.observation.gauges import GaugeAssessmentStatus, evaluate_gauge_observations
+from damsafe.observation.gee import EarthEngineService, ObservationMode, ObservationState
+from damsafe.observation.import_fallback import ImportedObservationInput, import_authentic_observation
 
 
-def test_earth_engine_service_query():
+def test_earth_engine_service_query_offline():
     service = EarthEngineService()
+    # With EE unconfigured, query returns either UNCONFIGURED or authentic local archive
     obs = service.query_sentinel1(
         site_key="ujjani-bhima",
         bounds_wgs84=(74.6, 18.0, 75.1, 18.4),
         mode=ObservationMode.HISTORICAL_EVENT,
-        target_time="2020-08-15T10:30:00Z",
+        target_time="2020-10-19T00:55:11Z",
     )
     assert obs.site_key == "ujjani-bhima"
     assert obs.mode == ObservationMode.HISTORICAL_EVENT
-    assert obs.provenance_type == "LIVE_EARTH_ENGINE_RESULT"
-    assert obs.width == 20
-    assert obs.height == 20
-    assert "FLOODED" in obs.pixel_counts
-    assert obs.flooded_area_km2 >= 0.0
+    # If authentic local processed GeoTIFF exists, it loads authentic archive
+    if obs.execution_state == ObservationState.OBSERVATION_READY:
+        assert obs.provenance_type == "AUTHENTIC_IMPORTED_OBSERVATION"
+        assert obs.scene_info is not None
+        assert "S1A_IW_GRDH" in obs.scene_info.scene_id
+        assert obs.flooded_area_km2 >= 0.0
+    else:
+        assert obs.execution_state in (ObservationState.UNCONFIGURED, ObservationState.AUTHENTICATION_FAILED)
+        assert obs.grid_matrix is None
 
 
 def test_authentic_observation_import():
@@ -48,7 +52,7 @@ def test_authentic_observation_import():
     )
     obs = import_authentic_observation(data)
     assert obs.provenance_type == "AUTHENTIC_IMPORTED_OBSERVATION"
-    assert obs.execution_state == ObservationState.PASS
+    assert obs.execution_state == ObservationState.OBSERVATION_READY
     assert obs.pixel_counts["FLOODED"] == 3
     assert obs.pixel_counts["PERMANENT_WATER"] == 1
     assert obs.pixel_counts["UNRELIABLE"] == 1
@@ -115,7 +119,10 @@ def test_gauge_assessment_insufficient_evidence():
 
 def test_exposure_evaluation():
     res = evaluate_exposure("run-123", "ujjani-bhima")
-    assert res.settlements.status == ExposureStatus.AVAILABLE
+    assert res.settlements.status == ExposureStatus.UNAVAILABLE
+    assert res.settlements.exposed_count_or_area is None
+    assert res.farmland_ha.status == ExposureStatus.UNAVAILABLE
+    assert res.farmland_ha.exposed_count_or_area is None
     assert res.population.status == ExposureStatus.UNAVAILABLE
     assert res.economic_loss.status == ExposureStatus.BLOCKED
     assert "BLOCKED" in res.economic_loss.notes

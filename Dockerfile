@@ -6,6 +6,9 @@ COPY frontend/ ./
 RUN npm run build
 
 FROM python:3.12-slim-bookworm
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libexpat1 \
+    && rm -rf /var/lib/apt/lists/*
 RUN pip install --no-cache-dir uv==0.12.13
 WORKDIR /app
 COPY pyproject.toml uv.lock ./

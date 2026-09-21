@@ -1,0 +1,14 @@
+# Team Responsibilities
+
+Names are intentionally blank until the team assigns them.
+
+| Role | Assigned member | Primary files/directories | Inputs expected | Outputs promised | Required tests | Handover | Team review required |
+|---|---|---|---|---|---|---|---|
+| Frontend and UI/UX |  | `frontend/src`, `frontend/tests`, `UI_UX_GUIDE.md` | typed API contracts, result semantics, status/classification | accessible connected pages, maps/viewers, honest states | `npm run build`; relevant Playwright tests | screenshots, browser/build output, endpoints used, unsupported states | scientific wording, API/type changes, map semantics |
+| Backend and database |  | `backend/damsafe/api.py`, `contracts.py`, `db.py`, `storage.py`, migrations, foundation/security tests | domain contracts, GIS validation rules, worker requirements | versioned APIs, migrations, isolation, validation, recovery | relevant pytest; migration on SQLite and PostGIS when available; Ruff | schema/API diff, migration/rollback note, status codes | migrations, public/security surface, scientific contract |
+| GIS and datasets |  | `ingestion.py`, `exports.py`, `site/terrain_sampler.py`, data manifests/contracts | source licences, modelling domain, output fields | validated inputs, CRS/datum transforms, reopenable GIS and manifests | ingestion/export/CRS tests; independent reopen check | source URL/licence/checksum/CRS/datum/processing | resampling, geometry, data licence, redistribution |
+| Hydrodynamic modelling |  | `numerics/`, `site/breach.py`, `hydraulic_case.py`, engine scripts/config/evidence | qualified terrain/bathymetry, forcing/boundaries, dam structures | reproducible cases, solver logs, diagnostics, normalized products | native benchmark, sensitivity, mass/identity checks | engine/image/commit, case classification, runtime, artifacts | equations, parameters, site claims, engine comparison |
+| Satellite analysis and validation |  | `observation/gee.py`, SAR/import/comparison/gauges, validation docs/tests | event definition, compatible run, credentials or authentic exports | scene provenance, masks, valid-grid metrics, limitations | synthetic-rejection, scene compatibility, mask/metric tests | IDs/times/orbits/method/masks/checksums/execution state | event matching, thresholds, independence, validation claim |
+| Integration, DevOps and documentation |  | Compose/Dockerfile, scripts, workers, root/docs READMEs, status/readiness docs | all role handovers and verified commands | reproducible start, integrated tests, release evidence, consistent docs | compose config/build when available, smoke/e2e, links/secrets audit | full command matrix, skips, blockers, real/imported/synthetic labels | deployment/security, release claim, cross-team status |
+
+Each role must preserve another role’s changes, avoid unilateral contract changes, and use the handover format in root `AGENTS.md`.

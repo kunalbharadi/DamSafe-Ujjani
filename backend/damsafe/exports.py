@@ -99,7 +99,7 @@ def _write_geotiff(path, crs, x, y, values, metadata):
                            crs=crs, transform=transform, nodata=-9999.0) as dst:
             dst.write(raster, 1)
             dst.update_tags(damsafe_units="metres", coordinate_convention="2D_INUNDATION_RASTER",
-                            nodata="-9999", source_crs=crs.to_string(), **{"run_provenance": json.dumps(metadata)})
+                            nodata="-9999", source_crs=crs.to_string(), run_provenance=json.dumps(metadata))
     else:
         # 1D or synthetic laboratory cell-centre strip representation
         dx = float(np.median(np.diff(np.sort(x)))) if len(x) > 1 and np.any(np.diff(np.sort(x)) > 0) else 1.0
@@ -110,7 +110,7 @@ def _write_geotiff(path, crs, x, y, values, metadata):
                            crs=crs, transform=transform, nodata=-9999.0) as dst:
             dst.write(np.where(np.isfinite(array), array, -9999.0), 1)
             dst.update_tags(damsafe_units="metres", coordinate_convention="CELL_CENTRE_STRIP_EXPORT",
-                            nodata="-9999", source_crs=crs.to_string(), **{"run_provenance": json.dumps(metadata)})
+                            nodata="-9999", source_crs=crs.to_string(), run_provenance=json.dumps(metadata))
 
 
 def _write_geojson(path, crs, x, y, area, values, state):

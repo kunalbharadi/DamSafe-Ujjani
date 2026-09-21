@@ -4,6 +4,11 @@ frontend/dist/
 __pycache__/
 .pytest_cache/
 .env
+.env.*
+!.env.example
+credentials/
+*-service-account.json
+*-credentials.json
 .local/
 *.pyc
 *.egg-info/
@@ -13,4 +18,6 @@ frontend/*.tsbuildinfo
 .ruff_cache/
 external/
 data/raw/
+data/processed/
 data/outputs/
+scratch/

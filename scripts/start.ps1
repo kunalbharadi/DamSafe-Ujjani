@@ -1,6 +1,7 @@
 param([switch]$Preview)
 $ErrorActionPreference = 'Stop'
 Set-Location -LiteralPath (Split-Path -Parent $PSScriptRoot)
+if (-not (Test-Path -LiteralPath '.env')) { Copy-Item -LiteralPath '.env.example' -Destination '.env' }
 if (-not $Preview) {
     docker compose up --build
     if ($LASTEXITCODE -ne 0) { throw 'Docker stack did not start. Start Docker Desktop, or use -Preview for an explicit SQLite setup preview.' }

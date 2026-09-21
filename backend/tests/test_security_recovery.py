@@ -1,13 +1,12 @@
-import pytest
-from pathlib import Path
-from fastapi.testclient import TestClient
 
-from damsafe.api import create_app, MAX_UPLOAD
-from damsafe.storage import safe_key, LocalStorage
+import pytest
+from damsafe.api import MAX_UPLOAD, create_app
+from damsafe.storage import LocalStorage, safe_key
+from fastapi.testclient import TestClient
 
 
 def test_storage_path_traversal_protection(tmp_path):
-    storage = LocalStorage(tmp_path)
+    LocalStorage(tmp_path)
     with pytest.raises(ValueError, match="Invalid object key"):
         safe_key("../../../etc/passwd")
 
@@ -43,11 +42,11 @@ def test_application_restart_and_state_recovery(tmp_path, monkeypatch):
     db_url = f"sqlite:///{db_file.as_posix()}"
     storage_dir = tmp_path / "storage"
     monkeypatch.setenv("DAMSAFE_DATABASE_URL", db_url)
-    
+
     from alembic import command
     from alembic.config import Config
     command.upgrade(Config("alembic.ini"), "head")
-    
+
     # Instance 1: Create project and dataset
     app1 = create_app(db_url, LocalStorage(storage_dir))
     with TestClient(app1) as client1:

@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 import netCDF4
+import numpy as np
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -15,23 +16,21 @@ from sqlalchemy import func, insert, select, text
 from starlette.concurrency import run_in_threadpool
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
+from . import exports as numerical_exports
 from .contracts import DatasetInput, EnsembleInput, ProjectInput, RunRequest, ScenarioInput
-from .db import datasets, ensembles, engine_for, jobs, now, projects, scenarios, uid
+from .db import datasets, engine_for, ensembles, jobs, now, projects, scenarios, uid
 from .ingestion import inspect
-from .numerics import products as numerical_products
 from .numerics import comparison as numerical_comparison
+from .numerics import products as numerical_products
 from .numerics import service as numerical_service
 from .numerics.adapters import capabilities
 from .numerics.execution import sha256
+from .observation.exposure import evaluate_exposure
+from .observation.gauges import evaluate_gauge_observations
+from .observation.gee import ObservationMode, ee_service
+from .observation.import_fallback import ImportedObservationInput, import_authentic_observation
 from .readiness import assess
 from .storage import storage_for
-from . import exports as numerical_exports
-from .observation.gee import ee_service, SARProcessingConfig, ObservationMode
-from .observation.import_fallback import import_authentic_observation, ImportedObservationInput
-from .observation.comparison import compare_simulation_with_observation
-from .observation.gauges import evaluate_gauge_observations
-from .observation.exposure import evaluate_exposure
-import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 MAX_UPLOAD = 64 * 1024 * 1024
@@ -393,8 +392,11 @@ def create_app(database_url=None, storage=None):
                       first_frame: int = 0, frame_count: int = 1):
         _, _, path = result_source(project_id, run_id)
         try:
-            return numerical_products.window(path, metric_bbox(bbox), first_frame=first_frame,
-                                             frame_count=frame_count, field=field)
+            result = numerical_products.window(path, metric_bbox(bbox), first_frame=first_frame,
+                                                frame_count=frame_count, field=field)
+            from .numerics.geometry import attach_native_polygons
+            attach_native_polygons(path, result["cells"])
+            return result
         except ValueError as exc:
             raise HTTPException(422, str(exc)) from exc
 
@@ -585,35 +587,63 @@ def create_app(database_url=None, storage=None):
         mode: ObservationMode = ObservationMode.HISTORICAL_EVENT,
         target_time: str | None = None,
     ):
-        row, source, path = result_source(project_id, run_id)
-        product = product_source(source, path)
-        with netCDF4.Dataset(product) as ds:
-            cell_states = np.asarray(ds["cell_state"][:])
-            if cell_states.ndim == 1:
-                wet_matrix = [[1 if cell == 2 else 0 for cell in cell_states]]
-            else:
-                wet_matrix = [[1 if cell == 2 else 0 for cell in row] for row in cell_states]
-
-        obs = ee_service.query_sentinel1(
-            site_key="ujjani-bhima",
-            bounds_wgs84=(74.6, 18.0, 75.1, 18.4),
-            mode=mode,
-            target_time=target_time,
-        )
-        return compare_simulation_with_observation(
-            run_id=run_id,
-            sim_grid=wet_matrix,
-            observation=obs,
-            sim_frame_time=target_time or obs.acquisition_time,
-        )
+        _row, _source, _path = result_source(project_id, run_id)
+        # Product cell_state represents the event maximum, not an acquisition-time
+        # frame. It cannot scientifically be compared with a single SAR overpass.
+        return {
+            "run_id": run_id,
+            "status": "NOT_VALIDATED",
+            "agreement": None,
+            "note": "DATA REQUIRED: a qualified historical release, authentic observation, "
+                    "and acquisition-time simulation frame regridded to a common valid grid. "
+                    "Maximum-ever products cannot substitute for that frame. "
+                    "Hypothetical breaches cannot be assessed using an unrelated monsoon image.",
+        }
 
     @app.get("/api/projects/{project_id}/runs/{run_id}/gauges/{station_id}")
     def evaluate_gauge(project_id: str, run_id: str, station_id: str):
+        run_detail(project_id, run_id)
         return evaluate_gauge_observations(station_id, run_id)
 
     @app.get("/api/projects/{project_id}/runs/{run_id}/exposure")
     def evaluate_exposure_endpoint(project_id: str, run_id: str):
+        run_detail(project_id, run_id)
         return evaluate_exposure(run_id, "ujjani-bhima")
+
+    @app.get("/api/sph/runs")
+    def list_sph_runs():
+        from .numerics.sph_adapter import list_available_sph_runs
+        return {"runs": list_available_sph_runs()}
+
+    @app.get("/api/runs/{run_id}/sph/metadata")
+    @app.get("/api/projects/{project_id}/runs/{run_id}/sph/metadata")
+    def sph_metadata(run_id: str, project_id: str = ""):
+        if project_id:
+            run_detail(project_id, run_id)
+        from .numerics.sph_adapter import find_sph_run_dir, get_sph_metadata
+        run_dir = find_sph_run_dir(run_id)
+        if not run_dir:
+            raise HTTPException(404, f"DualSPHysics output not found for run {run_id}")
+        try:
+            return get_sph_metadata(run_dir)
+        except (OSError, ValueError, KeyError) as e:
+            raise HTTPException(422, f"Failed to read SPH metadata: {e}") from e
+
+    @app.get("/api/runs/{run_id}/sph/frame")
+    @app.get("/api/projects/{project_id}/runs/{run_id}/sph/frame")
+    def sph_frame(run_id: str, index: int = Query(0, ge=0), decimation: int = Query(1, ge=1, le=16), project_id: str = ""):
+        if project_id:
+            run_detail(project_id, run_id)
+        from .numerics.sph_adapter import find_sph_run_dir, get_sph_frame
+        run_dir = find_sph_run_dir(run_id)
+        if not run_dir:
+            raise HTTPException(404, f"DualSPHysics output not found for run {run_id}")
+        try:
+            return get_sph_frame(run_dir, index, decimation=decimation)
+        except IndexError as e:
+            raise HTTPException(400, str(e))
+        except (OSError, ValueError, KeyError) as e:
+            raise HTTPException(422, f"Failed to read SPH frame: {e}") from e
 
     dist = ROOT / "frontend/dist"
     if (dist / "assets").exists():

@@ -201,13 +201,9 @@ def _select_cells(ds, bbox, limit=MAX_RESPONSE_CELLS):
 
 
 def _field_at(ds, name, frame, cells):
-    # Bound each native read to one scalar; selected cells are <=2048.
-    result = []
-    for cell in cells:
-        value = _array(ds[name], (frame, cell))
-        number = float(value)
-        result.append(number if math.isfinite(number) else None)
-    return result
+    # A single bounded vector read avoids thousands of NetCDF scalar calls per window.
+    values = np.ma.asarray(ds[name][frame, cells]).astype(float).filled(np.nan)
+    return [float(value) if math.isfinite(value) else None for value in values]
 
 
 def window(source: Path, bbox, *, first_frame: int, frame_count: int, field: str):
@@ -222,19 +218,22 @@ def window(source: Path, bbox, *, first_frame: int, frame_count: int, field: str
         if not cells:
             return {"state": "NO_CELLS_IN_WINDOW", "cells": [], "frames": []}
         geometry = [{"cell": c, "x": float(ds["x"][c]), "y": float(ds["y"][c]),
-                     "area_m2": float(ds["cell_area"][c])} for c in cells]
+                     "area_m2": float(ds["cell_area"][c]), "bed_m": float(ds["bed"][c])} for c in cells]
         frames = []
         for i in range(first_frame, first_frame + frame_count):
             valid = _field_at(ds, "valid", i, cells)
+            depths = _field_at(ds, "h", i, cells)
             if field == "velocity_magnitude":
                 uu = _field_at(ds, "u", i, cells)
                 vv = _field_at(ds, "v", i, cells)
                 values = [math.hypot(u, v) if u is not None and v is not None else None
                           for u, v in zip(uu, vv)]
+            elif field == "h":
+                values = depths
             else:
                 values = _field_at(ds, field, i, cells)
-            states = ["NODATA" if not flag else "DRY" if float(ds["h"][i, c]) < ds.wet_threshold_m else "WET"
-                      for c, flag in zip(cells, valid)]
+            states = ["NODATA" if not flag or depth is None else "DRY" if depth < ds.wet_threshold_m else "WET"
+                      for flag, depth in zip(valid, depths)]
             frames.append({"frame": i, "elapsed_s": float(ds["time"][i]), "values": values, "states": states})
         return {"state": "AVAILABLE", "cells": geometry, "frames": frames, "field": field}
 

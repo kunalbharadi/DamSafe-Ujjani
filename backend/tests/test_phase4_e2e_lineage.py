@@ -1,22 +1,17 @@
 import json
-from pathlib import Path
+
 import numpy as np
-import pytest
 from alembic import command
 from alembic.config import Config
-from fastapi.testclient import TestClient
-
 from damsafe.api import create_app
 from damsafe.exports import create_export, verify_export
 from damsafe.numerics import service
-from damsafe.numerics.products import postprocess, window
+from damsafe.numerics.products import postprocess
 from damsafe.numerics.results import create_result, write_frame
-from damsafe.observation.comparison import compare_simulation_with_observation
-from damsafe.observation.gee import EarthEngineService, ObservationMode
-from damsafe.observation.import_fallback import import_authentic_observation, ImportedObservationInput
-from damsafe.observation.exposure import evaluate_exposure, ExposureStatus
+from damsafe.observation.exposure import ExposureStatus
 from damsafe.storage import LocalStorage
 from damsafe.worker import work_once
+from fastapi.testclient import TestClient
 
 
 def test_complete_phase4_software_e2e_lineage(tmp_path, monkeypatch):
@@ -189,7 +184,7 @@ def test_complete_phase4_software_e2e_lineage(tmp_path, monkeypatch):
             write_frame(dataset_b, 0, np.ma.masked_invalid([0.6, 0.1, np.nan]), u=[0.3, 0.1, np.nan], v=[0.0, 0.0, np.nan])
             write_frame(dataset_b, 1, np.ma.masked_invalid([0.9, 0.5, np.nan]), u=[0.6, 0.3, np.nan], v=[0.0, 0.0, np.nan])
             write_frame(dataset_b, 2, np.ma.masked_invalid([1.3, 1.0, np.nan]), u=[1.0, 0.7, np.nan], v=[0.0, 0.0, np.nan])
-        
+
         norm_b_hash = service.sha256(norm_b_file)
         prod_b_file = run_b_dir / "products.nc"
         postprocess(norm_b_file, prod_b_file, threshold_m=0.1)
@@ -211,20 +206,26 @@ def test_complete_phase4_software_e2e_lineage(tmp_path, monkeypatch):
         assert comp_resp.status_code == 200
         assert comp_resp.json()["state"] == "COMPARABLE"
 
-        # Stage 11: Run satellite metric engine using explicitly SYNTHETIC_TEST_OBSERVATION
+        # Stage 11: Run satellite metric engine using explicitly isolated SYNTHETIC_TEST_DATA
+        from damsafe.observation.gee import create_synthetic_test_observation
+        monkeypatch.setattr(
+            "damsafe.api.ee_service.query_sentinel1",
+            lambda **kwargs: create_synthetic_test_observation(matrix=[[1, 0, 0]]),
+        )
         sat_comp_resp = client.post(f"/api/projects/{project_id}/runs/{run_id}/compare_satellite?mode=HISTORICAL_EVENT")
         assert sat_comp_resp.status_code == 200
         sat_metrics = sat_comp_resp.json()
-        assert sat_metrics["comparison_label"] == "agreement with satellite-derived flood reference"
-        assert "iou" in sat_metrics
-        assert "f1_score" in sat_metrics
-        observation_id = sat_metrics["observation_id"]
+        assert sat_metrics["status"] == "NOT_VALIDATED"
+        assert sat_metrics["agreement"] is None
+        assert "Maximum-ever" in sat_metrics["note"]
+        observation_id = "NOT_ASSESSED: no qualified acquisition-time grid"
 
         # Stage 12: Run exposure
         exp_resp = client.get(f"/api/projects/{project_id}/runs/{run_id}/exposure")
         assert exp_resp.status_code == 200
         exp_data = exp_resp.json()
-        assert exp_data["settlements"]["status"] == ExposureStatus.AVAILABLE
+        assert exp_data["settlements"]["status"] == ExposureStatus.UNAVAILABLE
+        assert exp_data["settlements"]["exposed_count_or_area"] is None
         assert exp_data["population"]["status"] == ExposureStatus.UNAVAILABLE
         assert exp_data["economic_loss"]["status"] == ExposureStatus.BLOCKED
 

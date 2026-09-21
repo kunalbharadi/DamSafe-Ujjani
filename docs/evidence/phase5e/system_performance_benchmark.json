@@ -1,0 +1,17 @@
+{
+  "terrain_500pts_sampling_ms": 92.98,
+  "breach_routing_24h_ms": 7.12,
+  "mesh_generation_ms": 132.46,
+  "dflowfm_solver_execution_s": 2.72,
+  "normalization_ms": 34.9,
+  "postprocessing_products_ms": 14.33,
+  "exports_ms": {
+    "geotiff": 20.75,
+    "geojson": 8.83,
+    "kml": 11.65,
+    "shapefile": 44.96,
+    "csv": 12.52,
+    "html": 7.33
+  },
+  "sar_flood_classification_10m_grid_s": 0.626
+}

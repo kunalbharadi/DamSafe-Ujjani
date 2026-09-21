@@ -1,57 +1,42 @@
 # DamSafe — Ujjani / Bhima
 
-Phase 2 implementation for SIH PS 26161. The application imports and audits inputs, saves immutable scenarios, and runs bounded background readiness and numerical jobs. Locally built D-Flow FM and DualSPHysics CPU engines have executed official examples and a physically matched synthetic dam-break benchmark. **No verified Ujjani flood prediction, computed breach or Ujjani two-engine comparison exists.** See [phase 2 evidence](docs/PHASE2_EVIDENCE.md).
+DamSafe is a traceable dam-release and breach scenario workspace for SIH 2026 Problem Statement 26161 (NTRO). It combines immutable input/scenario records, D-Flow FM regional 2D modelling, DualSPHysics laboratory/near-field modelling, time-varying result visualization, evidence-aware satellite/gauge assessment, and GIS/report export for a bounded Ujjani Dam–Bhima River demonstration.
 
-This `DAM` directory is the project root. The user-supplied build sequence is preserved unchanged in `DamSafe_Ujjani_Four_Codex_Prompts.md`; phase 1 evidence must be reviewed before phase 2. `kunal.md` was preserved. The supplied brief is in `docs/SUPPLIED_BRIEF.txt`; the full PRD referred to as `Pasted markdown(6).md` was not present.
+The local application and retained engine examples are demonstrable. Both engines have genuine benchmark evidence, and a bounded approximate Ujjani D-Flow demonstration exists. The Ujjani model is not calibrated or independently validated; live Earth Engine operation, real exposure/loss assessment, public deployment security, river blockage, and full-domain SPH remain incomplete. Hypothetical dam-break outputs are scenarios, not official forecasts or warnings.
 
 ## Start locally
 
-From PowerShell in this directory:
+Windows preview (Python 3.12 and Node 24):
 
 ```powershell
-# Tested Windows setup preview: Python 3.12 + Node 24
 .\scripts\start.ps1 -Preview
 ```
 
-Open http://127.0.0.1:8000. The script installs locked dependencies, builds the UI, runs migrations, seeds the Ujjani configuration and starts the API, audit worker and numerical worker. Ctrl+C stops the processes. Preview uses persistent SQLite and local files in `.local/`, and displays **SQLITE PREVIEW**. Numerical examples additionally require the locally installed hash-pinned Docker engine image. It is explicitly different from the PostgreSQL deployment.
+This builds the frontend, migrates an explicit SQLite preview database, bootstraps/registers local evidence, starts workers, and serves `http://127.0.0.1:8000`.
+
+PostgreSQL/PostGIS stack (Docker Desktop Linux engine required):
 
 ```powershell
-# PostgreSQL/PostGIS stack; requires a running Docker Desktop Linux engine
-.\scripts\start.ps1
+docker compose up --build
 ```
 
-Docker Compose PostGIS 16/3.5 and migrations have been exercised locally. The default Compose API/worker containers do not have Docker access, so engine examples are available through the host preview or a separately configured host API/numerical worker; engine capability checks truthfully return unavailable inside the default Compose API. `compose.numerics.yaml` can publish PostgreSQL to loopback for that host setup. The only default published port binds to `127.0.0.1`. `.env.example` documents local development settings.
+Create `.env` from `.env.example`; do not commit secrets. Numerical runs additionally require the pinned engine images in `config/engine_provenance.json`.
 
-## What to use
-
-- **Overview:** project status and an intentionally unset study domain.
-- **Data library:** raw-file upload with a JSON provenance contract, a new immutable version for every successful import, and audit findings. Source files stay unchanged.
-- **Scenarios:** save incomplete drafts as immutable snapshots; review missing conditions before any future execution. The JSON editor is a phase 1 technical setup interface.
-- **Readiness:** synchronous snapshot audits or durable worker jobs. A SUCCEEDED audit is not a successful simulation or validation claim.
-- **Numerical runs:** inspect local engine availability and queue official laboratory examples in a separate synthetic project. Ujjani site submissions remain blocked by missing physical inputs.
-- **API reference:** http://127.0.0.1:8000/docs. `POST/GET /api/projects/{id}/runs` and cancellation report execution separately from validation.
-
-See [input contracts](docs/MODEL_CONTRACTS.md) for examples and [data manifest](docs/DATA_MANIFEST.md) for the real NWIC files. Those raw files were retrieved and audited; they are not yet verified aggregate river-outflow hydrographs.
+See [environment and credentials](docs/ENVIRONMENT.md) for the exact Earth Engine setup. Local maps and 3D viewers need no API key. The launcher creates a missing .env, and backend processes load it automatically.
 
 ## Verify
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
 .\.venv\Scripts\python.exe -m ruff check backend scripts
-Push-Location frontend
-npm.cmd ci
-npm.cmd run build
-npm.cmd audit
-Pop-Location
+Push-Location frontend; npm.cmd ci; npm.cmd run build; Pop-Location
 docker compose config --quiet
 ```
 
-Python dependencies and hashes are in `uv.lock`; browser dependencies are in `frontend/package-lock.json`. CPython 3.12 is selected through `py -3.12` rather than the MSYS Python first on this computer's PATH.
+Native solver tests can skip when Docker/images or retained evidence are unavailable. A skip is not a pass.
 
-## Layout and persistence
+## Documentation
 
-`backend/damsafe/` contains contracts, ingestion, readiness, API, storage and worker modules. Alembic manages the database. The durable audit queue uses the same SQL database with atomic claims and cancellation, avoiding a separate Redis service for small readiness jobs. SQLAlchemy supports the proposed PostgreSQL deployment; the explicit SQLite preview supports local development when Docker is unavailable. PostGIS extension setup exists, but spatial SQL and PostgreSQL concurrency remain unverified. Vector inspection currently uses Fiona/Shapely.
+Start with the [team quick start](docs/TEAM_ONBOARDING.md) and [current project status](docs/PROJECT_STATUS.md). The [documentation index](docs/README.md) links the product requirements, technical requirements, architecture, backend/API contract, dataset contract, UI/UX guide and ownership map. Contributors and AI tools must follow [AGENTS.md](AGENTS.md).
 
-Raw inputs and outputs, `.env`, native binaries and `.local/` are ignored by Git; selected compact run manifests and build logs are under `docs/evidence/phase2/`. No Git repository existed initially; no commits, pushes, merges or deployment were performed. The S3 upload/delete interface is configurable through standard AWS environment credentials; no S3 service was exercised.
-
-Continue from [PROJECT_STATE](docs/PROJECT_STATE.md) and the [evidence table](docs/PHASE2_EVIDENCE.md). Site predictions remain blocked by verified physical inputs and a completed D-Flow/site comparison path.
+Local data and state belong under `.local/`, `data/` or `scratch/`; shared large inputs/results should use external storage plus checksummed manifests. Source code is under `backend/damsafe/` and `frontend/src/`; migrations are under `backend/migrations/`; reproducibility and audit scripts are under `scripts/`.

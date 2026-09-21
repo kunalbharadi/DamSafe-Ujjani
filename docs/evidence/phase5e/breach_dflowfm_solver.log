@@ -1,0 +1,190 @@
+OMP_NUM_THREADS is already defined
+    Configfile       : dimr_config.xml
+    D3D_HOME         : /delft3d/bin/..
+    PROC_DEF_DIR     : /delft3d/bin/../share/delft3d
+    Working directory: /work
+    Number of nodes  : 1
+    Number of slots  : 1
+    OMP_NUM_THREADS  : 2
+    FI_PROVIDER      : 
+    I_MPI_FABRICS    : 
+
+executing:
+ /delft3d/bin/../bin/dimr dimr_config.xml 
+Dimr [2026-09-13 11:04:54.558669] #0 >> Deltares, DIMR_EXE Version 2.00.Unknown, Sep 12 2026, 15:20:51
+Dimr [2026-09-13 11:04:54.558912] #0 >> Deltares, DIMR_LIB Version 1.02.Unknown, Sep 12 2026, 15:20:22
+Dimr [2026-09-13 11:04:54.575291] #0 >> 
+Dimr [2026-09-13 11:04:54.575338] #0 >> Version Information of Components
+Dimr [2026-09-13 11:04:54.575342] #0 >> =================================
+Dimr [2026-09-13 11:04:54.575345] #0 >> dflowfm                            : Deltares, D-Flow FM1.2.184.Unknown
+Dimr [2026-09-13 11:04:54.575346] #0 >> ---------------------------------
+Dimr [2026-09-13 11:04:54.575348] #0 >> 
+Dimr [2026-09-13 11:04:54.577221] #0 >> DFlowFM.Initialize(ujjani_bhima.mdu)
+** INFO   : OpenMP enabled, number of threads =              2
+** INFO   : OpenMP worker thread stack size (in bytes) set to       20000000
+** DEBUG  :            0  0.1000010      NOD(KMAX)
+** DEBUG  :            6  0.7000070      XK (KMAX), YK (KMAX), ZK (KMAX), KC (KMAX), NMK (KMAX), RNOD(KMAX)
+ loading model
+** INFO   : Keyword [geometry] circumcenterMethod is not specified. Since release 2026.02, the default value is "allNetlinksLoop". Results may differ from older releases.
+** INFO   : Keyword [wind] windHuOrZwsBased is not specified. Since release 2026.01, the default value is 0. Results may differ from older releases.
+** INFO   : Keyword [output] ncMapDataPrecision is not specified. Since release 2026.02, the default value is "single". Results may differ from older releases.
+** INFO   : Keyword [output] ncHisDataPrecision is not specified. Since release 2026.02, the default value is "single". Results may differ from older releases.
+** WARNING: While reading 'ujjani_bhima.mdu': keyword [geometry] inifieldfile is deprecated and may be removed in a future release.
+Dimr [2026-09-13 11:04:54.677551] #0 >> kernel: While reading 'ujjani_bhima.mdu': keyword [geometry] inifieldfile is deprecated and may be removed in a future release.
+** INFO   : While reading 'ujjani_bhima.mdu': keyword [geometry] inifieldfile: Use [external forcing] extForceFileNew instead. Note: you should update some keywords and values in the file contents to the new format. See the User Manual for details.
+** WARNING: While reading 'ujjani_bhima.mdu': keyword [output] Wrihis_zcor is unknown or not used by the program. Check possible typo.
+Dimr [2026-09-13 11:04:54.681797] #0 >> kernel: While reading 'ujjani_bhima.mdu': keyword [output] Wrihis_zcor is unknown or not used by the program. Check possible typo.
+** WARNING: While reading 'ujjani_bhima.mdu': Summary warning: 1 deprecated keyword(s) detected. All individual WARNING messages are listed above. Check the User Manual appendix about the Master Definition file for information on how to update this input file.
+Dimr [2026-09-13 11:04:54.683813] #0 >> kernel: While reading 'ujjani_bhima.mdu': Summary warning: 1 deprecated keyword(s) detected. All individual WARNING messages are listed above. Check the User Manual appendix about the Master Definition file for information on how to update this input file.
+** INFO   : Reading cache file: ujjani_bhima.cache
+** WARNING: No cache file available initially. Proceeding with normal initialization.
+Dimr [2026-09-13 11:04:54.694643] #0 >> kernel: No cache file available initially. Proceeding with normal initialization.
+ model loaded
+ Initializing flow: flow_modelinit
+** INFO   : Initializing flow model geometry...
+** INFO   : nr of netnodes               ( )  :                      105
+** INFO   : nr of netlinks               ( )  :                      184
+** INFO   : 
+** INFO   : nr of 2D netlinks            ( )  :                      184
+** INFO   : nr of 1D netlinks            ( )  :                        0
+** INFO   : 
+** INFO   : nr of netcells               ( )  :                       80
+** INFO   : nr of netcells 1D2D          ( )  :                       80
+** INFO   : 
+** INFO   : Opened file : upstream_discharge.pli
+** INFO   : Closed file : upstream_discharge.pli
+** INFO   : boundary: 'upstream_discharge.pli' opened 4 cells.
+** INFO   : dischargebnd upstream_discharge.pli       4 nr of open bndcells
+** INFO   : Opened file : downstream_stage.pli
+** INFO   : Closed file : downstream_stage.pli
+** INFO   : boundary: 'downstream_stage.pli' opened 4 cells.
+** INFO   : waterlevelbnd downstream_stage.pli       4 nr of open bndcells
+** INFO   : setbedlevelfromextfile: Using bedlevel as specified in net-file.
+** INFO   : Done initializing flow model geometry.
+** WARNING: set_model_boundingbox: cannot set lat/lon model bounds, because projection string is unavailable.
+Dimr [2026-09-13 11:04:54.882989] #0 >> kernel: set_model_boundingbox: cannot set lat/lon model bounds, because projection string is unavailable.
+** INFO   : Start initializing external forcings...
+** INFO   : Opened file : initial_water_level.xyz
+** INFO   : merged 0 samples in .00 seconds.
+** INFO   : Closed file : initial_water_level.xyz
+** INFO   : Done initializing external forcings.
+** INFO   : nogauss , nocg :             88             0
+** INFO   : ** Model initialization was successful **
+** INFO   : * Active Model definition:
+** INFO   : **
+** INFO   : Writing cache file: ujjani_bhima.cache, version: D-Flow FM, cache file, 1.01
+** INFO   : Modelinit finished   at: 11:04:56, 13-09-2026
+** INFO   : 
+** INFO   : 
+** INFO   : nr of netnodes               ( )  :                      105
+** INFO   : nr of netlinks               ( )  :                      184
+** INFO   : 
+** INFO   : nr of 2D netlinks            ( )  :                      184
+** INFO   : nr of 1D netlinks            ( )  :                        0
+** INFO   : 
+** INFO   : nr of netcells               ( )  :                       80
+** INFO   : nr of netcells 1D2D          ( )  :                       80
+** INFO   : 
+** INFO   : nr of flownodes              ( )  :                       88
+** INFO   : nr of internal flownodes     ( )  :                       80
+** INFO   : nr of 2D internal flownodes  ( )  :                       80
+** INFO   : nr of 1D internal flownodes  ( )  :                        0
+** INFO   : 
+** INFO   : nr of openbnd cells       ( )     :                        8
+** INFO   : nr of 2D boundaries       ( )     :                        8
+** INFO   : nr of 1D boundaries       ( )     :                        0
+** INFO   : nr of flowlinks           ( )     :                      144
+** INFO   : nr of internal links      ( )     :                      136
+** INFO   : nr of 1D links            ( )     :                        0
+** INFO   : 
+** INFO   : nr of closed walls     ( )  :                       40
+** INFO   : 
+** INFO   : 
+** INFO   : my model area          (m2) :         0.9924447766E+08
+** INFO   : my model volume        (m3) :         0.1283189692E+10
+** INFO   : 
+** INFO   : 
+** INFO   : Writing initial output to file(s)...
+** INFO   : Done writing initial output to file(s).
+Dimr [2026-09-13 11:04:56.438460] #0 >> DFlowFM.Update( 600.0)
+Dimr [2026-09-13 11:04:56.508038] #0 >> DFlowFM.Finalize()
+** INFO   : 
+** INFO   : 
+** INFO   : 
+** INFO   : extra timer:Flow geometry                                        0.1121370792
+** INFO   : extra timer:Flow init                                            0.0826060772
+** INFO   : extra timer:MDU file pointer                                     0.8949859142
+** INFO   : extra timer:Remainder                                            0.4661400318
+** INFO   : extra timer:Findcells/preparecells                               0.0382719040
+** INFO   : extra timer:Set bedlevel from ext-file                           0.0129649639
+** INFO   : extra timer:Output                                               0.0547881126
+** INFO   : extra timer:unc_write_his                                        0.0284397602
+** INFO   : extra timer:unc_write_his INIT/DEF                               0.0131769180
+** INFO   : extra timer:unc_write_flowgeom_filepointer_ugrid                 0.0385088921
+** INFO   : extra timer:unc_write_map_filepointer_ugrid                      0.0633976460
+** INFO   : extra timer:unc_write_flowgeom_filepointer_ugrid INI             0.0485811234
+** INFO   : extra timer:unc_write_map_filepointer_ugrid TIME wri             0.0141606331
+** INFO   : extra timer:call wrimap                                          0.1017549038
+** INFO   : extra timer:call flow_externaloutput                             0.0546057224
+** INFO   : extra timer:wrimap nf90_sync                                     0.0314261913
+** INFO   : 
+** INFO   : 
+** INFO   : 
+** INFO   : nr of timesteps        ( )  :            59.0000000000
+** INFO   : average timestep       (s)  :            10.0000000000
+** INFO   : nr of setbacks         ( )  :             0.0000000000
+** INFO   : 
+** INFO   : 
+** INFO   : simulation period      (d)  :             0.0069444444
+** INFO   : total computation time (d)  :             0.0000219780
+** INFO   : time modelinit         (d)  :             0.0000211719
+** INFO   : time steps (+ plots)   (d)  :             0.0000008061
+** INFO   : 
+** INFO   : simulation period      (h)  :             0.1666666667
+** INFO   : total computation time (h)  :             0.0005274726
+** INFO   : time modelinit         (h)  :             0.0005081259
+** INFO   : time steps (+ plots)   (h)  :             0.0000193467
+** INFO   : 
+** INFO   : simulation period      (s)  :           600.0000000000
+** INFO   : total computation time (s)  :             1.8989012241
+** INFO   : time modelinit         (s)  :             1.8292531967
+** INFO   : time steps (+ plots)   (s)  :             0.0696480274
+** INFO   : 
+** INFO   : 
+** INFO   : time iniexternalforc.  (s)  :             0.0767219067
+** INFO   : 
+** INFO   : time inistep           (s)  :             0.0117404461
+** INFO   : time setumod           (s)  :             0.0007371902
+** INFO   : time furu              (s)  :             0.0002262592
+** INFO   : time solve             (s)  :             0.0007932186
+** INFO   : time gausselimination  (s)  :             0.0000000000
+** INFO   : time gausssubstitution (s)  :             0.0000000000
+** INFO   : time totalsolve        (s)  :             0.0010000000
+** INFO   : time setexternalforc.  (s)  :             0.0000679493
+** INFO   : time setext.forc.fetch (s)  :             0.0000000000
+** INFO   : time setexternalfbnd.  (s)  :             0.0082681179
+** INFO   : time steps             (s)  :             0.0143587589
+** INFO   : fraction solve/steps   ( )  :             0.0552428394
+** INFO   : total/(dnt*ndx)        (s)  :             0.0003657360
+** INFO   : av nr of cont. it s1it ( )  :             0.0000000000
+** INFO   : time transport         (s)  :             0.0000000000
+** INFO   : time debug             (s)  :             0.0000000000
+** INFO   : 
+** INFO   : 
+** INFO   : 
+** INFO   : Computation started  at: 11:04:56, 13-09-2026
+** INFO   : Computation finished at: 11:04:56, 13-09-2026
+** INFO   : 
+** INFO   : simulation period      (h)  :             0.1666666667
+** INFO   : total time in timeloop (h)  :             0.0000193467
+** INFO   : MPI    : no.
+** INFO   : OpenMP : yes.         #threads max : 2
+** INFO   : 
+** INFO   : 
+** INFO   : 
+** INFO   : 
+Dimr [2026-09-13 11:04:56.566450] #0 >> TIMER INFO:
+
+Dimr [2026-09-13 11:04:56.566487] #0 >> DFlowFM	: 1.989055 sec
+Dimr [2026-09-13 11:04:56.566490] #0 >> DIMR_LIB	: 2.7838 sec
+Dimr [2026-09-13 11:04:56.566493] #0 >> DIMR_EXE	: 2.7834 sec

@@ -1,0 +1,73 @@
+{
+  "case_id": "ujjani_bhima_oct2020",
+  "event_name": "October 2020 Bhima River Flood",
+  "mode": "TERRAIN_BASED",
+  "domain_width_m": 2000.0,
+  "channel_width_m": 300.0,
+  "classification": "UJJANI_APPROXIMATE_DEMONSTRATION",
+  "is_approximate": true,
+  "uncertainty_disclaimer": "APPROXIMATE DEMONSTRATION ONLY: This hydraulic simulation uses approximate bathymetry, digitized forcing bulletins, literature roughness, and/or approximate boundary conditions. Results carry significant hydraulic uncertainty and MUST NOT be used for life-safety or emergency flood release operational decisions.",
+  "blockers_for_historical_validation": [
+    "Bathymetry is 'TERRAIN_ONLY_CHANNEL_APPROXIMATION' (requires verified sub-surface riverbed soundings/cross-sections).",
+    "Upstream forcing is 'DIGITIZED_FROM_BULLETIN' (requires continuous hourly/sub-hourly SCADA gate telemetry).",
+    "Downstream boundary is 'APPROXIMATE_NORMAL_DEPTH' (requires field-calibrated stage-discharge rating curve).",
+    "Roughness is 'LITERATURE_DEFAULTS' (requires hydraulic calibration against observed flood high-water marks).",
+    "Vertical datum is 'EGM96_UNVERIFIED_GAUGE_OFFSET' (requires surveyed tie between gauge zero and EGM96 geoid)."
+  ],
+  "projected_crs": "EPSG:32643",
+  "vertical_datum": "EGM96",
+  "dem_provenance": {
+    "dem_source": "Copernicus DEM GLO-30",
+    "resolution_m": 30.0,
+    "version": "2020_baseline",
+    "source_crs": "EPSG:4326",
+    "projected_crs": "EPSG:32643",
+    "vertical_datum": "EGM96",
+    "vertical_units": "m",
+    "bounds_wgs84": [
+      75.11164745274189,
+      17.674022271816014,
+      75.33686635354502,
+      18.081930142097207
+    ],
+    "file_sha256": {
+      "Copernicus_DSM_COG_10_N18_00_E075_00_DEM.tif": "b5dd4430e76d8a08eda1c96c07ad9a181b7c53b08904b83cc2230fd42f370268",
+      "Copernicus_DSM_COG_10_N17_00_E075_00_DEM.tif": "15d4e570bf421766e78562c20eab00ed0143e60c5bb0ebb9067fdb4bd34f3c3c"
+    },
+    "processing_operations": [
+      "validate_single_band_geotiff",
+      "verify_epsg4326_crs",
+      "coordinate_transform_utm43n_to_wgs84",
+      "bilinear_elevation_sampling"
+    ]
+  },
+  "reach_name": "Ujjani Dam to Pandharpur",
+  "reach_length_km": 115.0,
+  "dam_specs": {
+    "name": "Ujjani Dam (Bhima Dam)",
+    "crest_elevation_m": 497.0,
+    "full_reservoir_level_m": 496.83,
+    "gate_count": 41
+  },
+  "simulation_parameters": {
+    "start_time": "2020-10-14T00:00:00Z",
+    "end_time": "2020-10-22T23:59:59Z",
+    "peak_discharge_m3s": 7079.2,
+    "baseflow_m3s": 150.0,
+    "manning_channel": 0.035,
+    "manning_floodplain": 0.055,
+    "downstream_stage_m": 443.2
+  },
+  "input_files": {
+    "dflowfm/downstream_stage.bc": "b3ec5dbe40b7b851fd57e91b34bff494ffffb0a37d0a8fda82616921e802bd85",
+    "dflowfm/downstream_stage.pli": "6d8f887f0a196f4fe35fafdbcb00ba882cd3ac689d5b99a1d20f8fb9033fccd6",
+    "dflowfm/initial_water_level.xyz": "4c09dd76d1d496a8c561c05bb07d7105dbc07f425dd36e383c3f0f51c482e3f3",
+    "dflowfm/ujjani_bhima.ext": "d30a40ae968fbdc457534d92d3d7d909a2600f91067a7f0e7e5b7ae7342cfb6a",
+    "dflowfm/ujjani_bhima.mdu": "3456ea5a158eb88fa241ea3a1626a94563a047b3607593492d31f77355ca06f9",
+    "dflowfm/ujjani_init.ext": "1692b8efd44472bd453d2e046584556949acbfdf11c09d5526fa777a0f05425d",
+    "dflowfm/ujjani_net.nc": "f278e46eeec89e8876ad286f4a643f0f483b6a85d2399ab05d978d0482b87db7",
+    "dflowfm/upstream_discharge.bc": "5bc6921ccaa49339d528dd3462d3c17cbb759a76c630f71b3457e7022f7fac23",
+    "dflowfm/upstream_discharge.pli": "31162936ae1b92e2c159a1d478b1c97827ff327f47f3054c098edf49b4145a03",
+    "dimr_config.xml": "71b7517dc7acf4d2bce877443bbb0d3effad511ee0317c50cdee8ef709627f5b"
+  }
+}

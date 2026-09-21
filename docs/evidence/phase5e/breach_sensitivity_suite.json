@@ -1,0 +1,33 @@
+{
+  "dam": "Ujjani Dam",
+  "method": "Froehlich (2008) + Broad-Crested Weir + Level-Pool Reservoir Routing",
+  "initial_storage_m3": 3140000000.0,
+  "initial_level_m": 497.0,
+  "breach_invert_m": 465.0,
+  "variants": {
+    "REFERENCE": {
+      "average_width_m": 423.96,
+      "bottom_width_m": 391.96,
+      "formation_time_hours": 9.226,
+      "peak_discharge_m3s": 85250.17,
+      "time_to_peak_hours": 9.225,
+      "mass_balance_error_pct": 0.0
+    },
+    "SMALLER_SLOWER": {
+      "average_width_m": 254.37,
+      "bottom_width_m": 222.37,
+      "formation_time_hours": 13.839,
+      "peak_discharge_m3s": 52703.65,
+      "time_to_peak_hours": 13.839,
+      "mass_balance_error_pct": 0.0
+    },
+    "LARGER_FASTER": {
+      "average_width_m": 593.54,
+      "bottom_width_m": 561.54,
+      "formation_time_hours": 6.458,
+      "peak_discharge_m3s": 120683.94,
+      "time_to_peak_hours": 6.458,
+      "mass_balance_error_pct": 0.0
+    }
+  }
+}

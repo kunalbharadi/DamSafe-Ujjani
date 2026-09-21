@@ -1,4 +1,3 @@
-import hashlib
 import json
 from datetime import datetime
 from pathlib import Path
@@ -6,17 +5,37 @@ from typing import Literal
 
 import netCDF4
 import numpy as np
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, field_validator
 
 from ..numerics.execution import sha256
-from .preprocessing import cusecs_to_m3s, project_wgs84_to_utm43n
-from .run_classifier import SiteRunAudit, SiteRunClassification, classify_site_run
+from .breach import (
+    BreachInput,
+    BreachSensitivityVariant,
+    BreachSimulationResult,
+    simulate_breach_routing,
+)
+from .preprocessing import project_wgs84_to_utm43n
+from .run_classifier import SiteRunClassification, classify_site_run
+from .terrain_sampler import (
+    DEMProvenance,
+    MissingTerrainError,
+    sample_dem_elevations,
+)
 from .ujjani import BHIMA_REACH, UJJANI_DAM_SPECS
 
 
 class UjjaniApproximateCaseConfig(BaseModel):
     case_id: str = "ujjani_bhima_oct2020"
     event_name: str = "October 2020 Bhima River Flood"
+    scenario_type: Literal["CONTROLLED_RELEASE", "DAM_BREACH"] = "CONTROLLED_RELEASE"
+    breach_config: BreachInput | None = None
+    breach_variant: BreachSensitivityVariant = BreachSensitivityVariant.REFERENCE
+    custom_hydrograph: list[tuple[float, float]] | None = None
+    mode: Literal["TERRAIN_BASED", "SYNTHETIC_BENCHMARK"] = "TERRAIN_BASED"
+    dem_paths: list[Path] | None = None
+    domain_width_m: float = 2000.0  # Spanning 2 km total width across valley and floodplain
+    channel_width_m: float = 300.0   # Active incised channel width
+    channel_bankfull_depth_m: float = 3.0  # Approximate channel thalweg incisement below DEM water surface
     start_time: str = "2020-10-14T00:00:00Z"
     end_time: str = "2020-10-22T23:59:59Z"
     time_step_max_s: float = 30.0
@@ -29,7 +48,7 @@ class UjjaniApproximateCaseConfig(BaseModel):
     crs: str = "EPSG:32643"  # UTM Zone 43N
     vertical_datum: str = "EGM96"
     channel_approximation: Literal["TERRAIN_ONLY_CHANNEL_APPROXIMATION"] = "TERRAIN_ONLY_CHANNEL_APPROXIMATION"
-    forcing_source: Literal["DIGITIZED_FROM_BULLETIN"] = "DIGITIZED_FROM_BULLETIN"
+    forcing_source: Literal["DIGITIZED_FROM_BULLETIN", "COMPUTED_BREACH_OUTFLOW"] = "DIGITIZED_FROM_BULLETIN"
     classification: SiteRunClassification = SiteRunClassification.UJJANI_APPROXIMATE_DEMONSTRATION
     n_stream: int = 20
     n_cross: int = 4
@@ -53,8 +72,8 @@ class UjjaniApproximateCaseConfig(BaseModel):
     def validate_time_order(cls, v: str, info) -> str:
         start = info.data.get("start_time")
         if start:
-            t0 = datetime.fromisoformat(start.replace("Z", "+00:00"))
-            t1 = datetime.fromisoformat(v.replace("Z", "+00:00"))
+            t0 = datetime.fromisoformat(start)
+            t1 = datetime.fromisoformat(v)
             if t1 <= t0:
                 raise ValueError("end_time must be strictly after start_time")
         return v
@@ -91,8 +110,14 @@ def generate_oct2020_hydrograph(
     return [(round(t, 1), round(q, 2)) for t, q in hydrograph_points]
 
 
-def _build_curvilinear_reach_netcdf(nc_path: Path, config: UjjaniApproximateCaseConfig) -> tuple[np.ndarray, np.ndarray, np.ndarray, int, int]:
-    """Construct a synthetic 2D UGRID-compliant netcdf grid for the Ujjani-Pandharpur Bhima reach."""
+def _build_curvilinear_reach_netcdf(
+    nc_path: Path, config: UjjaniApproximateCaseConfig
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, int, int, DEMProvenance | None]:
+    """Construct a 2D UGRID-compliant netcdf grid for the Ujjani-Pandharpur Bhima reach.
+
+    When mode == 'TERRAIN_BASED', authentic DEM elevations are sampled from input GeoTIFFs.
+    When mode == 'SYNTHETIC_BENCHMARK', an idealized synthetic sloping profile is generated.
+    """
     reach = BHIMA_REACH
     waypoints = [project_wgs84_to_utm43n(lon, lat) for lon, lat in reach.key_centerline_coords_wgs84]
 
@@ -107,14 +132,11 @@ def _build_curvilinear_reach_netcdf(nc_path: Path, config: UjjaniApproximateCase
     cx = np.interp(t_dense, t_orig, wx)
     cy = np.interp(t_dense, t_orig, wy)
 
-    half_width = 200.0
+    half_width = config.domain_width_m / 2.0
 
     nodes_x = []
     nodes_y = []
-    nodes_z = []
-
-    # Elevation from ~490m at Ujjani Dam down to ~440m at Pandharpur, minus 3.5m bankfull approximation
-    z_profile = np.linspace(490.0, 440.0, n_stream + 1) - 3.5
+    offsets = []
 
     for i in range(n_stream + 1):
         if i < n_stream:
@@ -131,16 +153,68 @@ def _build_curvilinear_reach_netcdf(nc_path: Path, config: UjjaniApproximateCase
             offset = (j - (n_cross / 2.0)) * (2 * half_width / n_cross)
             px = cx[i] + nx * offset
             py = cy[i] + ny * offset
-            # Center channel is deepest, banks are slightly higher
-            pz = z_profile[i] + (abs(offset) / half_width) * 2.0
             nodes_x.append(px)
             nodes_y.append(py)
-            nodes_z.append(pz)
+            offsets.append(offset)
 
-    num_nodes = len(nodes_x)
     nodes_x_arr = np.array(nodes_x, dtype=np.float64)
     nodes_y_arr = np.array(nodes_y, dtype=np.float64)
-    nodes_z_arr = np.array(nodes_z, dtype=np.float64)
+    offsets_arr = np.array(offsets, dtype=np.float64)
+
+    dem_provenance: DEMProvenance | None = None
+
+    if config.mode == "TERRAIN_BASED":
+        # Resolve DEM paths
+        dem_paths = config.dem_paths
+        if dem_paths is None:
+            # Check default workspace terrain paths
+            candidate_paths = [
+                Path("data/raw/terrain/Copernicus_DSM_COG_10_N18_00_E075_00_DEM.tif"),
+                Path("data/raw/terrain/Copernicus_DSM_COG_10_N17_00_E075_00_DEM.tif"),
+            ]
+            existing_candidates = [p for p in candidate_paths if p.exists()]
+            if not existing_candidates:
+                raise MissingTerrainError(
+                    "No terrain DEM provided or found in 'data/raw/terrain/'. "
+                    "A valid terrain raster is required for TERRAIN_BASED site simulations. "
+                    "Use mode='SYNTHETIC_BENCHMARK' if running synthetic laboratory tests."
+                )
+            dem_paths = existing_candidates
+
+        # Sample authentic DEM elevations
+        sampled_z, dem_provenance = sample_dem_elevations(
+            dem_paths=dem_paths,
+            points_x_utm43n=nodes_x_arr,
+            points_y_utm43n=nodes_y_arr,
+            source_crs="EPSG:4326",
+            projected_crs=config.crs,
+            vertical_datum=config.vertical_datum,
+        )
+
+        # Apply incised active channel thalweg below DEM water surface
+        # Bank and floodplain nodes retain pure authentic DEM elevations
+        ch_half = config.channel_width_m / 2.0
+        depth_offset = np.where(
+            np.abs(offsets_arr) <= ch_half,
+            config.channel_bankfull_depth_m * np.cos(np.pi * offsets_arr / (2.0 * ch_half)),
+            0.0,
+        )
+        nodes_z_arr = sampled_z - depth_offset
+
+    elif config.mode == "SYNTHETIC_BENCHMARK":
+        # Idealized sloping synthetic bed
+        z_profile = np.linspace(490.0, 440.0, n_stream + 1) - 3.5
+        nodes_z = []
+        for i in range(n_stream + 1):
+            for j in range(n_cross + 1):
+                offset = (j - (n_cross / 2.0)) * (2 * half_width / n_cross)
+                pz = z_profile[i] + (abs(offset) / half_width) * 2.0
+                nodes_z.append(pz)
+        nodes_z_arr = np.array(nodes_z, dtype=np.float64)
+    else:
+        raise ValueError(f"Unknown hydraulic case mode: {config.mode}")
+
+    num_nodes = len(nodes_x)
 
     # Build quadrilateral elements (cells)
     elem_nodes = []
@@ -168,7 +242,7 @@ def _build_curvilinear_reach_netcdf(nc_path: Path, config: UjjaniApproximateCase
         for edge in edges:
             link_to_elems.setdefault(edge, []).append(e_idx)
 
-    links_list = sorted(list(link_to_elems.keys()))
+    links_list = sorted(link_to_elems.keys())
     num_links = len(links_list)
     links_arr = np.array(links_list, dtype=np.int32)
     link_types = np.full(num_links, 2, dtype=np.int32)  # 2 = 2D link
@@ -226,7 +300,7 @@ def _build_curvilinear_reach_netcdf(nc_path: Path, config: UjjaniApproximateCase
         vbnd = ds.createVariable("BndLink", "i4", ("nBndLink",))
         vbnd[:] = bnd_links
 
-    return nodes_x_arr, nodes_y_arr, nodes_z_arr, n_stream, n_cross
+    return nodes_x_arr, nodes_y_arr, nodes_z_arr, n_stream, n_cross, dem_provenance
 
 
 def build_ujjani_approximate_case(
@@ -235,7 +309,7 @@ def build_ujjani_approximate_case(
     """Prepare a complete, self-contained D-Flow FM site case for the Ujjani–Bhima reach.
 
     Outputs all necessary D-Flow FM input files (*.mdu, *.ext, *.bc, *.pli, *_net.nc)
-    with explicit provenance and sha256 checksums.
+    with explicit provenance, DEM sampling metadata, and sha256 checksums.
     """
     if config is None:
         config = UjjaniApproximateCaseConfig()
@@ -248,7 +322,9 @@ def build_ujjani_approximate_case(
 
     # 1. Generate NetCDF grid
     net_nc_path = dflowfm_dir / "ujjani_net.nc"
-    nodes_x, nodes_y, nodes_z, n_stream, n_cross = _build_curvilinear_reach_netcdf(net_nc_path, config)
+    nodes_x, nodes_y, nodes_z, n_stream, n_cross, dem_provenance = _build_curvilinear_reach_netcdf(
+        net_nc_path, config
+    )
 
     # 2. Upstream boundary polyline (spanning cross section at i = 0)
     up_x0, up_y0 = nodes_x[0], nodes_y[0]
@@ -274,8 +350,23 @@ def build_ujjani_approximate_case(
     )
     (dflowfm_dir / "downstream_stage.pli").write_text(down_pli_content, encoding="utf-8")
 
-    # 4. Upstream discharge boundary condition (.bc)
-    hydrograph = generate_oct2020_hydrograph(config.peak_discharge_m3s, config.baseflow_m3s)
+    # 4. Determine Upstream discharge boundary condition (.bc)
+    breach_simulation_result: BreachSimulationResult | None = None
+    if config.scenario_type == "DAM_BREACH":
+        breach_input = config.breach_config or BreachInput()
+        breach_simulation_result = simulate_breach_routing(breach_input, config.breach_variant)
+        hydrograph = breach_simulation_result.hydrograph
+        effective_classification = SiteRunClassification.ASSUMPTION_BASED_BREACH_SCENARIO.value
+        is_approx = True
+    elif config.custom_hydrograph is not None:
+        hydrograph = config.custom_hydrograph
+        effective_classification = config.classification.value
+        is_approx = True
+    else:
+        hydrograph = generate_oct2020_hydrograph(config.peak_discharge_m3s, config.baseflow_m3s)
+        effective_classification = config.classification.value
+        is_approx = True
+
     ref_time_str = "minutes since 2020-10-14 00:00:00 +00:00"
 
     bc_upstream_lines = [
@@ -341,8 +432,12 @@ def build_ujjani_approximate_case(
     ]
     (dflowfm_dir / "downstream_stage.bc").write_text("\n".join(bc_downstream_lines), encoding="utf-8")
 
-    # 6. Initial water level spatial condition (bed elevation + 1.5 m initial baseflow depth)
-    xyz_lines = [f"{nodes_x[i]:.3f} {nodes_y[i]:.3f} {nodes_z[i] + 1.5:.3f}" for i in range(len(nodes_x))]
+    # 6. Initial water level spatial condition (center channel + 1.5 m initial baseflow depth)
+    # Floodplain cells start at local bed elevation
+    xyz_lines = []
+    for i in range(len(nodes_x)):
+        wl_init = nodes_z[i] + 1.5
+        xyz_lines.append(f"{nodes_x[i]:.3f} {nodes_y[i]:.3f} {wl_init:.3f}")
     (dflowfm_dir / "initial_water_level.xyz").write_text("\n".join(xyz_lines), encoding="utf-8")
 
     init_ext_content = (
@@ -426,12 +521,12 @@ RstInterval                       = 0
 """
     (dflowfm_dir / "ujjani_bhima.mdu").write_text(mdu_content, encoding="utf-8")
 
-    # 8. DIMR root configuration (dimr_config.xml)
+    # 9. DIMR root configuration (dimr_config.xml)
     dimr_xml_content = """<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <dimrConfig xmlns="http://schemas.deltares.nl/dimr" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.deltares.nl/dimr https://content.oss.deltares.nl/schemas/dimr-1.2.xsd">
   <documentation>
     <fileVersion>1.2</fileVersion>
-    <createdBy>DamSafe Phase 5B - Ujjani Hydraulic Demonstration</createdBy>
+    <createdBy>DamSafe Phase 5 - Ujjani Hydraulic Demonstration</createdBy>
   </documentation>
   <control>
     <start name="DFlowFM" />
@@ -447,24 +542,33 @@ RstInterval                       = 0
 """
     (target / "dimr_config.xml").write_text(dimr_xml_content, encoding="utf-8")
 
-    # 9. Compute file hashes for complete input lineage
+    # 10. Compute file hashes for complete input lineage
     all_files = sorted([p for p in target.rglob("*") if p.is_file()])
     file_hashes = {str(p.relative_to(target).as_posix()): sha256(p) for p in all_files}
 
     audit = classify_site_run(
         bathymetry_type=config.channel_approximation,
-        forcing_type=config.forcing_source,
+        forcing_type="COMPUTED_BREACH_OUTFLOW" if config.scenario_type == "DAM_BREACH" else config.forcing_source,
     )
 
     manifest = {
         "case_id": config.case_id,
         "event_name": config.event_name,
-        "classification": audit.classification.value,
-        "is_approximate": audit.is_approximate,
-        "uncertainty_disclaimer": audit.uncertainty_disclaimer,
+        "scenario_type": config.scenario_type,
+        "mode": config.mode,
+        "domain_width_m": config.domain_width_m,
+        "channel_width_m": config.channel_width_m,
+        "classification": effective_classification if config.mode == "TERRAIN_BASED" else "SYNTHETIC_BENCHMARK",
+        "is_approximate": is_approx,
+        "uncertainty_disclaimer": audit.uncertainty_disclaimer if config.scenario_type == "CONTROLLED_RELEASE" else (
+            "PROTOTYPE_BREACH_ASSUMPTION: Ujjani Dam has never failed. This computed breach scenario "
+            "uses Froehlich (2008) and level-pool reservoir routing for disaster planning."
+        ),
         "blockers_for_historical_validation": audit.blockers_for_historical_validation,
         "projected_crs": config.crs,
         "vertical_datum": config.vertical_datum,
+        "dem_provenance": dem_provenance.model_dump() if dem_provenance else None,
+        "breach_simulation": breach_simulation_result.model_dump() if breach_simulation_result else None,
         "reach_name": BHIMA_REACH.reach_name,
         "reach_length_km": BHIMA_REACH.approximate_reach_length_km,
         "dam_specs": {
@@ -476,7 +580,7 @@ RstInterval                       = 0
         "simulation_parameters": {
             "start_time": config.start_time,
             "end_time": config.end_time,
-            "peak_discharge_m3s": config.peak_discharge_m3s,
+            "peak_discharge_m3s": max(q for _, q in hydrograph),
             "baseflow_m3s": config.baseflow_m3s,
             "manning_channel": config.manning_channel,
             "manning_floodplain": config.manning_floodplain,
@@ -490,21 +594,25 @@ RstInterval                       = 0
     manifest_hash = sha256(manifest_json_path)
 
     return {
-        "case_kind": "SITE_SCENARIO",
+        "case_kind": "SITE_SCENARIO" if config.mode == "TERRAIN_BASED" else "SYNTHETIC_BENCHMARK",
         "case_id": config.case_id,
-        "classification": audit.classification.value,
-        "is_approximate": audit.is_approximate,
+        "scenario_type": config.scenario_type,
+        "mode": config.mode,
+        "classification": manifest["classification"],
+        "is_approximate": is_approx,
         "manifest_sha256": manifest_hash,
+        "dem_provenance": dem_provenance.model_dump() if dem_provenance else None,
+        "breach_simulation": breach_simulation_result.model_dump() if breach_simulation_result else None,
         "input_files": file_hashes,
         "physical_case": {
             "reach": BHIMA_REACH.reach_name,
             "crs": config.crs,
             "vertical_datum": config.vertical_datum,
-            "peak_discharge_m3s": config.peak_discharge_m3s,
+            "peak_discharge_m3s": max(q for _, q in hydrograph),
             "start_time": config.start_time,
             "end_time": config.end_time,
             "end_time_s": 777600.0,
             "time_origin": config.start_time,
-            "disclaimer": audit.uncertainty_disclaimer,
+            "disclaimer": manifest["uncertainty_disclaimer"],
         },
     }

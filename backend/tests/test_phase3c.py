@@ -1,11 +1,10 @@
 import json
 
-import netCDF4
 import numpy as np
 from alembic import command
 from alembic.config import Config
-from damsafe.exports import create_export, verify_export
 from damsafe.api import create_app
+from damsafe.exports import create_export, verify_export
 from damsafe.numerics import service
 from damsafe.numerics.products import postprocess
 from damsafe.numerics.results import create_result, write_frame

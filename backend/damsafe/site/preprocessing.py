@@ -1,8 +1,8 @@
-from datetime import datetime, timezone, timedelta
+from datetime import UTC, datetime, timedelta, timezone
 from typing import Literal
-from pydantic import BaseModel, Field
-from pyproj import Transformer
 
+from pydantic import BaseModel
+from pyproj import Transformer
 
 CUSEC_TO_M3S_FACTOR = 0.028316846592
 M3S_TO_CUSEC_FACTOR = 35.314666721489
@@ -29,7 +29,7 @@ def ist_to_utc(ist_dt_str: str) -> str:
     dt = datetime.fromisoformat(clean_str)
     ist_tz = timezone(timedelta(hours=5, minutes=30))
     dt_ist = dt.replace(tzinfo=ist_tz)
-    dt_utc = dt_ist.astimezone(timezone.utc)
+    dt_utc = dt_ist.astimezone(UTC)
     return dt_utc.isoformat().replace("+00:00", "Z")
 
 

@@ -1,0 +1,5 @@
+# Preserve native evidence bytes; solver logs contain intentional trailing spaces.
+docs/evidence/**/*.log -text whitespace=-blank-at-eol
+docs/evidence/**/*.csv -text whitespace=cr-at-eol
+# Markdown uses two trailing spaces for an explicit line break.
+*.md whitespace=-blank-at-eol
