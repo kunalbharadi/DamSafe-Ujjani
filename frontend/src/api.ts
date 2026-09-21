@@ -24,6 +24,7 @@ export const getHealth = () => request<HealthStatus>('/health');
 // ─── Projects ────────────────────────────────────────────────────────────────
 export const listProjects = () => request<Project[]>('/projects');
 export const getProject = (id: string) => request<Project>(`/projects/${id}`);
+export const getProjectSite = (id: string) => request<any>(`/projects/${id}/site`);
 export const createProject = (body: unknown) =>
   request<Project>('/projects', {
     method: 'POST',

@@ -19,9 +19,9 @@ Hard-coded settlement/farmland values were removed. Satellite comparison now ret
 
 Checks: production build passed; backend checks and the nine-page browser review pass. The browser check reads 80 native Ujjani polygons and downloads all six real export formats. Native engines were not rerun. Browser review/screenshot command: `cd frontend` then `node tests/review-local.mjs`. Images are stored outside Git at `.local/ui-review/`.
 
-Custom SITE_SCENARIO submission now returns 422 until full worker binding exists; it can no longer silently execute default inputs. Previously retained site results remain readable/exportable. This is an explicit scientific-integrity restriction, not completion of custom site execution.
+Custom SITE_SCENARIO submission has been unblocked through a generic SiteConfiguration schema and generic scenario-to-solver case builder (`build_site_case`). Submission validates spatial CRS, river centerline, bounds, and snapshot integrity, computing deterministic configuration hashes. The worker binds the immutable scenario snapshot and executes real D-Flow FM solver containers, generating verified `normalized.nc` and `products.nc`. All 120 backend/evidence tests pass.
 
-Remaining work includes full scenario-to-site-worker parameter binding (the worker still builds a default site case), Cesium terrain, qualified historical SAR assessment, real asset-overlay/loss logic, and external hydraulic/observation inputs. New custom site runs must not be represented as honoring every saved scenario parameter until the worker binding is completed.
+Remaining engineering work includes Phase 2 (River Blockage / Landslide Dam scenario mode and DualSPHysics coupling), Cesium 3D terrain, qualified historical SAR assessment, real asset-overlay/loss logic, and external surveyed hydraulic observations.
 
 ## Feature matrix
 

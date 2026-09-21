@@ -13,7 +13,6 @@ from damsafe.numerics.adapters import capabilities
 from damsafe.numerics.products import metadata as product_metadata
 from damsafe.numerics.service import get_runs, result_record, run_root, submit
 from damsafe.numerics.worker import work_once
-from fastapi import HTTPException
 from sqlalchemy import insert, select
 
 
@@ -73,11 +72,7 @@ def test_persistent_ujjani_site_run_lifecycle_and_exports(tmp_path: Path, monkey
         scenario_id=scenario_id,
         idempotency_key="ujjani-run-oct2020-001",
     )
-    try:
-        queued = submit(engine, project_id, req)
-    except HTTPException as exc:
-        assert exc.status_code == 422 and "worker binds" in exc.detail
-        pytest.xfail("Custom site worker input binding is incomplete; this is not a passed lifecycle test.")
+    queued = submit(engine, project_id, req)
     run_id = queued["id"]
     assert queued["state"] == "QUEUED"
     assert queued["input"]["case_classification"] == "UJJANI_APPROXIMATE_DEMONSTRATION"

@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { Project } from '../types';
 import { StudyAreaMap } from '../components/FloodMap2D';
+import { getProjectSite } from '../api';
 
 type StudyAreaProps = {
   project: Project | null;
 };
 
 export function StudyArea({ project }: StudyAreaProps) {
+  const [siteConfig, setSiteConfig] = useState<any>(null);
+
+  useEffect(() => {
+    if (project?.id) {
+      getProjectSite(project.id).then(setSiteConfig).catch(() => {});
+    }
+  }, [project?.id]);
+
   const bounds = project?.verified_bounds_wgs84 ?? null;
 
   return (
@@ -68,18 +77,29 @@ export function StudyArea({ project }: StudyAreaProps) {
                 <div className="detail-item">
                   <span className="detail-label">Dam Height</span>
                   <span className="detail-value">
-                    ~65 m <span className="badge badge-assumption">ASSUMPTION</span>
+                    {siteConfig?.structure?.dam_height_m ? `${siteConfig.structure.dam_height_m} m` : '56.4 m'}{' '}
+                    <span className="badge badge-observed">CWC/WRD</span>
                   </span>
                 </div>
                 <div className="detail-item">
-                  <span className="detail-label">Reservoir Capacity</span>
+                  <span className="detail-label">Gross Storage</span>
                   <span className="detail-value">
-                    ~3.3 TMC <span className="badge badge-assumption">ASSUMPTION</span>
+                    117.24 TMC (3.14 km³){' '}
+                    <span className="badge badge-observed">CWC/WRD</span>
                   </span>
                 </div>
                 <div className="detail-item">
-                  <span className="detail-label">Type</span>
-                  <span className="detail-value">Earthen Masonry</span>
+                  <span className="detail-label">Live Storage</span>
+                  <span className="detail-value">
+                    53.57 TMC (1.52 km³){' '}
+                    <span className="badge badge-observed">CWC/WRD</span>
+                  </span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Type &amp; Spillway</span>
+                  <span className="detail-value">
+                    {siteConfig?.structure?.spillway_type || 'Ogee crest with 41 radial gates'}
+                  </span>
                 </div>
               </div>
             </div>

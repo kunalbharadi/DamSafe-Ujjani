@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import type { Engine, HealthStatus, NumericalRun, Project } from '../types';
+import React, { useEffect, useState } from 'react';
+import type { Engine, HealthStatus, NumericalRun, Project, Scenario } from '../types';
 import { StatusBadge } from '../components/StatusBadge';
 import { cancelRun, submitRun } from '../api';
 
@@ -7,6 +7,7 @@ type SimulationProps = {
   project: Project | null;
   health: HealthStatus | null;
   runs: NumericalRun[];
+  scenarios?: Scenario[];
   onRefresh: () => void;
   onError: (e: string) => void;
   onNotice: (n: string) => void;
@@ -15,11 +16,13 @@ type SimulationProps = {
   setBusy: (b: boolean) => void;
 };
 
-function EngineCard({ engine, onRun, busy, projectSynthetic }: {
+function EngineCard({ engine, onRun, busy, projectSynthetic, onRunSiteScenario, hasScenario }: {
   engine: Engine;
   onRun: () => void;
   busy: boolean;
   projectSynthetic: boolean;
+  onRunSiteScenario?: () => void;
+  hasScenario?: boolean;
 }) {
   const isDflow = engine.engine === 'dflowfm';
   return (
@@ -42,7 +45,7 @@ function EngineCard({ engine, onRun, busy, projectSynthetic }: {
           {/* Engine scope note */}
           <div className="alert alert-info" style={{ marginBottom: 0, fontSize: 11 }}>
             {isDflow
-              ? '🗺 Models the entire downstream river reach as a 2D shallow-water domain. Use for inundation extent, depth, velocity, and arrival time.'
+              ? '🗺 Models the downstream river reach as a 2D shallow-water domain. Use for inundation extent, depth, velocity, and arrival time.'
               : '💧 Models the near-field dam-breach zone in 3D particle detail. Does NOT model the full river — SPH is complementary to D-Flow FM.'}
           </div>
 
@@ -61,21 +64,49 @@ function EngineCard({ engine, onRun, busy, projectSynthetic }: {
 
           {engine.available ? (
             <>
-              <div className="alert alert-warning" style={{ fontSize: 11, marginBottom: 0 }}>
-                ⚠ Official laboratory example only. Requires switching to the synthetic laboratory project.
-                Ujjani site runs are blocked until verified hydraulic inputs exist.
-              </div>
-              <button
-                id={`btn-run-${engine.engine}`}
-                className="btn btn-primary"
-                disabled={busy || !projectSynthetic}
-                onClick={onRun}
-                title={!projectSynthetic ? 'Switch to synthetic laboratory project first' : undefined}
-              >
-                {busy ? <span className="spinner" /> : '▶'} Run Official Laboratory Example
-              </button>
-              {!projectSynthetic && (
-                <p className="caption">Switch to the synthetic laboratory project to submit a run.</p>
+              {projectSynthetic ? (
+                <>
+                  <div className="alert alert-warning" style={{ fontSize: 11, marginBottom: 0 }}>
+                    Official laboratory benchmark example for synthetic validation.
+                  </div>
+                  <button
+                    id={`btn-run-${engine.engine}`}
+                    className="btn btn-primary"
+                    disabled={busy}
+                    onClick={onRun}
+                  >
+                    {busy ? <span className="spinner" /> : '▶'} Run Official Laboratory Example
+                  </button>
+                </>
+              ) : isDflow ? (
+                <>
+                  <div className="alert alert-success" style={{ fontSize: 11, marginBottom: 0 }}>
+                    ✓ Ready for site scenario execution. Select a saved scenario above.
+                  </div>
+                  <button
+                    id={`btn-run-${engine.engine}`}
+                    className="btn btn-primary"
+                    disabled={busy || !hasScenario}
+                    onClick={onRunSiteScenario}
+                    title={!hasScenario ? 'Select or save a scenario first' : undefined}
+                  >
+                    {busy ? <span className="spinner" /> : '▶'} Run D-Flow FM Site Simulation
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="alert alert-info" style={{ fontSize: 11, marginBottom: 0 }}>
+                    DualSPHysics near-field particle simulation. Runs laboratory benchmarks or near-field breach blocks.
+                  </div>
+                  <button
+                    id={`btn-run-${engine.engine}`}
+                    className="btn btn-outline-blue"
+                    disabled={busy}
+                    onClick={onRun}
+                  >
+                    {busy ? <span className="spinner" /> : '▶'} Run Near-Field Benchmark
+                  </button>
+                </>
               )}
             </>
           ) : (
@@ -99,9 +130,15 @@ function progressLabel(run: NumericalRun): string {
 }
 
 export function Simulation({
-  project, health, runs, onRefresh, onError, onNotice, onLoadResults, busy, setBusy,
+  project, health, runs, scenarios = [], onRefresh, onError, onNotice, onLoadResults, busy, setBusy,
 }: SimulationProps) {
-  const [engineChoice, setEngineChoice] = useState<'dualsphysics' | 'dflowfm'>('dualsphysics');
+  const [selectedScenarioId, setSelectedScenarioId] = useState<string>('');
+
+  useEffect(() => {
+    if (scenarios.length > 0 && !selectedScenarioId) {
+      setSelectedScenarioId(scenarios[0].id);
+    }
+  }, [scenarios, selectedScenarioId]);
 
   async function handleRun(engine: 'dualsphysics' | 'dflowfm') {
     if (!project) return;
@@ -114,6 +151,25 @@ export function Simulation({
       });
       await onRefresh();
       onNotice(`${engine} laboratory example queued. Execution success is separate from scientific validation.`);
+    } catch (e) {
+      onError(String(e));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function handleRunSiteScenario() {
+    if (!project || !selectedScenarioId) return;
+    setBusy(true);
+    try {
+      await submitRun(project.id, {
+        engine: 'dflowfm',
+        case_kind: 'SITE_SCENARIO',
+        scenario_id: selectedScenarioId,
+        idempotency_key: crypto.randomUUID().replace(/-/g, ''),
+      });
+      await onRefresh();
+      onNotice('Site scenario queued for D-Flow FM 2D hydrodynamic simulation.');
     } catch (e) {
       onError(String(e));
     } finally {
@@ -149,14 +205,57 @@ export function Simulation({
         </p>
       </div>
 
-      {/* Synthetic project warning if needed */}
+      {/* Site Project Scenario Runner */}
       {project && !isProjectSynthetic && (
-        <div className="alert alert-warning" style={{ marginBottom: 20 }}>
-          ⚠ The current project ({project.name}) is a <strong>site project</strong>.
-          Laboratory examples require the synthetic laboratory project.
-          Ujjani site runs are blocked until verified hydraulic boundary conditions exist.
+        <div className="card" style={{ marginBottom: 20, border: '1px solid #CBD5E1' }}>
+          <div className="card-header" style={{ background: '#F8FAFC' }}>
+            <span className="card-title">Run Site Scenario (D-Flow FM 2D)</span>
+            <span className="badge badge-orange">{project.name}</span>
+          </div>
+          <div className="card-body">
+            <p style={{ fontSize: 13, color: '#475569', marginBottom: 12 }}>
+              Execute 2D shallow-water flood wave propagation along the river reach downstream using Delft3D Flexible Mesh.
+            </p>
+            <div style={{ display: 'flex', gap: 16, alignItems: 'flex-end', flexWrap: 'wrap' }}>
+              <div style={{ flex: 1, minWidth: 280 }}>
+                <label className="detail-label" style={{ display: 'block', marginBottom: 6 }}>
+                  Select Saved Scenario Snapshot:
+                </label>
+                <select
+                  id="select-site-scenario"
+                  className="form-control"
+                  style={{ width: '100%', padding: '8px 12px' }}
+                  value={selectedScenarioId}
+                  onChange={(e) => setSelectedScenarioId(e.target.value)}
+                >
+                  {scenarios.length === 0 && (
+                    <option value="">No saved scenarios available. Create one in Scenario Builder.</option>
+                  )}
+                  {scenarios.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.name} ({s.id.slice(0, 8)}…)
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <button
+                id="btn-run-site-scenario"
+                className="btn btn-primary"
+                disabled={busy || !selectedScenarioId || !dflowEngine?.available}
+                onClick={handleRunSiteScenario}
+              >
+                {busy ? <span className="spinner" /> : '▶'} Run D-Flow FM Simulation
+              </button>
+            </div>
+            {scenarios.length === 0 && (
+              <p className="caption" style={{ marginTop: 8, color: '#D97706' }}>
+                💡 Go to <strong>Scenario Builder</strong> to configure and save a dam breach or controlled release scenario first.
+              </p>
+            )}
+          </div>
         </div>
       )}
+
       {project?.synthetic && (
         <div className="alert alert-synthetic" style={{ marginBottom: 20 }}>
           <strong>SYNTHETIC EXAMPLE</strong> — these inputs do not represent Ujjani and cannot be used as a site prediction.
@@ -171,6 +270,8 @@ export function Simulation({
             onRun={() => handleRun('dflowfm')}
             busy={busy}
             projectSynthetic={isProjectSynthetic}
+            onRunSiteScenario={handleRunSiteScenario}
+            hasScenario={Boolean(selectedScenarioId)}
           />
         )}
         {sphEngine && (

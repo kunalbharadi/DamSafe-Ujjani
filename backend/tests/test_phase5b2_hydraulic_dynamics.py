@@ -10,7 +10,6 @@ from damsafe.site.hydraulic_case import (
     UjjaniApproximateCaseConfig,
     build_ujjani_approximate_case,
 )
-from fastapi import HTTPException
 from sqlalchemy import create_engine, select
 
 
@@ -132,11 +131,7 @@ def test_persistent_dynamic_site_run_lifecycle(tmp_path, monkeypatch):
         scenario_id=scen_id,
         idempotency_key="test-dyn-req-001",
     )
-    try:
-        rec = run_service.submit(engine, proj_id, req)
-    except HTTPException as exc:
-        assert exc.status_code == 422 and "worker binds" in exc.detail
-        pytest.xfail("Custom site worker input binding is incomplete; this is not a passed dynamic-site test.")
+    rec = run_service.submit(engine, proj_id, req)
     run_id = rec["id"]
     assert rec["state"] == "QUEUED"
     assert rec["input"]["case_classification"] == "UJJANI_APPROXIMATE_DEMONSTRATION"

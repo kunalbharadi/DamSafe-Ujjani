@@ -8,13 +8,18 @@ from fastapi import HTTPException
 from sqlalchemy import insert, select
 
 from ..contracts import RunRequest
-from ..db import now, projects, runs, scenarios, uid
+from ..db import datasets, now, projects, runs, scenarios, uid
 from .adapters import ROOT, SOURCES, capabilities
 from .execution import sha256
 from .products import PRODUCT_SCHEMA
 
 
-def configuration_hash(request: RunRequest, capability: dict, snapshot: dict | None = None):
+def configuration_hash(
+    request: RunRequest,
+    capability: dict,
+    snapshot: dict | None = None,
+    site_config: object | None = None,
+):
     """Identity covers solver image, physical input file set and configuration."""
     profile = SOURCES[request.engine]
     source = ROOT / "external" / profile["directory"]
@@ -25,6 +30,11 @@ def configuration_hash(request: RunRequest, capability: dict, snapshot: dict | N
             "source_commit": profile["commit"],
             "case_kind": "SITE_SCENARIO",
             "snapshot": snapshot or {},
+            "site_configuration": (
+                site_config.model_dump(mode="json")
+                if hasattr(site_config, "model_dump")
+                else (site_config or {})
+            ),
         }
     elif request.engine == "dualsphysics":
         files = [source / "examples/main/01_DamBreak/CaseDambreakVal2D_Def.xml"]
@@ -112,6 +122,8 @@ def submit(engine, project_id, request: RunRequest, ensemble_id: str | None = No
                 raise HTTPException(409, "Idempotency key already belongs to a different request")
             return dict(old)
         snap = None
+        site_config = None
+        site_key = None
         if request.case_kind == "SITE_SCENARIO":
             row = (
                 conn.execute(
@@ -125,14 +137,52 @@ def submit(engine, project_id, request: RunRequest, ensemble_id: str | None = No
             if not row:
                 raise HTTPException(422, "Select an immutable scenario in this project")
             snap = row["body"]["snapshot"]
-            # The current site worker calls prepare_ujjani_site() with defaults.
-            # Do not claim that an arbitrary immutable scenario was executed.
-            raise HTTPException(
-                422,
-                "Custom site execution is blocked until the worker binds the saved scenario's "
-                "forcing, datasets, boundaries and time settings. Retained site demonstrations "
-                "remain available for viewing and export; laboratory runs remain supported.",
-            )
+
+            # Load and validate generic site configuration
+            from ..site.configuration import load_site_configuration
+
+            proj_dict = project["body"]
+            site_key = proj_dict.get("site_key") or "ujjani-bhima"
+            try:
+                site_config = load_site_configuration(site_key, proj_dict)
+            except Exception as exc:
+                raise HTTPException(422, f"Site configuration could not be resolved: {exc}") from exc
+
+            # Validate spatial definition
+            if not site_config.spatial.computation_crs:
+                raise HTTPException(422, "Site computation CRS is missing")
+            if not site_config.spatial.river_centerline_wgs84 or len(site_config.spatial.river_centerline_wgs84) < 2:
+                raise HTTPException(422, "Site river centerline requires at least 2 coordinate points")
+            w, s, e, n = site_config.spatial.bounds_wgs84
+            if not (-180 <= w < e <= 180 and -90 <= s < n <= 90):
+                raise HTTPException(422, "Invalid site WGS84 bounding box coordinates")
+
+            # Validate scenario times if present
+            scen_body = snap.get("scenario") or snap
+            start_str = scen_body.get("start_time")
+            end_str = scen_body.get("end_time")
+            if start_str and end_str:
+                try:
+                    from datetime import datetime
+                    t0 = datetime.fromisoformat(str(start_str))
+                    t1 = datetime.fromisoformat(str(end_str))
+                    if t1 <= t0:
+                        raise HTTPException(422, "Scenario end_time must follow start_time")
+                except ValueError as exc:
+                    raise HTTPException(422, f"Invalid scenario datetime values: {exc}") from exc
+
+            # Validate referenced datasets if specified in scenario
+            ds_ids = scen_body.get("dataset_ids") or []
+            if ds_ids:
+                proj_datasets = {
+                    r["id"]
+                    for r in conn.execute(
+                        select(datasets.c.id).where(datasets.c.project_id == project_id)
+                    ).mappings()
+                }
+                missing_ds = [d for d in ds_ids if d not in proj_datasets]
+                if missing_ds:
+                    raise HTTPException(422, f"Referenced dataset not found in project: {missing_ds[0]}")
         else:
             if not project["body"]["synthetic"]:
                 raise HTTPException(422, "Official laboratory cases require a separate synthetic project")
@@ -141,7 +191,7 @@ def submit(engine, project_id, request: RunRequest, ensemble_id: str | None = No
         cap = capabilities(request.engine)
         if not cap["available"]:
             raise HTTPException(503, cap)
-        config_hash = configuration_hash(request, cap, snap)
+        config_hash = configuration_hash(request, cap, snap, site_config)
         # Serializes duplicate submissions for this project on both database backends.
         conn.execute(projects.update().where(projects.c.id == project_id).values(body=project["body"]))
         old = (
@@ -170,6 +220,10 @@ def submit(engine, project_id, request: RunRequest, ensemble_id: str | None = No
         }
         if snap:
             body["scenario_snapshot"] = snap
+        if site_key:
+            body["site_key"] = site_key
+        if site_config and hasattr(site_config, "model_dump"):
+            body["site_configuration"] = site_config.model_dump(mode="json")
         if ensemble_id:
             body["ensemble_id"] = ensemble_id
         cached = next(

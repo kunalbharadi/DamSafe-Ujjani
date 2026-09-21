@@ -391,6 +391,7 @@ function App() {
               project={project}
               health={health}
               runs={runs}
+              scenarios={scenarios}
               onRefresh={refresh}
               onError={showError}
               onNotice={showNotice}

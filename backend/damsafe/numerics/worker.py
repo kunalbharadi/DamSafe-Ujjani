@@ -90,9 +90,18 @@ def work_once(engine):
 
     try:
         if request.get("case_kind") == "SITE_SCENARIO":
-            from .adapters import prepare_ujjani_site
+            from ..site.case_builder import build_site_case
+            from ..site.configuration import SiteConfiguration, load_site_configuration
 
-            case = prepare_ujjani_site(destination)
+            snapshot = submission.get("scenario_snapshot") or {}
+            site_data = submission.get("site_configuration")
+            if site_data:
+                site_config = SiteConfiguration.model_validate(site_data)
+            else:
+                proj = snapshot.get("project") or {}
+                site_key = proj.get("site_key") or "ujjani-bhima"
+                site_config = load_site_configuration(site_key, proj)
+            case = build_site_case(site_config, snapshot, destination)
         else:
             case = prepare_official(request["engine"], destination, request.get("particle_spacing_m"))
         save_json(destination / "input-manifest.json", {**submission, "case": case})

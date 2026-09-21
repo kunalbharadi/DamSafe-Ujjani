@@ -52,6 +52,8 @@ class UjjaniApproximateCaseConfig(BaseModel):
     classification: SiteRunClassification = SiteRunClassification.UJJANI_APPROXIMATE_DEMONSTRATION
     n_stream: int = 20
     n_cross: int = 4
+    centerline_wgs84: tuple[tuple[float, float], ...] | None = None
+    reach_name: str = "Bhima River Reach"
 
     @field_validator("peak_discharge_m3s", "baseflow_m3s")
     @classmethod
@@ -118,8 +120,8 @@ def _build_curvilinear_reach_netcdf(
     When mode == 'TERRAIN_BASED', authentic DEM elevations are sampled from input GeoTIFFs.
     When mode == 'SYNTHETIC_BENCHMARK', an idealized synthetic sloping profile is generated.
     """
-    reach = BHIMA_REACH
-    waypoints = [project_wgs84_to_utm43n(lon, lat) for lon, lat in reach.key_centerline_coords_wgs84]
+    coords = config.centerline_wgs84 or BHIMA_REACH.key_centerline_coords_wgs84
+    waypoints = [project_wgs84_to_utm43n(lon, lat) for lon, lat in coords]
 
     n_stream = config.n_stream
     n_cross = config.n_cross
@@ -366,6 +368,10 @@ def build_ujjani_approximate_case(
         hydrograph = generate_oct2020_hydrograph(config.peak_discharge_m3s, config.baseflow_m3s)
         effective_classification = config.classification.value
         is_approx = True
+
+    t_stop_min = 777600.0 / 60.0
+    if hydrograph and hydrograph[-1][0] < t_stop_min:
+        hydrograph = list(hydrograph) + [(t_stop_min, hydrograph[-1][1])]
 
     ref_time_str = "minutes since 2020-10-14 00:00:00 +00:00"
 

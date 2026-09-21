@@ -125,6 +125,17 @@ def create_app(database_url=None, storage=None):
             row = get(conn, projects, project_id)
             return {"id": row["id"], **row["body"]}
 
+    @app.get("/api/projects/{project_id}/site")
+    def project_site(project_id: str):
+        with engine.connect() as conn:
+            row = get(conn, projects, project_id)
+            from .site.configuration import load_site_configuration
+
+            proj_dict = row["body"]
+            site_key = proj_dict.get("site_key") or "ujjani-bhima"
+            site_config = load_site_configuration(site_key, proj_dict)
+            return site_config.model_dump(mode="json")
+
     @app.post("/api/projects", status_code=201)
     def add_project(body: ProjectInput):
         if body.computation_crs:
